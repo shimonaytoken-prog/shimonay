@@ -1,127 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SHIMONAY</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Orbitron', sans-serif;
-}
-
-body{
-    background: radial-gradient(circle at top, #0f0f0f, #000);
-    color:white;
-}
-
-header{
-    padding:40px 20px;
-    text-align:center;
-}
-
-header h1{
-    font-size:64px;
-    letter-spacing:4px;
-    background:linear-gradient(90deg,#00ffcc,#00aaff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-
-header p{
-    color:#aaa;
-    margin-top:10px;
-    font-size:18px;
-}
-
-.section{
-    max-width:1000px;
-    margin:60px auto;
-    padding:40px;
-    background:#111;
-    border:1px solid #222;
-    border-radius:16px;
-    box-shadow:0 0 40px rgba(0,255,200,0.08);
-}
-
-.section h2{
-    margin-bottom:20px;
-    color:#00ffcc;
-}
-
-.tokenomics{
-    display:grid;
-    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
-}
-
-.card{
-    background:#0d0d0d;
-    padding:25px;
-    border-radius:12px;
-    border:1px solid #222;
-    text-align:center;
-}
-
-.card h3{
-    color:#00aaff;
-    margin-bottom:10px;
-}
-
-.address{
-    background:#000;
-    padding:15px;
-    border-radius:10px;
-    word-break:break-all;
-    font-size:14px;
-    border:1px solid #333;
-}
-
-footer{
-    text-align:center;
-    margin:60px 0 30px 0;
-    color:#555;
-    font-size:14px;
-}
-
-.button{
-    margin-top:25px;
-    display:inline-block;
-    padding:12px 30px;
-    border-radius:30px;
-    background:linear-gradient(90deg,#00ffcc,#00aaff);
-    color:#000;
-    text-decoration:none;
-    font-weight:bold;
-    transition:0.3s;
-}
-
-.button:hover{
-    transform:scale(1.05);
-    box-shadow:0 0 20px #00ffcc;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-    <h1>SHIMONAY</h1>
-    <p>A meme coin built the right way.</p>
-</header>
-
-<div class="section">
-    <h2>📜 Contract Address</h2>
-    <div class="address">
-        0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e
-    </div>
-</div>
-
 <div class="section">
     <h2>⚙️ Tokenomics</h2>
     <div class="tokenomics">
@@ -129,45 +5,36 @@ footer{
             <h3>Max Supply</h3>
             <p>200 Billion</p>
         </div>
+
         <div class="card">
             <h3>Initial Liquidity</h3>
             <p>7 Billion Tokens</p>
         </div>
+
         <div class="card">
             <h3>Burned Before Launch</h3>
             <p>120 Billion</p>
         </div>
+
         <div class="card">
             <h3>Tax</h3>
-            <p>3% Buy / 3% Sell<br>→ Burn</p>
+            <p>3% Buy / 3% Sell → Burn</p>
         </div>
+
         <div class="card">
             <h3>Liquidity Lock</h3>
             <p>10 Years</p>
         </div>
+
         <div class="card">
-            <h3>Binance Wallet</h3>
-            <p>Only 10 Billion<br>Transparent</p>
+            <h3>Binance Wallet (Project Vault)</h3>
+            <p>10 Billion Tokens<br>100% Transparent</p>
         </div>
     </div>
 
-    <a class="button" href="#">View on BscScan</a>
-</div>
-
-<div class="section">
-    <h2>📜 Contract Address</h2>
-    <div class="address">
-        0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e
-    </div>
-    <a class="button" href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">
-        View on BscScan
+    <a class="button" 
+       href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" 
+       target="_blank">
+       🔍 Verify Contract on BscScan
     </a>
 </div>
-
-
-<footer>
-    © 2026 SHIMONAY — Built for the community.
-</footer>
-
-</body>
-</html>

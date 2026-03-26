@@ -113,6 +113,73 @@ header p{
     font-weight:bold;
 }
 
+/* ✅ Estilo para badges de scanner */
+.audit-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:#0d0d0d;
+    padding:15px 25px;
+    border-radius:12px;
+    border:1px solid #222;
+    margin:10px;
+    transition:0.3s;
+}
+
+.audit-badge:hover{
+    border-color:#00ffcc;
+    box-shadow:0 0 15px rgba(0,255,200,0.3);
+}
+
+.audit-score{
+    font-size:24px;
+    font-weight:bold;
+    color:#00ffcc;
+}
+
+.audit-name{
+    color:#aaa;
+    font-size:14px;
+}
+
+.audit-link{
+    color:#00aaff;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+/* ✅ Estilo para Google Trends */
+.trends-box{
+    background:#0d0d0d;
+    padding:25px;
+    border-radius:12px;
+    border:1px solid #222;
+    text-align:center;
+    margin:20px 0;
+}
+
+.trends-box h3{
+    color:#00aaff;
+    margin-bottom:15px;
+}
+
+.trends-button{
+    display:inline-block;
+    padding:14px 35px;
+    border-radius:30px;
+    background:linear-gradient(90deg,#4285f4,#34a853);
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+    margin:10px;
+}
+
+.trends-button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 20px rgba(66,133,244,0.5);
+}
+
 footer{
     text-align:center;
     margin:70px 0 30px 0;
@@ -141,6 +208,72 @@ footer{
            target="_blank">
            🔍 Verify Contract on BscScan
         </a>
+    </div>
+</div>
+
+<!-- ✅ SEÇÃO: SCANNERS (GRATUITOS/AUTOMÁTICOS) -->
+<div class="section">
+    <h2>🔍 Contract Scanners</h2>
+    <p style="text-align:center; color:#aaa; margin-bottom:20px;">
+        Automated security scans (free tools). No paid audits. 100% transparent.
+    </p>
+    
+    <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:15px;">
+        
+        <!-- SolidityScan Badge -->
+        <a href="https://solidityscan.com/quickscan/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e/bscscan/mainnet?ref=etherscan" 
+           target="_blank" 
+           class="audit-badge"
+           style="text-decoration:none;">
+            <div>
+                <div class="audit-score">92.78/100</div>
+                <div class="audit-name">SolidityScan • Automated Scan</div>
+            </div>
+            <span class="audit-link">View Report →</span>
+        </a>
+
+        <!-- BlockSAFU Badge -->
+        <a href="https://blocksafu.com/token-scanner/56/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" 
+           target="_blank" 
+           class="audit-badge"
+           style="text-decoration:none;">
+            <div>
+                <div class="audit-score">85/100</div>
+                <div class="audit-name">BlockSAFU • Token Scanner</div>
+            </div>
+            <span class="audit-link">View Report →</span>
+        </a>
+
+    </div>
+    
+    <p style="text-align:center; color:#777; font-size:12px; margin-top:15px;">
+        * Free automated scans. Not manual audits.
+    </p>
+</div>
+
+<!-- ✅ NOVA SEÇÃO: GOOGLE TRENDS (INTERESSE ORGÂNICO) -->
+<div class="section">
+    <h2>📈 Organic Interest</h2>
+    <p style="text-align:center; color:#aaa; margin-bottom:20px;">
+        Real search interest from real people. No paid marketing.
+    </p>
+    
+    <div class="trends-box">
+        <h3> Google Trends - Shimonay</h3>
+        <p style="color:#888; margin-bottom:20px;">
+            People are searching for Shimonay organically across multiple countries.<br>
+            Cuba • Jamaica • Saudi Arabia • Dominica • North Macedonia • Laos
+        </p>
+        
+        <a href="https://trends.google.com/trends/explore?q=shimonay,Shimonay%20token,shimonay%20twitter,shimonay%20x&date=now%201-d&legacy&hl=pt" 
+           target="_blank" 
+           class="trends-button">
+           📊 View Google Trends Data
+        </a>
+        
+        <p style="color:#777; font-size:12px; margin-top:15px;">
+            * Public data from Google Trends. Updated in real-time.
+        </p>
     </div>
 </div>
 
@@ -200,6 +333,9 @@ footer{
     <div class="links">
         <a href="https://pancakeswap.finance" target="_blank">PancakeSwap</a> |
         <a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">BscScan</a> |
+        <a href="https://solidityscan.com/quickscan/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e/bscscan/mainnet?ref=etherscan" target="_blank">SolidityScan</a> |
+        <a href="https://blocksafu.com/token-scanner/56/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">BlockSAFU</a> |
+        <a href="https://trends.google.com/trends/explore?q=shimonay,Shimonay%20token,shimonay%20twitter,shimonay%20x&date=now%201-d&legacy&hl=pt" target="_blank">Google Trends</a> |
         <a href="https://x.com/ShimonayToken" target="_blank">𝕏 (Twitter)</a> |
         <a href="https://t.me/+Bzn5r9XIhyw4YWMx" target="_blank">Telegram</a>
     </div>

@@ -212,6 +212,25 @@ header p{
     box-shadow:0 0 15px #00ffcc;
 }
 
+/* ✅ Badge RENOUNCED */
+.renounced-badge {
+    display:inline-block;
+    background:linear-gradient(90deg,#ff0000,#ff6600);
+    color:white;
+    padding:4px 12px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:bold;
+    margin:8px 0;
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow:0 0 0 0 rgba(255,0,0,0.7); }
+    70% { box-shadow:0 0 0 10px rgba(255,0,0,0); }
+    100% { box-shadow:0 0 0 0 rgba(255,0,0,0); }
+}
+
 footer{
     text-align:center;
     margin:70px 0 30px 0;
@@ -341,6 +360,7 @@ footer{
             <p>60 Billion Tokens<br>
             <span style="color:#00ffcc; font-size:12px;">
                 Locked 2 Years on PinkLock<br>
+                <span class="renounced-badge">✓ OWNERSHIP RENOUNCED</span><br>
                 <a href="https://www.pinksale.finance/pinklock/bsc/record/1514414" 
                    target="_blank" style="color:#00aaff;">
                    View Lock Proof →
@@ -389,12 +409,16 @@ footer{
             </a>
         </div>
 
-        <!-- Lock Proof Card - PinkLock -->
+        <!-- Lock Proof Card - PinkLock (RENOUNCED) -->
         <div class="card">
-            <h3 style="color:#4ecdc4;">🔒 60B Locked (PinkLock)</h3>
-            <p style="color:#bbb; font-size:14px; margin-bottom:15px;">
+            <h3 style="color:#4ecdc4;">🔒 60B Locked (RENOUNCED)</h3>
+            <p style="color:#bbb; font-size:14px; margin-bottom:10px;">
                 Reserve secured for 2 years on PinkLock.<br>
                 Unlock date: March 2028
+            </p>
+            <span class="renounced-badge">✓ OWNERSHIP RENOUNCED</span>
+            <p style="color:#888; font-size:12px; margin:10px 0;">
+                Nobody can modify this lock.<br>Not even the developer.
             </p>
             <a href="https://www.pinksale.finance/pinklock/bsc/record/1514414" 
                target="_blank" 

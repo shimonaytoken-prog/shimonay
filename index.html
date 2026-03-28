@@ -4,17 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <!-- ✅ GOOGLE SITE VERIFICATION (NOVO!) -->
+    <!-- ✅ GOOGLE SITE VERIFICATION -->
   <meta name="google-site-verification" content="SMH_2Kb2dB4ZBEi7HdX0wMiPWs8S7tJzAouDEXIjIzc" />
 
-    <!-- ✅ Sitemap Reference (NOVO!) -->
+    <!-- ✅ Sitemap Reference -->
   <link rel="sitemap" type="application/xml" href="/shimonay/sitemap.xml" />
 
-
-    <!-- Meta Description (ajuda no snippet do Google) -->
+    <!-- Meta Description -->
 <meta name="description" content="SHIMONAY: A transparent meme coin on BNB Chain. 90% supply burned/locked. 3% buy + 3% sell burn tax. Built the right way." />
 
-<!-- Open Graph (para compartilhar no Twitter/X, Telegram) -->
+<!-- Open Graph -->
 <meta property="og:title" content="SHIMONAY Token" />
 <meta property="og:description" content="Built the right way. Transparent. Community-driven." />
 <meta property="og:url" content="https://shimonaytoken-prog.github.io/shimonay/" />
@@ -202,6 +201,17 @@ header p{
     box-shadow:0 0 20px rgba(66,133,244,0.5);
 }
 
+/* ✅ Botões menores para cards de proof */
+.button.small {
+    padding:10px 25px;
+    font-size:14px;
+}
+
+.button.small:hover {
+    transform:scale(1.03);
+    box-shadow:0 0 15px #00ffcc;
+}
+
 footer{
     text-align:center;
     margin:70px 0 30px 0;
@@ -233,7 +243,7 @@ footer{
     </div>
 </div>
 
-<!-- ✅ SEÇÃO: SCANNERS (GRATUITOS/AUTOMÁTICOS) -->
+<!-- ✅ SEÇÃO: SCANNERS -->
 <div class="section">
     <h2>🔍 Contract Scanners</h2>
     <p style="text-align:center; color:#aaa; margin-bottom:20px;">
@@ -273,7 +283,7 @@ footer{
     </p>
 </div>
 
-<!-- ✅ NOVA SEÇÃO: GOOGLE TRENDS (INTERESSE ORGÂNICO) -->
+<!-- ✅ GOOGLE TRENDS -->
 <div class="section">
     <h2>📈 Organic Interest</h2>
     <p style="text-align:center; color:#aaa; margin-bottom:20px;">
@@ -299,6 +309,7 @@ footer{
     </div>
 </div>
 
+<!-- ✅ TOKENOMICS -->
 <div class="section">
     <h2>⚙️ Tokenomics</h2>
     <div class="tokenomics">
@@ -314,13 +325,27 @@ footer{
         </div>
 
         <div class="card">
-            <h3>Burned Before Launch</h3>
-            <p>120 Billion</p>
+            <h3>🔥 Burned Before Launch</h3>
+            <p>120 Billion Tokens<br>
+            <span style="color:#00ffcc; font-size:12px;">
+                Permanently removed from supply<br>
+                <a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e?a=0x000000000000000000000000000000000000dead" 
+                   target="_blank" style="color:#00aaff;">
+                   View Burn Proof on BscScan →
+                </a>
+            </span></p>
         </div>
 
         <div class="card">
-            <h3>Reserve (Locked)</h3>
-            <p>60 Billion Tokens<br><span style="color:#00ffcc; font-size:12px;">🔒 Locked 2 Years on PinkLock</span></p>
+            <h3>🔒 Reserve (Locked)</h3>
+            <p>60 Billion Tokens<br>
+            <span style="color:#00ffcc; font-size:12px;">
+                Locked 2 Years on PinkLock<br>
+                <a href="https://www.pinksale.finance/pinklock/bsc/record/1514414" 
+                   target="_blank" style="color:#00aaff;">
+                   View Lock Proof →
+                </a>
+            </span></p>
         </div>
 
         <div class="card">
@@ -341,6 +366,67 @@ footer{
     </div>
 </div>
 
+<!-- ✅ NOVA SEÇÃO: ON-CHAIN PROOFS -->
+<div class="section">
+    <h2>✅ On-Chain Proofs</h2>
+    <p style="text-align:center; color:#aaa; margin-bottom:20px;">
+        Every claim is verifiable. No promises. Just proofs.
+    </p>
+    
+    <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:20px;">
+        
+        <!-- Burn Proof Card -->
+        <div class="card">
+            <h3 style="color:#ff6b6b;">🔥 120B Burned</h3>
+            <p style="color:#bbb; font-size:14px; margin-bottom:15px;">
+                Permanently removed from total supply.<br>
+                Sent to dead address: 0x000...dEaD
+            </p>
+            <a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e?a=0x000000000000000000000000000000000000dead" 
+               target="_blank" 
+               class="button small">
+               🔍 Verify Burn on BscScan
+            </a>
+        </div>
+
+        <!-- Lock Proof Card - PinkLock -->
+        <div class="card">
+            <h3 style="color:#4ecdc4;">🔒 60B Locked (PinkLock)</h3>
+            <p style="color:#bbb; font-size:14px; margin-bottom:15px;">
+                Reserve secured for 2 years on PinkLock.<br>
+                Unlock date: March 2028
+            </p>
+            <a href="https://www.pinksale.finance/pinklock/bsc/record/1514414" 
+               target="_blank" 
+               class="button small"
+               style="background:linear-gradient(90deg,#4ecdc4,#44a08d);">
+               🔐 Verify on PinkLock
+            </a>
+        </div>
+
+        <!-- Lock Proof Card - BscScan Direct -->
+        <div class="card">
+            <h3 style="color:#00aaff;">🔗 60B Locked (BscScan)</h3>
+            <p style="color:#bbb; font-size:14px; margin-bottom:15px;">
+                Tokens held by PinkLock contract.<br>
+                Contract: 0x4079...1bbe
+            </p>
+            <a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e?a=0x407993575c91ce7643a4d4ccacc9a98c36ee1bbe" 
+               target="_blank" 
+               class="button small"
+               style="background:linear-gradient(90deg,#00aaff,#0077ff);">
+               🔍 Verify on BscScan
+            </a>
+        </div>
+
+    </div>
+    
+    <p style="text-align:center; color:#777; font-size:12px; margin-top:20px;">
+        * All proofs are public, immutable, and verifiable by anyone.
+    </p>
+</div>
+
+<!-- ✅ TRANSPARENCY -->
 <div class="section">
     <h2>🔍 Transparency & Security</h2>
     <p style="text-align:center; line-height:1.8; color:#bbb;">
@@ -350,6 +436,7 @@ footer{
     </p>
 </div>
 
+<!-- ✅ LINKS -->
 <div class="section">
     <h2>🌐 Where to find SHIMONAY</h2>
     <div class="links">
@@ -363,7 +450,7 @@ footer{
     </div>
 </div>
 
-<!-- ✅ SEÇÃO: COMUNIDADE DESTACADA -->
+<!-- ✅ COMUNIDADE -->
 <div class="section">
     <h2>💬 Join the Community</h2>
     <div style="text-align:center; margin-top:20px;">
@@ -376,6 +463,7 @@ footer{
     </div>
 </div>
 
+<!-- ✅ PARTNERSHIPS -->
 <div class="section">
     <h2>🤝 Partnerships</h2>
     <p style="text-align:center; color:#777;">

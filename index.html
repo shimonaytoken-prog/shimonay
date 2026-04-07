@@ -122,6 +122,19 @@ header p{
     box-shadow:0 0 20px #00ffcc;
 }
 
+/* ✅ Botão principal de compra (destaque) */
+.button.buy-now {
+    background:linear-gradient(90deg,#00ff99,#00ccff);
+    font-size:18px;
+    padding:16px 45px;
+    box-shadow:0 0 30px rgba(0,255,153,0.4);
+}
+
+.button.buy-now:hover {
+    transform:scale(1.08);
+    box-shadow:0 0 40px rgba(0,255,153,0.7);
+}
+
 .links{
     text-align:center;
     margin-top:15px;
@@ -245,6 +258,13 @@ footer{
 <header>
     <h1>SHIMONAY</h1>
     <p>A meme coin built the right way.</p>
+    
+    <!-- ✅ BOTÃO PRINCIPAL DE COMPRA -->
+    <a class="button buy-now" 
+       href="https://pancakeswap.finance/swap?outputCurrency=0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e&chain=bsc" 
+       target="_blank">
+       🚀 Buy SHIMONAY on PancakeSwap
+    </a>
 </header>
 
 <div class="section">
@@ -487,6 +507,38 @@ footer{
     </p>
 </div>
 
+<!-- ✅ TRADING TOOLS -->
+<div class="section">
+    <h2>📊 Trading Tools</h2>
+    <p style="text-align:center; color:#aaa; margin-bottom:20px;">
+        Real-time charts and swap interface.
+    </p>
+    
+    <div style="text-align:center;">
+        
+        <!-- DexTools Button -->
+        <a href="https://www.dextools.io/app/bnb/pair-explorer/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" 
+           target="_blank" 
+           class="button" 
+           style="margin:10px; background:linear-gradient(90deg,#ff6b6b,#ffa502);">
+           📈 View Chart on DexTools
+        </a>
+        
+        <!-- PancakeSwap Swap Button -->
+        <a href="https://pancakeswap.finance/swap?outputCurrency=0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e&chain=bsc" 
+           target="_blank" 
+           class="button" 
+           style="margin:10px; background:linear-gradient(90deg,#00d4aa,#0099ff);">
+           💱 Swap on PancakeSwap
+        </a>
+        
+    </div>
+    
+    <p style="text-align:center; color:#777; font-size:12px; margin-top:15px;">
+        * Always verify contract address before trading.
+    </p>
+</div>
+
 <!-- ✅ TRANSPARENCY -->
 <div class="section">
     <h2>🔍 Transparency & Security</h2>
@@ -501,8 +553,9 @@ footer{
 <div class="section">
     <h2>🌐 Where to find SHIMONAY</h2>
     <div class="links">
-        <a href="https://pancakeswap.finance" target="_blank">PancakeSwap</a> |
-        <a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">BscScan</a> |
+        <a href="https://pancakeswap.finance/swap?outputCurrency=0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e&chain=bsc" target="_blank">🛒 Buy on PancakeSwap</a> |
+        <a href="https://www.dextools.io/app/bnb/pair-explorer/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" target="_blank">📊 DexTools</a> |
+        <a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">🔍 BscScan</a> |
         <a href="https://solidityscan.com/quickscan/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e/bscscan/mainnet?ref=etherscan" target="_blank">SolidityScan</a> |
         <a href="https://www.hashdit.io/token-scanner/bsc/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">HashDit</a> |
         <a href="https://blocksafu.com/token-scanner/56/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">BlockSAFU</a> |

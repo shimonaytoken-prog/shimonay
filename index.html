@@ -1,3 +1,6 @@
+Aqui está o **código completo atualizado** com **GeckoTerminal** e **aviso de slippage alto**:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -244,6 +247,42 @@ header p{
     100% { box-shadow:0 0 0 0 rgba(255,0,0,0); }
 }
 
+/* ✅ ALERTA DE SLIPPAGE */
+.slippage-alert {
+    background:linear-gradient(135deg, #ff6b6b, #ffa502);
+    padding:25px;
+    border-radius:12px;
+    border:2px solid #ff0000;
+    margin:30px auto;
+    max-width:800px;
+    text-align:center;
+    animation:slippagePulse 3s infinite;
+}
+
+.slippage-alert h3 {
+    color:#fff;
+    font-size:20px;
+    margin-bottom:15px;
+    text-transform:uppercase;
+}
+
+.slippage-alert p {
+    color:#fff;
+    line-height:1.6;
+    margin:10px 0;
+    font-size:14px;
+}
+
+.slippage-alert strong {
+    color:#ffff00;
+    font-size:16px;
+}
+
+@keyframes slippagePulse {
+    0%, 100% { box-shadow:0 0 20px rgba(255,107,107,0.5); }
+    50% { box-shadow:0 0 40px rgba(255,107,107,0.8); }
+}
+
 footer{
     text-align:center;
     margin:70px 0 30px 0;
@@ -266,6 +305,20 @@ footer{
        🚀 Buy SHIMONAY on PancakeSwap
     </a>
 </header>
+
+<!-- ✅ ALERTA DE SLIPPAGE ALTO -->
+<div class="slippage-alert">
+    <h3>⚠️ Important: High Slippage Warning</h3>
+    <p><strong>Initial liquidity is low (0.32 BNB)</strong></p>
+    <p>This means higher price impact on trades. We recommend:</p>
+    <p>✅ Use <strong>11-15% slippage</strong> for buy/sell<br>
+       ✅ Start with small amounts to test<br>
+       ✅ Expect price volatility in early stages</p>
+    <p style="margin-top:15px; font-size:12px;">
+        This is intentional — we chose organic growth over artificial hype.<br>
+        Liquidity is locked for 10 years + ownership renounced. 🔒
+    </p>
+</div>
 
 <div class="section">
     <h2>📜 Contract Address</h2>
@@ -524,6 +577,14 @@ footer{
            📈 View Chart on DexTools
         </a>
         
+        <!-- GeckoTerminal Button -->
+        <a href="https://www.geckoterminal.com/pt/bsc/pools/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" 
+           target="_blank" 
+           class="button" 
+           style="margin:10px; background:linear-gradient(90deg,#00d4aa,#0099ff);">
+           📊 View Chart on GeckoTerminal
+        </a>
+        
         <!-- PancakeSwap Swap Button -->
         <a href="https://pancakeswap.finance/swap?outputCurrency=0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e&chain=bsc" 
            target="_blank" 
@@ -555,6 +616,7 @@ footer{
     <div class="links">
         <a href="https://pancakeswap.finance/swap?outputCurrency=0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e&chain=bsc" target="_blank">🛒 Buy on PancakeSwap</a> |
         <a href="https://www.dextools.io/app/bnb/pair-explorer/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" target="_blank">📊 DexTools</a> |
+        <a href="https://www.geckoterminal.com/pt/bsc/pools/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" target="_blank"> GeckoTerminal</a> |
         <a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">🔍 BscScan</a> |
         <a href="https://solidityscan.com/quickscan/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e/bscscan/mainnet?ref=etherscan" target="_blank">SolidityScan</a> |
         <a href="https://www.hashdit.io/token-scanner/bsc/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">HashDit</a> |
@@ -592,3 +654,47 @@ footer{
 
 </body>
 </html>
+```
+
+### ✅ O que foi adicionado:
+
+**1. 🚨 Alerta de Slippage Alto (NOVO)**
+- Box vermelho/laranja com animação de pulso
+- Posicionado logo após o header (primeira coisa que o visitante vê)
+- Explica:
+  - Liquidez baixa (0.32 BNB)
+  - Slippage recomendado: **11-15%**
+  - Recomenda começar com valores pequenos
+  - Justifica que é intencional (crescimento orgânico)
+  - Reforça que liquidez está travada 10Y + renunciada
+
+**2. 📊 GeckoTerminal Adicionado**
+- Botão na seção "Trading Tools" entre DexTools e PancakeSwap
+- Link direto: https://www.geckoterminal.com/pt/bsc/pools/0x550ab515cb19c1447895375c1eeae9d9a037e5bd
+- Gradiente azul/verde para diferenciar
+- Também adicionado na seção de links no final
+
+### 🎨 Detalhes do Alerta:
+- **Cores**: Gradiente vermelho/laranja (chama atenção)
+- **Animação**: Pulso suave para destacar sem ser irritante
+- **Mensagem**: Clara, honesta e educativa
+- **Tom**: Transparente sem ser alarmista
+
+### 🚀 Para atualizar:
+```bash
+git add index.html
+git commit -m "Add GeckoTerminal + High Slippage Warning"
+git push
+```
+
+Agora seu site tem:
+✅ **Transparência total** (alerta de slippage antes da compra)
+✅ **Todas as ferramentas** (DexTools + GeckoTerminal + PancakeSwap)
+✅ **Educação do investidor** (recomendações claras)
+✅ **Proteção contra frustração** (ninguém entra achando que é baixo slippage)
+
+Isso é **ética na prática**. Quem entrar sabendo dos riscos, entra consciente. 💙🔒
+
+*"A verdade vos libertará."* (João 8:32)
+
+Estou aqui se precisar de mais ajustes! 🚀✨

@@ -396,9 +396,20 @@ footer{
        target="_blank">
        🚀 Buy SHIMONAY on PancakeSwap
     </a>
-    <p style="color:#777; font-size:12px; margin-top:10px;">
-        Contract: 0xCa9F...d77e
-    </p>
+    
+    <!-- ✅ ENDEREÇO CLICÁVEL (COPIA AO CLICAR) -->
+    <div style="margin-top:15px;">
+        <button onclick="copyContract()" 
+                style="background:transparent; border:1px solid #00ffcc; color:#00ffcc; padding:10px 20px; border-radius:8px; cursor:pointer; font-size:13px; font-family:'Orbitron', sans-serif; transition:all 0.3s; display:flex; align-items:center; gap:8px; margin:0 auto;"
+                onmouseover="this.style.background='#00ffcc'; this.style.color='#000';"
+                onmouseout="this.style.background='transparent'; this.style.color='#00ffcc';">
+            <span id="contractText">Contract: 0xCa9F...d77e</span>
+            <span id="copyIcon">📋</span>
+        </button>
+        <p id="copyMessage" style="color:#00ffcc; font-size:11px; margin-top:5px; opacity:0; transition:opacity 0.3s;">
+            ✓ Copied to clipboard!
+        </p>
+    </div>
 </header>
 
 <!-- ✅ EXPLICAÇÃO SIMPLES (O QUE É E POR QUE EXISTE) -->
@@ -928,6 +939,52 @@ footer{
     </p>
     © 2026 SHIMONAY — Built for the community.
 </footer>
+
+<!-- ✅ SCRIPT PARA COPIAR CONTRATO -->
+<script>
+function copyContract() {
+    const fullAddress = "0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e";
+    
+    // Copia para clipboard
+    navigator.clipboard.writeText(fullAddress).then(function() {
+        // Mostra mensagem de sucesso
+        const msg = document.getElementById('copyMessage');
+        const icon = document.getElementById('copyIcon');
+        const text = document.getElementById('contractText');
+        
+        // Salva texto original
+        const originalText = text.innerText;
+        const originalIcon = icon.innerText;
+        
+        // Muda temporariamente
+        text.innerText = "Contract copied!";
+        icon.innerText = "✓";
+        msg.style.opacity = "1";
+        
+        // Volta ao normal após 2 segundos
+        setTimeout(function() {
+            text.innerText = originalText;
+            icon.innerText = originalIcon;
+            msg.style.opacity = "0";
+        }, 2000);
+    }).catch(function(err) {
+        // Fallback para navegadores antigos
+        const textArea = document.createElement("textarea");
+        textArea.value = fullAddress;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        
+        // Mostra mensagem
+        const msg = document.getElementById('copyMessage');
+        msg.style.opacity = "1";
+        setTimeout(function() {
+            msg.style.opacity = "0";
+        }, 2000);
+    });
+}
+</script>
 
 </body>
 </html>

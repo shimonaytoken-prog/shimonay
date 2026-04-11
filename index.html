@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -375,6 +374,124 @@ header p{
     text-decoration:underline;
 }
 
+/* ✅ CORE PRINCIPLES */
+.core-principles {
+    background:linear-gradient(135deg, #0a0a0f, #1a1a2e);
+    border:2px solid #00ffcc;
+}
+
+.core-principles .principle-card {
+    background:#0d0d0d;
+    padding:20px;
+    border-radius:12px;
+    border:1px solid #222;
+    margin-bottom:15px;
+}
+
+.core-principles .principle-card h3 {
+    color:#00aaff;
+    margin-bottom:10px;
+    font-size:16px;
+}
+
+.core-principles .principle-card p {
+    color:#bbb;
+    font-size:14px;
+    line-height:1.6;
+    margin:0;
+}
+
+.core-principles .principle-card .note {
+    color:#777;
+    font-size:13px;
+}
+
+.core-principles .simple-rule {
+    font-style:italic;
+}
+
+.core-principles .key-phrase {
+    margin-top:25px;
+    padding:15px;
+    background:rgba(0,255,204,0.05);
+    border-radius:10px;
+    border-left:3px solid #00ffcc;
+}
+
+.core-principles .key-phrase p {
+    color:#00ffcc;
+    font-size:15px;
+    font-weight:bold;
+    margin:0 0 8px 0;
+}
+
+.core-principles .key-phrase .sub {
+    color:#777;
+    font-size:12px;
+    margin:0;
+}
+
+/* ✅ TRUST THE CODE ALERT */
+.trust-code-alert {
+    background:linear-gradient(135deg, #1a1a2e, #0f0f1a);
+    padding:30px;
+    border-radius:12px;
+    border:2px solid #ff6b6b;
+    margin:30px auto;
+    max-width:800px;
+    text-align:center;
+    animation:borderPulse 4s infinite;
+}
+
+.trust-code-alert h3 {
+    color:#ff6b6b;
+    font-size:20px;
+    margin-bottom:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+}
+
+.trust-code-alert .main-message {
+    color:#fff;
+    font-size:18px;
+    font-weight:bold;
+    margin:15px 0;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.trust-code-alert p {
+    color:#ccc;
+    line-height:1.6;
+    margin:10px 0;
+    font-size:14px;
+}
+
+.trust-code-alert .tips {
+    text-align:left;
+    margin:20px 0;
+    padding:15px;
+    background:#0d0d0d;
+    border-radius:8px;
+}
+
+.trust-code-alert .tips li {
+    color:#bbb;
+    margin:8px 0;
+    font-size:13px;
+}
+
+.trust-code-alert .tips strong {
+    color:#00ffcc;
+}
+
+@keyframes borderPulse {
+    0%, 100% { box-shadow:0 0 20px rgba(255,107,107,0.3); }
+    50% { box-shadow:0 0 35px rgba(255,107,107,0.6); }
+}
+
 footer{
     text-align:center;
     margin:70px 0 30px 0;
@@ -458,6 +575,74 @@ footer{
     
     <p style="text-align:center; color:#777; font-size:13px; margin-top:25px;">
         🔍 Everything is verifiable on-chain. No trust needed.
+    </p>
+</div>
+
+<!-- ✅ CORE PRINCIPLES - BLOCO DE CONFIANÇA -->
+<div class="section core-principles">
+    <h2 style="color:#00ffcc; margin-bottom:25px; text-align:center;">🛡️ Core Principles</h2>
+    
+    <div style="max-width:700px; margin:0 auto; text-align:center;">
+        
+        <!-- Principle 1: Owner Role -->
+        <div class="principle-card">
+            <h3>🔐 Owner Role</h3>
+            <p>
+                Owner exists <strong>only to turn OFF tax</strong> (3% → 0%).<br>
+                Cannot increase tax. Cannot mint. Cannot blacklist.<br>
+                <span class="note">All critical functions are locked & renounced.</span>
+            </p>
+        </div>
+
+        <!-- Principle 2: Public Limits -->
+        <div class="principle-card">
+            <h3>📏 Public Limits</h3>
+            <p>
+                ✅ Max tax: <strong>3%</strong> (never increases)<br>
+                ✅ No whitelist. No private sale.<br>
+                ✅ No hidden functions. Ever.<br>
+                <span class="note">These are public commitments, not promises.</span>
+            </p>
+        </div>
+
+        <!-- Principle 3: Simple Rule -->
+        <div class="principle-card">
+            <h3>🧭 Simple Rule</h3>
+            <p class="simple-rule">
+                "If you don't trust it, don't buy.<br>
+                Everything is on-chain. Verify yourself."
+            </p>
+        </div>
+
+        <!-- Key Phrase: The Anchor -->
+        <div class="key-phrase">
+            <p>✨ This project does not depend on the developer.</p>
+            <p class="sub">Code runs automatically. Locks are immutable. Burns are permanent.</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- ✅ TRUST THE CODE - ALERTA EDUCATIVO -->
+<div class="trust-code-alert">
+    <h3>🔐 Important for Newcomers</h3>
+    <p class="main-message">Don't trust the dev. Trust the code.</p>
+    <p>
+        In crypto, <strong>never buy based on words</strong>.<br>
+        Always verify on-chain before investing.
+    </p>
+    
+    <ul class="tips" style="list-style:none; padding:0; margin:0;">
+        <li>✅ <strong>Check the contract</strong> on BscScan</li>
+        <li>✅ <strong>Verify liquidity lock</strong> on PinkLock</li>
+        <li>✅ <strong>Confirm burns</strong> on dead address</li>
+        <li>✅ <strong>Test with small amounts</strong> first</li>
+        <li>✅ <strong>Use a separate wallet</strong> for new tokens</li>
+    </ul>
+    
+    <p style="margin-top:15px; font-size:13px; color:#888;">
+        This isn't fear-mongering. This is survival.<br>
+        If a project can't be verified on-chain, walk away.
     </p>
 </div>
 
@@ -936,6 +1121,9 @@ footer{
     <p style="margin-top:15px; color:#777; font-size:12px;">
         Built with integrity by a solo developer • 2026<br>
         No paid audits • No promoters • Just transparency
+    </p>
+    <p style="color:#555; font-size:11px; margin-top:10px;">
+        Remember: Don't trust words. Trust code. Verify on-chain.
     </p>
     © 2026 SHIMONAY — Built for the community.
 </footer>

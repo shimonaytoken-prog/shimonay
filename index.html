@@ -280,6 +280,54 @@ header p{
     50% { box-shadow:0 0 40px rgba(255,107,107,0.8); }
 }
 
+/* ✅ AVISO DE CONTA X SUSPENSA */
+.x-suspended-alert {
+    background:linear-gradient(135deg, #1a1a2e, #16213e);
+    padding:25px;
+    border-radius:12px;
+    border:2px solid #00d4aa;
+    margin:30px auto;
+    max-width:800px;
+    text-align:center;
+    animation:borderPulse 4s infinite;
+}
+
+.x-suspended-alert h3 {
+    color:#fff;
+    font-size:18px;
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+}
+
+.x-suspended-alert p {
+    color:#ccc;
+    line-height:1.6;
+    margin:8px 0;
+    font-size:14px;
+}
+
+.x-suspended-alert strong {
+    color:#00ffcc;
+}
+
+.x-suspended-alert a {
+    color:#00d4aa;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.x-suspended-alert a:hover {
+    text-decoration:underline;
+}
+
+@keyframes borderPulse {
+    0%, 100% { box-shadow:0 0 20px rgba(0,212,170,0.3); }
+    50% { box-shadow:0 0 35px rgba(0,212,170,0.6); }
+}
+
 footer{
     text-align:center;
     margin:70px 0 30px 0;
@@ -314,6 +362,22 @@ footer{
     <p style="margin-top:15px; font-size:12px;">
         This is intentional — we chose organic growth over artificial hype.<br>
         Liquidity is locked for 10 years + ownership renounced. 🔒
+    </p>
+</div>
+
+<!-- ✅ AVISO: CONTA X (TWITTER) SUSPENSA -->
+<div class="x-suspended-alert">
+    <h3>📢 Account Status Update</h3>
+    <p><strong>Our X (Twitter) account @ShimonayToken is currently under review.</strong></p>
+    <p>We've submitted an appeal and are awaiting manual review by the platform.</p>
+    <p style="margin-top:12px;">
+        In the meantime, follow us on:<br>
+        <a href="https://t.me/+Bzn5r9XIhyw4YWMx" target="_blank">✈️ Telegram</a> • 
+        <a href="https://bitcointalk.org/index.php?topic=5579855.0" target="_blank">💬 Bitcointalk</a> • 
+        <a href="https://www.geckoterminal.com/pt/bsc/pools/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" target="_blank">🦎 GeckoTerminal</a>
+    </p>
+    <p style="margin-top:10px; font-size:12px; color:#888;">
+        The project continues: contract audited, liquidity locked, burns active. 🔒
     </p>
 </div>
 
@@ -671,8 +735,8 @@ footer{
 <div class="section">
     <h2>💬 Join the Community</h2>
     <div style="text-align:center; margin-top:20px;">
-        <a class="button" href="https://x.com/ShimonayToken" target="_blank" style="margin:10px; background:linear-gradient(90deg,#fff,#aaa);">
-            𝕏 Follow on X
+        <a class="button" href="https://x.com/ShimonayToken" target="_blank" style="margin:10px; background:linear-gradient(90deg,#fff,#aaa); opacity:0.7;">
+            𝕏 Follow on X (Under Review)
         </a>
         <a class="button" href="https://t.me/+Bzn5r9XIhyw4YWMx" target="_blank" style="margin:10px; background:linear-gradient(90deg,#0088cc,#00aaff); color:white;">
             ✈️ Join Telegram

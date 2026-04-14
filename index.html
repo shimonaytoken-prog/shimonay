@@ -60,6 +60,47 @@ header p{
     font-size:18px;
 }
 
+/* ✅ MANIFESTO SECTION - NOVA SEÇÃO DA FRASE */
+.manifesto-section {
+    max-width:900px;
+    margin:40px auto;
+    padding:30px 25px;
+    background:linear-gradient(135deg, #0a0a0f, #1a1a2e);
+    border:2px solid #00ffcc;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 0 40px rgba(0,255,200,0.12);
+    position:relative;
+    overflow:hidden;
+}
+
+.manifesto-section::before {
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0;
+    height:3px;
+    background:linear-gradient(90deg, #00ffcc, #00aaff, #00ffcc);
+    animation:glowLine 3s ease-in-out infinite;
+}
+
+@keyframes glowLine {
+    0%, 100% { opacity:0.6; }
+    50% { opacity:1; box-shadow:0 0 20px rgba(0,255,200,0.5); }
+}
+
+.manifesto-text {
+    font-size:18px;
+    line-height:1.8;
+    color:#e0e0e0;
+    margin:0;
+    font-weight:400;
+}
+
+.manifesto-text strong {
+    color:#00ffcc;
+    font-weight:600;
+}
+
 .section{
     max-width:1100px;
     margin:60px auto;
@@ -556,6 +597,15 @@ footer{
         </p>
     </div>
 </header>
+
+<!-- ✅ MANIFESTO SECTION - NOVA SEÇÃO COM A FRASE EM INGLÊS -->
+<div class="manifesto-section">
+    <p class="manifesto-text">
+        <strong>Shimonay doesn't ask for blind trust.</strong><br>
+        It's an open experiment: watch, question, and see over time<br>
+        if transparency is enough to survive.
+    </p>
+</div>
 
 <!-- ✅ EXPLICAÇÃO SIMPLES (O QUE É E POR QUE EXISTE) -->
 <div class="section" style="background:linear-gradient(135deg, #0d0d0d, #1a1a2e); border:2px solid #00ffcc;">

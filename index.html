@@ -327,54 +327,6 @@ header p{
     50% { box-shadow:0 0 40px rgba(255,107,107,0.8); }
 }
 
-/* ✅ AVISO DE CONTA X SUSPENSA - ATUALIZADO */
-.x-suspended-alert {
-    background:linear-gradient(135deg, #1a1a2e, #16213e);
-    padding:25px;
-    border-radius:12px;
-    border:2px solid #ff6b6b;
-    margin:30px auto;
-    max-width:800px;
-    text-align:center;
-    animation:borderPulse 4s infinite;
-}
-
-.x-suspended-alert h3 {
-    color:#ff6b6b;
-    font-size:18px;
-    margin-bottom:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-}
-
-.x-suspended-alert p {
-    color:#ccc;
-    line-height:1.6;
-    margin:8px 0;
-    font-size:14px;
-}
-
-.x-suspended-alert strong {
-    color:#00ffcc;
-}
-
-.x-suspended-alert a {
-    color:#00d4aa;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-.x-suspended-alert a:hover {
-    text-decoration:underline;
-}
-
-@keyframes borderPulse {
-    0%, 100% { box-shadow:0 0 20px rgba(255,107,107,0.3); }
-    50% { box-shadow:0 0 35px rgba(255,107,107,0.6); }
-}
-
 /* ✅ SEÇÃO DO DEVMODE */
 .dev-story {
     background:linear-gradient(135deg, #0d0d0d, #1a1a2e);
@@ -808,29 +760,6 @@ footer{
     </p>
 </div>
 
-<!-- ✅ AVISO: CONTA X (TWITTER) SUSPENSA - ATUALIZADO -->
-<div class="x-suspended-alert">
-    <h3>📢 Account Status: Permanently Suspended</h3>
-    <p><strong>Our X (Twitter) account @ShimonayToken was permanently suspended by automated review.</strong></p>
-    <p>We submitted an appeal explaining the situation, but the request was denied without human review.</p>
-    <p style="margin-top:12px;">
-        <strong>This does not affect the project:</strong><br>
-        ✅ Contract remains audited & secure<br>
-        ✅ Liquidity remains locked 10 years<br>
-        ✅ Burns continue automatically<br>
-        ✅ Website & community remain active<br><br>
-        Follow us on:<br>
-        <a href="https://x.com/ShimonayToken" target="_blank" style="opacity:0.6; text-decoration:none;">𝕏 (Suspended)</a> • 
-        <a href="https://bsky.app/profile/shimonaytoken.bsky.social" target="_blank">🦋 Bluesky</a> • 
-        <a href="https://t.me/+Bzn5r9XIhyw4YWMx" target="_blank">✈️ Telegram</a> • 
-        <a href="https://bitcointalk.org/index.php?topic=5579855.0" target="_blank">💬 Bitcointalk</a> • 
-        <a href="https://www.geckoterminal.com/pt/bsc/pools/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" target="_blank">🦎 GeckoTerminal</a>
-    </p>
-    <p style="margin-top:10px; font-size:12px; color:#888;">
-        The project continues on-chain. Transparency never stops. 🔒
-    </p>
-</div>
-
 <!-- ✅ WHY SHIMONAY - DEV STORY -->
 <div class="section">
     <h2>👨‍ Why SHIMONAY Exists</h2>
@@ -1125,7 +1054,7 @@ footer{
     </p>
 </div>
 
-<!-- ✅ TRADING TOOLS -->
+<!-- ✅ TRADING TOOLS - DEXTOOLS PRIMEIRO -->
 <div class="section">
     <h2>📊 Trading Tools</h2>
     <p style="text-align:center; color:#aaa; margin-bottom:20px;">
@@ -1160,10 +1089,52 @@ footer{
         
     </div>
 
-    <!-- ✅ GeckoTerminal Verified Badge -->
+    <!-- ✅ DEXTOOLS VERIFIED BADGE - AGORA EM PRIMEIRO LUGAR -->
     <div style="text-align:center; margin-top:35px; padding-top:30px; border-top:2px solid #222;">
         <p style="color:#888; font-size:12px; margin-bottom:15px; text-transform:uppercase; letter-spacing:1.5px; font-weight:bold;">
-            🦎 Officially Verified On
+            📈 Officially Verified On
+        </p>
+        
+        <a href="https://www.dextools.io/app/bnb/pair-explorer/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" 
+           target="_blank"
+           style="display:inline-flex; align-items:center; justify-content:center; 
+                  background:linear-gradient(135deg, #0d0d0d, #1a1a2e); 
+                  padding:16px 35px; border-radius:50px; 
+                  border:2px solid #ff6b6b; text-decoration:none; 
+                  transition:all 0.3s ease; 
+                  box-shadow:0 4px 25px rgba(255,107,107,0.2);
+                  max-width:400px; margin:0 auto;"
+           onmouseover="this.style.borderColor='#ffa502'; 
+                        this.style.boxShadow='0 8px 35px rgba(255,165,2,0.5)'; 
+                        this.style.transform='translateY(-3px) scale(1.02)'"
+           onmouseout="this.style.borderColor='#ff6b6b'; 
+                       this.style.boxShadow='0 4px 25px rgba(255,107,107,0.2)'; 
+                       this.style.transform='translateY(0) scale(1)'">
+            
+            <img src="https://www.dextools.io/favicon.ico" 
+                 alt="DexTools" 
+                 style="height:35px; width:auto; margin-right:15px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
+            
+            <div style="text-align:left;">
+                <div style="color:#fff; font-weight:700; font-size:16px; letter-spacing:0.5px; margin-bottom:3px;">
+                    DexTools
+                </div>
+                <div style="color:#ff6b6b; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.8px;">
+                    ✓ Professional Update Active
+                </div>
+            </div>
+        </a>
+        
+        <p style="color:#666; font-size:11px; margin-top:18px; line-height:1.6;">
+            Real-time data • Liquidity locked 10Y • Contract publicly verifiable<br>
+            <span style="color:#ff6b6b; font-weight:bold;">Professional Verified Status</span>
+        </p>
+    </div>
+
+    <!-- ✅ GeckoTerminal Verified Badge -->
+    <div style="text-align:center; margin-top:35px; padding-top:30px; border-top:1px solid #333;">
+        <p style="color:#888; font-size:12px; margin-bottom:15px; text-transform:uppercase; letter-spacing:1.5px; font-weight:bold;">
+            🦎 Also Verified On
         </p>
         
         <a href="https://www.geckoterminal.com/pt/bsc/pools/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" 
@@ -1258,7 +1229,7 @@ footer{
         <a href="https://www.hashdit.io/token-scanner/bsc/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">HashDit</a> |
         <a href="https://blocksafu.com/token-scanner/56/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">BlockSAFU</a> |
         <a href="https://trends.google.com/trends/explore?q=shimonay,Shimonay%20token,shimonay%20twitter,shimonay%20x&date=now%201-d&legacy&hl=pt" target="_blank">Google Trends</a> |
-        <a href="https://x.com/ShimonayToken" target="_blank" style="opacity:0.6;">𝕏 (Suspended)</a> |
+        <a href="https://x.com/ShimonayToken" target="_blank">𝕏 X (Twitter)</a> |
         <a href="https://bsky.app/profile/shimonaytoken.bsky.social" target="_blank">🦋 Bluesky</a> |
         <a href="https://t.me/+Bzn5r9XIhyw4YWMx" target="_blank">Telegram</a>
     </div>
@@ -1269,8 +1240,8 @@ footer{
     <h2>💬 Join the Community</h2>
     <div style="text-align:center; margin-top:20px;">
         <a class="button" href="https://x.com/ShimonayToken" target="_blank" 
-           style="margin:10px; background:linear-gradient(90deg,#000,#333); color:#fff; opacity:0.8;">
-            𝕏 X (Suspended)
+           style="margin:10px; background:linear-gradient(90deg,#000,#333); color:#fff;">
+            𝕏 Follow on X
         </a>
         <a class="button" href="https://bsky.app/profile/shimonaytoken.bsky.social" target="_blank" 
            style="margin:10px; background:linear-gradient(90deg,#1185fe,#0066ff); color:white;">
@@ -1314,6 +1285,11 @@ footer{
 
 <footer>
     <div style="margin-bottom:20px; text-align:center;">
+        <a href="https://www.dextools.io/app/bnb/pair-explorer/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" 
+           target="_blank"
+           style="color:#ff6b6b; text-decoration:none; font-size:12px; font-weight:bold; margin:0 15px;">
+           📈 Verified on DexTools
+        </a>
         <a href="https://www.geckoterminal.com/pt/bsc/pools/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" 
            target="_blank"
            style="color:#00d4aa; text-decoration:none; font-size:12px; font-weight:bold; margin:0 15px;">
@@ -1331,7 +1307,7 @@ footer{
         </a>
         <a href="https://x.com/ShimonayToken" 
            target="_blank"
-           style="color:#888; text-decoration:none; font-size:12px; font-weight:bold; margin:0 15px; opacity:0.7;">
+           style="color:#fff; text-decoration:none; font-size:12px; font-weight:bold; margin:0 15px;">
            𝕏 X
         </a>
     </div>

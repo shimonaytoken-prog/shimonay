@@ -633,6 +633,91 @@ header p{
     font-size:14px;
 }
 
+/* ✅ BINANCE SQUARE SECTION */
+.binance-square-section {
+    max-width:1000px;
+    margin:80px auto;
+    padding:50px 40px;
+    background:linear-gradient(135deg, rgba(26,20,0,0.9), rgba(42,31,0,0.9));
+    border:2px solid #ffd700;
+    border-radius:25px;
+    box-shadow:0 0 60px rgba(255,215,0,0.2);
+}
+
+.binance-square-section h2 {
+    text-align:center;
+    margin-bottom:35px;
+    font-size:32px;
+    letter-spacing:2px;
+}
+
+.binance-square-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap:30px;
+    margin-bottom:40px;
+}
+
+.binance-card {
+    background:linear-gradient(135deg, rgba(10,10,0,0.9), rgba(26,20,0,0.9));
+    border:1px solid #ffd700;
+    border-radius:18px;
+    padding:30px;
+    transition:all 0.3s;
+    text-decoration:none;
+    display:block;
+}
+
+.binance-card:hover {
+    transform:translateY(-8px);
+    box-shadow:0 15px 40px rgba(255,215,0,0.4);
+    border-color:#ffed4e;
+}
+
+.binance-card h3 {
+    color:#ffd700;
+    font-size:18px;
+    margin-bottom:12px;
+}
+
+.binance-card p {
+    color:#aaa;
+    font-size:14px;
+    line-height:1.8;
+    margin-bottom:15px;
+}
+
+.binance-card .binance-tag {
+    display:inline-block;
+    padding:6px 15px;
+    background:rgba(255,215,0,0.2);
+    color:#ffd700;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.binance-profile-btn {
+    display:block;
+    text-align:center;
+    padding:20px 50px;
+    background:linear-gradient(135deg, #ffd700, #ffaa00);
+    color:#000;
+    text-decoration:none;
+    border-radius:30px;
+    font-weight:900;
+    font-size:16px;
+    margin:30px auto 0;
+    max-width:400px;
+    transition:all 0.3s;
+    box-shadow:0 10px 40px rgba(255,215,0,0.3);
+}
+
+.binance-profile-btn:hover {
+    transform:translateY(-5px) scale(1.05);
+    box-shadow:0 15px 60px rgba(255,215,0,0.6);
+}
+
 /* ✅ LINKS */
 .links{
     text-align:center;
@@ -697,6 +782,9 @@ footer a:hover {
     .button {
         padding: 18px 40px;
         font-size: 16px;
+    }
+    .binance-square-grid {
+        grid-template-columns: 1fr;
     }
 }
 </style>
@@ -769,6 +857,35 @@ footer a:hover {
     </p>
 </div>
 
+<!-- ✅ BINANCE SQUARE SECTION -->
+<div class="binance-square-section">
+    <h2>📱 Follow Us on Binance Square</h2>
+    
+    <div class="binance-square-grid">
+        <a href="https://www.binance.com/pt-BR/square/post/336736669350385" 
+           target="_blank" 
+           class="binance-card">
+            <h3>🎯 Dev Solo CLT - Transparência Total</h3>
+            <p>Sou um dev solo, CLT brasileiro, tocando esse projeto no tempo livre e com recursos limitados. Minha filosofia: máxima transparência e integridade. 60% queimados, liquidez travada 10 anos, ownership renunciado. Nota 91.82/100 no SolidityScan.</p>
+            <span class="binance-tag">Read Article →</span>
+        </a>
+
+        <a href="https://www.binance.com/pt-BR/square/post/332642524147186" 
+           target="_blank" 
+           class="binance-card">
+            <h3>📢 Latest Updates & Announcements</h3>
+            <p>Acompanhe as últimas atualizações, anúncios e novidades do projeto Shimonay. Construído da forma certa, com transparência e segurança para a comunidade.</p>
+            <span class="binance-tag">View Post →</span>
+        </a>
+    </div>
+
+    <a href="https://www.binance.com/pt-BR/square/profile/ShimonayToken" 
+       target="_blank" 
+       class="binance-profile-btn">
+       💛 Visit Our Binance Square Profile
+    </a>
+</div>
+
 <!-- ✅ CARROSSEL SOCIAL -->
 <div class="social-carousel-section">
     <h2 class="section-title">📊 Community & Social Platforms</h2>
@@ -823,6 +940,31 @@ footer a:hover {
                     </div>
                 </div>
                 <a href="https://x.com/ShimonayToken" target="_blank" class="carousel-link">Follow Us →</a>
+            </div>
+
+            <div class="carousel-item">
+                <div class="carousel-header">
+                    <span class="carousel-icon">💛</span>
+                    <div class="carousel-title">
+                        <h3>Binance Square</h3>
+                        <span>Official Profile</span>
+                    </div>
+                </div>
+                <div class="carousel-stats">
+                    <div class="stat-row">
+                        <span class="stat-label">Platform</span>
+                        <span class="stat-value">Binance</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Content</span>
+                        <span class="stat-value">Updates</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Status</span>
+                        <span class="stat-value">Active</span>
+                    </div>
+                </div>
+                <a href="https://www.binance.com/pt-BR/square/profile/ShimonayToken" target="_blank" class="carousel-link">Follow →</a>
             </div>
 
             <div class="carousel-item">
@@ -949,6 +1091,31 @@ footer a:hover {
                     </div>
                 </div>
                 <a href="https://x.com/ShimonayToken" target="_blank" class="carousel-link">Follow Us →</a>
+            </div>
+
+            <div class="carousel-item">
+                <div class="carousel-header">
+                    <span class="carousel-icon">💛</span>
+                    <div class="carousel-title">
+                        <h3>Binance Square</h3>
+                        <span>Official Profile</span>
+                    </div>
+                </div>
+                <div class="carousel-stats">
+                    <div class="stat-row">
+                        <span class="stat-label">Platform</span>
+                        <span class="stat-value">Binance</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Content</span>
+                        <span class="stat-value">Updates</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Status</span>
+                        <span class="stat-value">Active</span>
+                    </div>
+                </div>
+                <a href="https://www.binance.com/pt-BR/square/profile/ShimonayToken" target="_blank" class="carousel-link">Follow →</a>
             </div>
 
             <div class="carousel-item">
@@ -1234,6 +1401,7 @@ footer a:hover {
         <a href="https://www.dextools.io/app/bnb/pair-explorer/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" target="_blank">📊 DexTools</a> |
         <a href="https://www.geckoterminal.com/pt/bsc/pools/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" target="_blank">🦎 GeckoTerminal</a> |
         <a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">🔍 BscScan</a> |
+        <a href="https://www.binance.com/pt-BR/square/profile/ShimonayToken" target="_blank">💛 Binance Square</a> |
         <a href="https://bitcointalk.org/index.php?topic=5579855.0" target="_blank">💬 Bitcointalk</a> |
         <a href="https://solidityscan.com/quickscan/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e/bscscan/mainnet" target="_blank">SolidityScan</a> |
         <a href="https://www.hashdit.io/token-scanner/bsc/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">HashDit</a> |
@@ -1266,6 +1434,7 @@ footer a:hover {
         <a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">BscScan</a>
         <a href="https://solidityscan.com/quickscan/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e/bscscan/mainnet" target="_blank">SolidityScan</a>
         <a href="https://www.pinksale.finance/pinklock/bsc/record/1524785" target="_blank">PinkLock</a>
+        <a href="https://www.binance.com/pt-BR/square/profile/ShimonayToken" target="_blank">Binance Square</a>
         <a href="https://bitcointalk.org/index.php?topic=5579855.0" target="_blank">Bitcointalk</a>
     </div>
     <p>© 2026 SHIMONAY — Built with transparency by a solo developer</p>

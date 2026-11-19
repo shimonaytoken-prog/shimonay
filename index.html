@@ -104,7 +104,7 @@ header p{ color:#d4af37; font-size:22px; letter-spacing: 3px; margin-bottom: 50p
 .stat-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,215,0,0.2), transparent); transition: left 0.6s; }
 .stat-card:hover::before { left: 100%; }
 .stat-card:hover { transform:translateY(-10px); box-shadow: 0 20px 60px rgba(255,215,0,0.4); border-color: #ffed4e; }
-.stat-value { font-size:48px; font-weight:900; background: linear-gradient(135deg, #ffd700, #ffaa00); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:12px; }
+.stat-value { font-size:48px; font-weight:900; color:#ffd700; margin-bottom:12px; }
 .stat-label { color:#d4af37; font-size:14px; letter-spacing: 2px; text-transform: uppercase; }
 
 /* ✅ MANIFESTO */
@@ -119,29 +119,89 @@ header p{ color:#d4af37; font-size:22px; letter-spacing: 3px; margin-bottom: 50p
 .section h2{ margin-bottom:40px; background: linear-gradient(135deg, #ffd700, #ffaa00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align:center; font-size: 36px; letter-spacing: 3px; }
 .section-title { text-align:center; font-size:32px; background:linear-gradient(135deg, #ffd700, #ffaa00); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:35px; letter-spacing:2px; }
 
-/* ✅ ABOUT (SEO-RICH) */
+/* ✅ NOVA SEÇÃO ABOUT (SEO-RICH) */
 .about-section {
-    max-width: 1150px; margin: 80px auto; padding: 70px 60px;
+    max-width: 1150px;
+    margin: 80px auto;
+    padding: 70px 60px;
     background: linear-gradient(135deg, rgba(10,10,0,0.95), rgba(26,20,0,0.95));
-    border: 2px solid #ffd700; border-radius: 25px; box-shadow: 0 0 80px rgba(255,215,0,0.2);
-    position: relative; overflow: hidden;
+    border: 2px solid #ffd700;
+    border-radius: 25px;
+    box-shadow: 0 0 80px rgba(255,215,0,0.2);
+    position: relative;
+    overflow: hidden;
 }
-.about-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, transparent, #ffd700, transparent); }
-.about-section h2 { margin-bottom: 30px; background: linear-gradient(135deg, #ffd700, #ffaa00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; font-size: 36px; letter-spacing: 3px; }
-.about-subtitle { text-align: center; color: #d4af37; font-size: 18px; font-style: italic; margin-bottom: 40px; letter-spacing: 1px; }
-.about-content { color: #d0d0d0; font-size: 16px; line-height: 1.9; max-width: 900px; margin: 0 auto; }
-.about-content p { margin-bottom: 25px; text-align: justify; }
-.about-content strong { color: #ffd700; font-weight: 700; }
-.about-content .highlight-box { background: rgba(255,215,0,0.08); border-left: 4px solid #ffd700; padding: 20px 25px; margin: 30px 0; border-radius: 8px; font-style: italic; color: #fff; }
-.about-cta { text-align: center; margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255,215,0,0.3); }
-.about-cta p { color: #ffd700; font-size: 20px; font-weight: 700; letter-spacing: 2px; margin-bottom: 10px; }
-.about-cta small { color: #b3b3b3; font-size: 13px; }
+.about-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #ffd700, transparent);
+}
+.about-section h2 {
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    font-size: 36px;
+    letter-spacing: 3px;
+}
+.about-subtitle {
+    text-align: center;
+    color: #d4af37;
+    font-size: 18px;
+    font-style: italic;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+.about-content {
+    color: #d0d0d0;
+    font-size: 16px;
+    line-height: 1.9;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.about-content p {
+    margin-bottom: 25px;
+    text-align: justify;
+}
+.about-content strong {
+    color: #ffd700;
+    font-weight: 700;
+}
+.about-content .highlight-box {
+    background: rgba(255,215,0,0.08);
+    border-left: 4px solid #ffd700;
+    padding: 20px 25px;
+    margin: 30px 0;
+    border-radius: 8px;
+    font-style: italic;
+    color: #fff;
+}
+.about-cta {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,215,0,0.3);
+}
+.about-cta p {
+    color: #ffd700;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+.about-cta small {
+    color: #b0b0b0;
+    font-size: 13px;
+}
 
 /* ✅ TOKENOMICS */
 .tokenomics{ display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:25px; }
 .card{ background:linear-gradient(135deg, rgba(10,10,0,0.9), rgba(26,20,0,0.9)); padding:35px; border-radius:18px; border:1px solid #ffd700; text-align:center; transition: all 0.3s ease; position: relative; overflow: hidden; }
 .card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(255,215,0,0.3); border-color: #ffed4e; }
-.card h3{ background: linear-gradient(135deg, #ffd700, #ffaa00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom:18px; font-size: 20px; }
+.card h3{ color:#ffd700; margin-bottom:18px; font-size: 20px; }
 .card p { color: #ccc; font-size: 15px; line-height: 2; }
 .card .highlight { color:#ffd700; font-weight:700; font-size: 18px; display: block; margin: 10px 0; }
 
@@ -154,8 +214,8 @@ header p{ color:#d4af37; font-size:22px; letter-spacing: 3px; margin-bottom: 50p
 .verification-table .category-row td { background: rgba(255,215,0,0.12); color: #ffd700; font-weight: 900; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; padding: 12px 15px; border-top: 1px solid rgba(255,215,0,0.4); border-bottom: 1px solid rgba(255,215,0,0.4); }
 .verification-table .status-ok { color: #00ff88; font-weight: 700; }
 .verification-table .status-info { color: #ffd700; font-weight: 700; }
-.verification-table a { color: #ffd700; text-decoration: none; font-weight: 700; transition: 0.3s; display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 6px; }
-.verification-table a:hover { color: #fff; background: rgba(255,215,0,0.1); text-shadow: 0 0 10px rgba(255,215,0,0.8); }
+.verification-table a { color: #ffd700; text-decoration: none; font-weight: 700; transition: 0.3s; display: inline-flex; align-items: center; gap: 5px; }
+.verification-table a:hover { color: #fff; text-shadow: 0 0 10px rgba(255,215,0,0.8); }
 
 /* ✅ HALL OF FAME */
 .hall-da-fama-section { text-align: center; padding: 70px 20px; background: linear-gradient(180deg, #05070a 0%, #0d1117 100%); border-bottom: 3px solid #ffd700; border-top: 3px solid #ffd700; box-shadow: 0 0 80px rgba(255,215,0,0.2); position: relative; overflow: hidden; }
@@ -210,18 +270,14 @@ header p{ color:#d4af37; font-size:22px; letter-spacing: 3px; margin-bottom: 50p
 
 /* ✅ FOOTER */
 footer { text-align:center; padding:50px 20px; color:#b3b3b3; font-size:13px; border-top:1px solid #333; margin-top:100px; }
-footer a { 
-    color:#ffd700; text-decoration:none; font-weight:700; transition: all 0.3s; font-size: 13px;
-    display: inline-block; padding: 8px 12px; margin: 4px 6px; min-height: 44px; line-height: 1.2;
-}
+footer a { color:#ffd700; text-decoration:none; margin:4px 6px; font-weight:700; transition: all 0.3s; font-size: 13px; display:inline-block; padding:10px 14px; min-height:44px; }
 footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
 
-/* ✅ ACESSIBILIDADE: FOCUS VISIBLE (Navegação por teclado) */
-.button:focus-visible, .trade-btn:focus-visible, .copy-btn:focus-visible, 
-.carousel-link:focus-visible, .scanner-badge:focus-visible, 
-.blockspot-badge:focus-visible, .binance-profile-btn:focus-visible, footer a:focus-visible {
+/* ✅ ACESSIBILIDADE: FOCO VISÍVEL */
+a:focus-visible, button:focus-visible {
     outline: 3px solid #ffed4e;
-    outline-offset: 3px;
+    outline-offset: 2px;
+    border-radius: 4px;
 }
 
 /* ✅ RESPONSIVE */
@@ -242,6 +298,14 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
     .verification-table { font-size: 12px; }
     .verification-table th, .verification-table td { padding: 12px 10px; }
     .about-content { font-size: 15px; line-height: 1.7; }
+    
+    /* Tap targets ≥48px no mobile */
+    .verification-table a {
+        display: inline-block;
+        min-height: 48px;
+        padding: 14px 16px;
+        line-height: 1.4;
+    }
 }
 </style>
 </head>
@@ -413,7 +477,7 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
 <!-- ✅ PAINEL DE VERIFICAÇÃO MASTER -->
 <div class="section">
     <h2>🔍 Command Center: On-Chain Verification</h2>
-    <p style="text-align:center; color:#aaa; margin-bottom:30px; font-size:16px;">
+    <p style="text-align:center; color:#b0b0b0; margin-bottom:30px; font-size:16px;">
         Every claim is verifiable. No promises, just proofs.
     </p>
     
@@ -608,7 +672,7 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
 <!-- ✅ MARKET WIDGET -->
 <div class="market-widget-container">
     <h2 style="margin-bottom: 20px; background: linear-gradient(135deg, #ffd700, #ffaa00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 28px; letter-spacing: 2px;">📊 Live Market Data</h2>
-    <p style="color:#aaa; margin-bottom:30px; font-size:15px;">Real-time price and market information.</p>
+    <p style="color:#b0b0b0; margin-bottom:30px; font-size:15px;">Real-time price and market information.</p>
     <div class="cc-widget" data-slug="shimonay-shimo-ca9f10" data-theme="dark" data-market="true" style="margin: 0 auto; max-width: 100%;">
         <a href="https://www.coincatapult.com/coin/shimonay-shimo-ca9f10">Shimonay on CoinCatapult</a>
     </div>
@@ -617,7 +681,7 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
 <!-- ✅ BLOCKSPOT VERIFIED LISTING -->
 <div class="blockspot-section">
     <h2 style="margin-bottom:20px; background:linear-gradient(135deg,#ffd700,#ffaa00); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-size:28px; letter-spacing:2px;">🏅 Verified Listing</h2>
-    <p style="color:#aaa; margin-bottom:30px; font-size:15px;">
+    <p style="color:#b0b0b0; margin-bottom:30px; font-size:15px;">
         Shimonay (SHIMO) is verified on Blockspot.io — listing data confirmed by the project.
     </p>
     <a href="https://blockspot.io/coin/shimonay-shimo/" target="_blank" rel="noopener" class="blockspot-badge" title="Shimonay (SHIMO) — Verified on Blockspot.io">
@@ -642,7 +706,7 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
         <li>✅ <strong>Supply:</strong> 60% burned permanently before launch</li>
         <li>✅ <strong>Contract:</strong> Open-source & verifiable on BscScan</li>
     </ul>
-    <p style="margin-top:25px; font-size:14px; color:#b3b3b3;">Everything is on-chain. Verify yourself in the panel above before investing.</p>
+    <p style="margin-top:25px; font-size:14px; color:#b0b0b0;">Everything is on-chain. Verify yourself in the panel above before investing.</p>
 </div>
 
 <!-- ✅ A-ADS BOTTOM -->
@@ -650,7 +714,7 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
     <div class="aads-frame">
         <iframe data-aa='2434894' src='//acceptable.a-ads.com/2434894/?size=Adaptive' style='border:0; width:100%; max-width:728px; height:90px; display:block; margin:auto;'></iframe>
     </div>
-    <p style="color:#a0a0a0; font-size:10px; margin-top:10px;">Ads support organic development • No paid promotions • Just transparency</p>
+    <p style="color:#b0b0b0; font-size:10px; margin-top:10px;">Ads support organic development • No paid promotions • Just transparency</p>
 </div>
 
 <!-- ✅ FOOTER -->
@@ -664,8 +728,8 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
         <a href="https://t.me/+Bzn5r9XIhyw4YWMx" target="_blank">Telegram</a>
     </div>
     <p>© 2026 SHIMONAY — Built with transparency by a solo developer</p>
-    <p style="margin-top:15px; font-size:11px; color:#b3b3b3;">Remember: Don't trust words. Trust code. Verify on-chain.</p>
-    <p style="color:#b3b3b3; font-size:10px; margin-top:10px;">Contact: shimonaytoken@gmail.com</p>
+    <p style="margin-top:15px; font-size:11px; color:#b0b0b0;">Remember: Don't trust words. Trust code. Verify on-chain.</p>
+    <p style="color:#b0b0b0; font-size:10px; margin-top:10px;">Contact: shimonaytoken@gmail.com</p>
 </footer>
 
 <!-- ✅ SCRIPTS -->

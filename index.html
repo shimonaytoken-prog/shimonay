@@ -4,7 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<!-- ✅ FAVICON / MINIATURA DO SITE (ABA DO NAVEGADOR) -->
+<!-- ✅ Ethers.js -->
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.7.0/dist/ethers.umd.min.js"></script>
+
+<!-- ✅ FAVICON -->
 <link rel="icon" type="image/png" href="/shimonay/assets/logo.png.png" />
 <link rel="apple-touch-icon" href="/shimonay/assets/logo.png.png" />
 
@@ -12,7 +15,7 @@
 <meta name="google-site-verification" content="SMH_2Kb2dB4ZBEi7HdX0wMiPWs8S7tJzAouDEXIjIzc" />
 <link rel="sitemap" type="application/xml" href="/shimonay/sitemap.xml" />
 
-<!-- ✅ SEO OTIMIZADO -->
+<!-- ✅ SEO -->
 <meta name="description" content="Shimonay ($SHIMO) is a community-driven token on BNB Chain built on verifiable honesty. No presale, no custodial backdoors, 100% LP locked until 2036. SolidityScan 91.82/100." />
 <meta name="keywords" content="Shimonay, SHIMO, BNB Chain, meme coin, BSC token, transparent crypto, no presale, locked liquidity, SolidityScan, PinkLock, PancakeSwap, verifiable honesty, community token, safe token, audited token" />
 <meta name="author" content="Dev_CLT (Solo Developer)" />
@@ -20,7 +23,7 @@
 <meta name="theme-color" content="#ffd700" />
 <link rel="canonical" href="https://shimonaytoken-prog.github.io/shimonay/" />
 
-<!-- ✅ OPEN GRAPH (Compartilhamento WhatsApp/Facebook/Discord) -->
+<!-- ✅ OPEN GRAPH -->
 <meta property="og:title" content="SHIMONAY ($SHIMO) - Verifiable Honesty on BNB Chain" />
 <meta property="og:description" content="Community-driven token. No presale. No custodial backdoors. 100% LP locked until 2036. SolidityScan 91.82/100. Built on verifiable honesty." />
 <meta property="og:url" content="https://shimonaytoken-prog.github.io/shimonay/" />
@@ -35,7 +38,7 @@
 <meta name="twitter:description" content="Community-driven BNB Chain token. No presale. 100% LP locked until 2036. Transparency-first design." />
 <meta name="twitter:image" content="https://shimonaytoken-prog.github.io/shimonay/assets/logo.png.png" />
 
-<!-- ✅ SCHEMA.ORG JSON-LD (SEO Boost) -->
+<!-- ✅ SCHEMA.ORG -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -45,15 +48,8 @@
   "description": "Shimonay ($SHIMO) is a community-driven token on BNB Chain built on verifiable honesty. No presale, no custodial backdoors, 100% LP locked until 2036.",
   "url": "https://shimonaytoken-prog.github.io/shimonay/",
   "logo": "https://shimonaytoken-prog.github.io/shimonay/assets/logo.png.png",
-  "brand": {
-    "@type": "Brand",
-    "name": "Shimonay"
-  },
-  "offers": {
-    "@type": "Offer",
-    "priceCurrency": "USD",
-    "availability": "https://schema.org/InStock"
-  },
+  "brand": { "@type": "Brand", "name": "Shimonay" },
+  "offers": { "@type": "Offer", "priceCurrency": "USD", "availability": "https://schema.org/InStock" },
   "sameAs": [
     "https://x.com/ShimonayToken",
     "https://t.me/+Bzn5r9XIhyw4YWMx",
@@ -119,13 +115,8 @@ header p{ color:#d4af37; font-size:22px; letter-spacing: 3px; margin-bottom: 50p
 .section h2{ margin-bottom:40px; background: linear-gradient(135deg, #ffd700, #ffaa00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align:center; font-size: 36px; letter-spacing: 3px; }
 .section-title { text-align:center; font-size:32px; background:linear-gradient(135deg, #ffd700, #ffaa00); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:35px; letter-spacing:2px; }
 
-/* ✅ ABOUT (SEO-RICH) */
-.about-section {
-    max-width: 1150px; margin: 80px auto; padding: 70px 60px;
-    background: linear-gradient(135deg, rgba(10,10,0,0.95), rgba(26,20,0,0.95));
-    border: 2px solid #ffd700; border-radius: 25px; box-shadow: 0 0 80px rgba(255,215,0,0.2);
-    position: relative; overflow: hidden;
-}
+/* ✅ ABOUT */
+.about-section { max-width: 1150px; margin: 80px auto; padding: 70px 60px; background: linear-gradient(135deg, rgba(10,10,0,0.95), rgba(26,20,0,0.95)); border: 2px solid #ffd700; border-radius: 25px; box-shadow: 0 0 80px rgba(255,215,0,0.2); position: relative; overflow: hidden; }
 .about-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, transparent, #ffd700, transparent); }
 .about-section h2 { margin-bottom: 30px; background: linear-gradient(135deg, #ffd700, #ffaa00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; font-size: 36px; letter-spacing: 3px; }
 .about-subtitle { text-align: center; color: #d4af37; font-size: 18px; font-style: italic; margin-bottom: 40px; letter-spacing: 1px; }
@@ -145,7 +136,7 @@ header p{ color:#d4af37; font-size:22px; letter-spacing: 3px; margin-bottom: 50p
 .card p { color: #ccc; font-size: 15px; line-height: 2; }
 .card .highlight { color:#ffd700; font-weight:700; font-size: 18px; display: block; margin: 10px 0; }
 
-/* ✅ PAINEL DE VERIFICAÇÃO MASTER */
+/* ✅ PAINEL DE VERIFICAÇÃO */
 .verification-table-container { overflow-x: auto; margin-top: 30px; border-radius: 15px; border: 1px solid rgba(255,215,0,0.3); }
 .verification-table { width: 100%; border-collapse: collapse; font-family: 'Courier New', monospace; font-size: 14px; min-width: 600px; }
 .verification-table th { background: rgba(255,215,0,0.15); color: #ffd700; padding: 18px 15px; text-align: left; font-weight: 700; letter-spacing: 1px; border-bottom: 2px solid #ffd700; }
@@ -156,6 +147,86 @@ header p{ color:#d4af37; font-size:22px; letter-spacing: 3px; margin-bottom: 50p
 .verification-table .status-info { color: #ffd700; font-weight: 700; }
 .verification-table a { color: #ffd700; text-decoration: none; font-weight: 700; transition: 0.3s; display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 6px; }
 .verification-table a:hover { color: #fff; background: rgba(255,215,0,0.1); text-shadow: 0 0 10px rgba(255,215,0,0.8); }
+
+/* ✅ LIVE SCANNER */
+.scanner-container { max-width: 700px; margin: 0 auto; }
+.scanner-input-group { display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+.scanner-input { flex: 1; background: rgba(0,0,0,0.4); border: 2px solid #ffd700; color: #fff; padding: 15px 20px; border-radius: 12px; font-family: 'Courier New', monospace; font-size: 14px; outline: none; transition: all 0.3s; min-width: 250px; }
+.scanner-input:focus { box-shadow: 0 0 20px rgba(255,215,0,0.3); border-color: #ffed4e; }
+.scanner-btn { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; border: none; padding: 15px 35px; border-radius: 12px; font-weight: 900; font-size: 16px; cursor: pointer; transition: all 0.3s; font-family: 'Orbitron', sans-serif; }
+.scanner-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,215,0,0.4); }
+.scanner-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.scanner-result { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,215,0,0.3); border-radius: 15px; padding: 25px; text-align: left; display: none; }
+.scanner-result.active { display: block; animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.scanner-item { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,215,0,0.1); }
+.scanner-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.scanner-label { color: #d4af37; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; font-weight: 700; }
+.scanner-value { color: #fff; font-size: 15px; font-family: 'Inter', sans-serif; line-height: 1.5; }
+.scanner-value code { background: rgba(255,215,0,0.1); color: #ffd700; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px; }
+.status-green { color: #00ff88; font-weight: 700; }
+.status-red { color: #ff4444; font-weight: 700; }
+.status-yellow { color: #ffd700; font-weight: 700; }
+
+/* ✅ LIVE GRID */
+.live-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-top:8px; }
+.live-cell { background: rgba(255,215,0,0.05); border:1px solid rgba(255,215,0,0.15); border-radius:10px; padding:12px; transition:all 0.3s; }
+.live-cell:hover { border-color:#ffd700; background:rgba(255,215,0,0.08); }
+.live-cell-label { display:block; color:#d4af37; font-size:10px; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; font-weight:700; }
+.live-cell-value { display:block; color:#fff; font-size:14px; font-weight:700; font-family:'Orbitron', sans-serif; word-break:break-word; }
+
+/* ✅ UPDATE BUTTON */
+.update-btn { background: rgba(255,215,0,0.1); border: 1px solid #ffd700; color: #ffd700; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 13px; transition: all 0.3s; margin-top: 12px; font-family: 'Inter', sans-serif; }
+.update-btn:hover { background: #ffd700; color: #000; box-shadow: 0 0 20px rgba(255,215,0,0.4); }
+.update-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ✅ SLIPPAGE */
+.slippage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 15px; }
+.slippage-card { background: rgba(255,215,0,0.05); border: 1px solid rgba(255,215,0,0.2); border-radius: 12px; padding: 15px 10px; text-align: center; transition: all 0.3s; }
+.slippage-card:hover { border-color: #ffd700; background: rgba(255,215,0,0.08); transform: translateY(-2px); }
+.slippage-amount { color: #fff; font-weight: 700; font-size: 15px; margin-bottom: 6px; font-family: 'Orbitron', sans-serif; }
+.slippage-impact { font-size: 12px; color: #aaa; margin-bottom: 8px; }
+.slippage-rec { font-size: 14px; font-weight: 800; padding: 4px 8px; border-radius: 6px; display: inline-block; }
+.slippage-note { font-size: 12px; color: #888; margin-top: 15px; text-align: center; font-style: italic; line-height: 1.4; background: rgba(255,215,0,0.05); padding: 10px; border-radius: 8px; border-left: 3px solid #ffd700; }
+
+/* ✅ PRICE CARDS */
+.price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 15px; }
+.price-cell { background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,215,0,0.03)); border: 1px solid rgba(255,215,0,0.25); border-radius: 12px; padding: 14px 10px; text-align: center; }
+.price-cell-label { display:block; color:#d4af37; font-size:10px; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; font-weight:700; }
+.price-cell-value { display:block; color:#fff; font-size:15px; font-weight:800; font-family:'Orbitron', sans-serif; }
+
+/* ✅ RUG ALERT BANNER */
+.rug-alert-banner {
+    background: linear-gradient(135deg, rgba(255,0,0,0.18), rgba(139,0,0,0.25));
+    border: 2px solid #ff4444;
+    border-radius: 14px;
+    padding: 20px;
+    margin: 18px 0;
+    text-align: center;
+    animation: rug-pulse 1.4s ease-in-out infinite;
+}
+@keyframes rug-pulse {
+    0%, 100% { box-shadow: 0 0 12px rgba(255,68,68,0.3); border-color: #ff4444; }
+    50% { box-shadow: 0 0 30px rgba(255,68,68,0.9), inset 0 0 20px rgba(255,68,68,0.15); border-color: #ff7777; }
+}
+.rug-alert-title {
+    color: #ff4444; font-size: 17px; font-weight: 900;
+    font-family: 'Orbitron', sans-serif; letter-spacing: 2px;
+    margin-bottom: 8px; text-transform: uppercase;
+}
+.rug-alert-text { color: #ffb3b3; font-size: 13px; line-height: 1.6; }
+.rug-alert-text strong { color: #fff; }
+
+/* ✅ AGE BADGES */
+.age-cell { position: relative; }
+.age-badge {
+    display: inline-block; font-size: 10px; font-weight: 800;
+    padding: 3px 8px; border-radius: 20px; margin-top: 6px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+}
+.age-badge-old { background: rgba(0,255,136,0.12); color: #00ff88; border: 1px solid rgba(0,255,136,0.3); }
+.age-badge-new { background: rgba(255,215,0,0.12); color: #ffd700; border: 1px solid rgba(255,215,0,0.3); }
+.age-badge-danger { background: rgba(255,68,68,0.15); color: #ff4444; border: 1px solid rgba(255,68,68,0.4); animation: rug-pulse 1.4s infinite; }
 
 /* ✅ HALL OF FAME */
 .hall-da-fama-section { text-align: center; padding: 70px 20px; background: linear-gradient(180deg, #05070a 0%, #0d1117 100%); border-bottom: 3px solid #ffd700; border-top: 3px solid #ffd700; box-shadow: 0 0 80px rgba(255,215,0,0.2); position: relative; overflow: hidden; }
@@ -172,7 +243,7 @@ header p{ color:#d4af37; font-size:22px; letter-spacing: 3px; margin-bottom: 50p
 .guardiao-nick { color: #ffffff; font-weight: 800; font-size: 1rem; display: block; letter-spacing: 1px; margin-bottom: 10px; }
 .guardiao-badge { display: inline-block; background: linear-gradient(135deg, rgba(255,215,0,0.25), rgba(255,170,0,0.15)); color: #ffd700; font-size: 0.75rem; padding: 6px 14px; border-radius: 20px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border: 1px solid rgba(255,215,0,0.4); }
 
-/* ✅ BINANCE PROFILE CTA */
+/* ✅ BINANCE PROFILE */
 .binance-profile-section { text-align: center; padding: 60px 20px; background: linear-gradient(135deg, rgba(26,20,0,0.9), rgba(42,31,0,0.9)); border-top: 1px solid rgba(255,215,0,0.3); position: relative; z-index: 1; }
 .binance-profile-title { color: #ffd700; font-size: 1.8rem; margin-bottom: 15px; font-weight: 700; letter-spacing: 2px; }
 .binance-profile-text { color: #ccc; font-size: 1.1rem; max-width: 650px; margin: 0 auto 35px auto; line-height: 1.6; }
@@ -185,10 +256,10 @@ header p{ color:#d4af37; font-size:22px; letter-spacing: 3px; margin-bottom: 50p
 .trade-btn { padding:18px 40px; border-radius:30px; background:linear-gradient(135deg,#ffd700,#ffaa00); color:#000; text-decoration:none; font-weight:900; font-size:15px; transition:all 0.3s; box-shadow:0 10px 30px rgba(255,215,0,0.3); }
 .trade-btn:hover { transform:scale(1.08) translateY(-5px); box-shadow:0 15px 50px rgba(255,215,0,0.6); }
 
-/* ✅ MARKET WIDGET CONTAINER */
+/* ✅ MARKET WIDGET */
 .market-widget-container { max-width: 800px; margin: 80px auto; padding: 40px 30px; background: linear-gradient(135deg, rgba(26,20,0,0.9), rgba(42,31,0,0.9)); border: 1px solid #ffd700; border-radius: 25px; box-shadow: 0 0 60px rgba(255,215,0,0.15); text-align: center; }
 
-/* ✅ BLOCKSPOT VERIFIED BADGE */
+/* ✅ BLOCKSPOT */
 .blockspot-section { max-width: 800px; margin: 80px auto; padding: 40px 30px; background: linear-gradient(135deg, rgba(26,20,0,0.9), rgba(42,31,0,0.9)); border: 2px solid #ffd700; border-radius: 25px; box-shadow: 0 0 60px rgba(255,215,0,0.2); text-align: center; }
 .blockspot-badge { display: inline-flex; align-items: center; justify-content: center; gap: 22px; flex-wrap: wrap; text-decoration: none; background: linear-gradient(135deg, rgba(10,10,0,0.9), rgba(26,20,0,0.9)); border: 1px solid #ffd700; border-radius: 18px; padding: 25px 40px; transition: all 0.3s; }
 .blockspot-badge:hover { transform: translateY(-5px); box-shadow: 0 0 35px rgba(255,215,0,0.4); border-color: #ffed4e; }
@@ -210,16 +281,13 @@ header p{ color:#d4af37; font-size:22px; letter-spacing: 3px; margin-bottom: 50p
 
 /* ✅ FOOTER */
 footer { text-align:center; padding:50px 20px; color:#b3b3b3; font-size:13px; border-top:1px solid #333; margin-top:100px; }
-footer a { 
-    color:#ffd700; text-decoration:none; font-weight:700; transition: all 0.3s; font-size: 13px;
-    display: inline-block; padding: 8px 12px; margin: 4px 6px; min-height: 44px; line-height: 1.2;
-}
+footer a { color:#ffd700; text-decoration:none; font-weight:700; transition: all 0.3s; font-size: 13px; display: inline-block; padding: 8px 12px; margin: 4px 6px; min-height: 44px; line-height: 1.2; }
 footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
 
-/* ✅ ACESSIBILIDADE: FOCUS VISIBLE (Navegação por teclado) */
+/* ✅ ACESSIBILIDADE */
 .button:focus-visible, .trade-btn:focus-visible, .copy-btn:focus-visible, 
-.carousel-link:focus-visible, .scanner-badge:focus-visible, 
-.blockspot-badge:focus-visible, .binance-profile-btn:focus-visible, footer a:focus-visible {
+.blockspot-badge:focus-visible, .binance-profile-btn:focus-visible, footer a:focus-visible,
+.scanner-input:focus-visible, .scanner-btn:focus-visible, .update-btn:focus-visible {
     outline: 3px solid #ffed4e;
     outline-offset: 3px;
 }
@@ -242,6 +310,10 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
     .verification-table { font-size: 12px; }
     .verification-table th, .verification-table td { padding: 12px 10px; }
     .about-content { font-size: 15px; line-height: 1.7; }
+    .scanner-input-group { flex-direction: column; }
+    .scanner-btn { width: 100%; }
+    .slippage-grid, .price-grid { grid-template-columns: 1fr; }
+    .rug-alert-title { font-size: 14px; }
 }
 </style>
 </head>
@@ -259,12 +331,8 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
 <header>
     <h1>SHIMONAY</h1>
     <p>✨ Verifiable Honesty on BNB Chain ✨</p>
-    
     <div class="header-content">
-        <a class="button" href="https://pancakeswap.finance/swap?outputCurrency=0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e&chain=bsc" target="_blank">
-           🚀 Buy SHIMONAY on PancakeSwap
-        </a>
-        
+        <a class="button" href="https://pancakeswap.finance/swap?outputCurrency=0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e&chain=bsc" target="_blank">🚀 Buy SHIMONAY on PancakeSwap</a>
         <div class="contract-box">
             <div class="contract-address">Contract Address (BSC)</div>
             <div class="contract-full">0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e</div>
@@ -277,7 +345,6 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
 <section class="hall-da-fama-section">
     <h2 class="hall-fama-title">🏆 Hall of Fame: Guardians of Mathematics 🏆</h2>
     <p class="hall-fama-subtitle">Those who verify the code, trust the logic, and hold the line with the Dev. No hype, just on-chain truth.</p>
-    
     <div class="guardioes-grid">
         <div class="guardiao-card">
             <img src="https://avatars.githubusercontent.com/u/261414930?s=400&u=87ef640b67b53b276d280feef4248aa1f52ee7ac&v=4" alt="Dev_CLT - Shimonay Founder" class="guardiao-logo">
@@ -295,36 +362,19 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
             <span class="guardiao-badge">Skin in the Game</span>
         </div>
     </div>
-
     <div class="binance-profile-section">
         <h3 class="binance-profile-title">📚 Official Knowledge Hub</h3>
-        <p class="binance-profile-text">
-            All articles, AI audit tutorials, and transparent project updates are centralized in our verified profile. No noise, no empty promises, just verifiable information.
-        </p>
-        <a href="https://app.binance.com/uni-qr/cpro/ShimonayToken?l=pt-BR&r=RQNR7OU8&uc=app_square_share_link&us=copylink" target="_blank" rel="noopener noreferrer" class="binance-profile-btn">
-             Visit Official Binance Square Profile
-        </a>
+        <p class="binance-profile-text">All articles, AI audit tutorials, and transparent project updates are centralized in our verified profile. No noise, no empty promises, just verifiable information.</p>
+        <a href="https://app.binance.com/uni-qr/cpro/ShimonayToken?l=pt-BR&r=RQNR7OU8&uc=app_square_share_link&us=copylink" target="_blank" rel="noopener noreferrer" class="binance-profile-btn">Visit Official Binance Square Profile</a>
     </div>
 </section>
 
 <!-- ✅ STATS -->
 <div class="stats-grid">
-    <div class="stat-card">
-        <div class="stat-value">60%</div>
-        <div class="stat-label">Supply Burned</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-value">10Y</div>
-        <div class="stat-label">LP Locked</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-value">0% / 3%</div>
-        <div class="stat-label">Dynamic Tax</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-value">100%</div>
-        <div class="stat-label">LP Renounced</div>
-    </div>
+    <div class="stat-card"><div class="stat-value">60%</div><div class="stat-label">Supply Burned</div></div>
+    <div class="stat-card"><div class="stat-value">10Y</div><div class="stat-label">LP Locked</div></div>
+    <div class="stat-card"><div class="stat-value">0% / 3%</div><div class="stat-label">Dynamic Tax</div></div>
+    <div class="stat-card"><div class="stat-value">100%</div><div class="stat-label">LP Renounced</div></div>
 </div>
 
 <!-- ✅ MANIFESTO -->
@@ -339,32 +389,16 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
     </p>
 </div>
 
-<!-- ✅ ABOUT SHIMONAY (SEO-RICH) -->
+<!-- ✅ ABOUT -->
 <section class="about-section" aria-label="About Shimonay Token">
     <h2>📖 About Shimonay ($SHIMO)</h2>
     <p class="about-subtitle">A community-driven token on BNB Chain built on one principle: verifiable honesty.</p>
-    
     <div class="about-content">
-        <p>
-            <strong>Shimonay ($SHIMO)</strong> is a <strong>community-driven token on BNB Chain</strong> built on one principle: <strong>verifiable honesty</strong>. Launched in <strong>May 2026</strong> with <strong>no presale</strong> and <strong>no custodial backdoors</strong> — the contract holds <strong>zero custodial functions</strong> (no mint, no blacklist, no hidden taxes), and <strong>100% of the PancakeSwap V2 liquidity is locked until 2036</strong>, publicly verifiable on-chain.
-        </p>
-        
-        <p>
-            What makes <strong>Shimonay unique</strong> is its <strong>transparency-first design</strong>: <strong>public audits</strong> (SolidityScan 91.82/100 — rated <strong>GREAT</strong> and Serialized <strong>"Safe"</strong>), an <strong>open BscScan presence</strong>, and a founder who refuses <strong>synthetic volume and paid shortcuts</strong> — every metric about this project can be checked on-chain by anyone, at any time.
-        </p>
-        
-        <div class="highlight-box">
-            <strong>Goals & Plans:</strong> Grow organic liquidity and the holder base step by step through <strong>community-funded monthly LP additions</strong>; expand listings across aggregators and exchanges through <strong>genuine partnerships only</strong>; and roll out community utilities (<strong>collectible NFTs</strong>) as the project matures.
-        </div>
-        
-        <p>
-            Shimonay follows <strong>Bitcoin's essence</strong>: a free market where founder, holders and partners share the same risk and the same upside. No privileged wallets, no hidden agendas — just code, community, and time.
-        </p>
-        
-        <div class="about-cta">
-            <p>Small but real. Join the build. 🚀</p>
-            <small>Contract: 0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e</small>
-        </div>
+        <p><strong>Shimonay ($SHIMO)</strong> is a <strong>community-driven token on BNB Chain</strong> built on one principle: <strong>verifiable honesty</strong>. Launched in <strong>May 2026</strong> with <strong>no presale</strong> and <strong>no custodial backdoors</strong> — the contract holds <strong>zero custodial functions</strong> (no mint, no blacklist, no hidden taxes), and <strong>100% of the PancakeSwap V2 liquidity is locked until 2036</strong>, publicly verifiable on-chain.</p>
+        <p>What makes <strong>Shimonay unique</strong> is its <strong>transparency-first design</strong>: <strong>public audits</strong> (SolidityScan 91.82/100 — rated <strong>GREAT</strong> and Serialized <strong>"Safe"</strong>), an <strong>open BscScan presence</strong>, and a founder who refuses <strong>synthetic volume and paid shortcuts</strong> — every metric about this project can be checked on-chain by anyone, at any time.</p>
+        <div class="highlight-box"><strong>Goals & Plans:</strong> Grow organic liquidity and the holder base step by step through <strong>community-funded monthly LP additions</strong>; expand listings across aggregators and exchanges through <strong>genuine partnerships only</strong>; and roll out community utilities (<strong>collectible NFTs</strong>) as the project matures.</div>
+        <p>Shimonay follows <strong>Bitcoin's essence</strong>: a free market where founder, holders and partners share the same risk and the same upside. No privileged wallets, no hidden agendas — just code, community, and time.</p>
+        <div class="about-cta"><p>Small but real. Join the build. 🚀</p><small>Contract: 0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e</small></div>
     </div>
 </section>
 
@@ -372,225 +406,73 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
 <div class="section">
     <h2>⚙️ Tokenomics</h2>
     <div class="tokenomics">
-        <div class="card">
-            <h3>Max Supply</h3>
-            <p class="highlight">200 Billion</p>
-            <p>Fixed supply, no minting</p>
-        </div>
-        <div class="card">
-            <h3>🔥 Burned Before Launch</h3>
-            <p class="highlight">120 Billion (60%)</p>
-            <p>Permanently removed<br>
-            <a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e?a=0x000000000000000000000000000000000000dead" target="_blank" style="color:#ffd700; margin-top:8px; display:inline-block;">View Proof →</a></p>
-        </div>
-        <div class="card">
-            <h3>💧 Liquidity (LP)</h3>
-            <p class="highlight">10 Years Locked</p>
-            <p>100% LP locked & <strong>renounced</strong>.<br>
-            <a href="https://www.pinksale.finance/pinklock/bsc/0x550aB515CB19c1447895375C1eEaE9d9a037E5bd" target="_blank" style="color:#ffd700; margin-top:8px; display:inline-block;">Verify on PinkLock →</a></p>
-        </div>
-        <div class="card">
-            <h3>💰 Dynamic Tax</h3>
-            <p class="highlight">0% or 3%</p>
-            <p>Owner controls ONLY the tax switch. No hidden fees, no honeypot.</p>
-        </div>
-        <div class="card">
-            <h3>🔒 Reserve (Locked)</h3>
-            <p class="highlight">60 Billion</p>
-            <p>Locked 2 years on PinkLock<br>
-            <a href="https://www.pinksale.finance/pinklock/bsc/record/1514414" target="_blank" style="color:#ffd700; margin-top:8px; display:inline-block;">Verify Lock →</a></p>
-        </div>
-        <div class="card">
-            <h3>Development Wallet</h3>
-            <p class="highlight">13 Billion Allocated</p>
-            <p>Current on-chain balance:<br>
-            <strong style="color:#ffd700; font-size:16px;">8,828,804,146 SHIMO</strong><br>
-            <a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e?a=0x02225DBA3980aE5feC2015dE6165940e99D3331d#transactions" target="_blank" style="color:#ffd700; margin-top:8px; display:inline-block;">View Wallet & Transactions →</a></p>
-        </div>
+        <div class="card"><h3>Max Supply</h3><p class="highlight">200 Billion</p><p>Fixed supply, no minting</p></div>
+        <div class="card"><h3>🔥 Burned Before Launch</h3><p class="highlight">120 Billion (60%)</p><p>Permanently removed<br><a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e?a=0x000000000000000000000000000000000000dead" target="_blank" style="color:#ffd700; margin-top:8px; display:inline-block;">View Proof →</a></p></div>
+        <div class="card"><h3>💧 Liquidity (LP)</h3><p class="highlight">10 Years Locked</p><p>100% LP locked & <strong>renounced</strong>.<br><a href="https://www.pinksale.finance/pinklock/bsc/0x550aB515CB19c1447895375C1eEaE9d9a037E5bd" target="_blank" style="color:#ffd700; margin-top:8px; display:inline-block;">Verify on PinkLock →</a></p></div>
+        <div class="card"><h3>💰 Dynamic Tax</h3><p class="highlight">0% or 3%</p><p>Owner controls ONLY the tax switch. No hidden fees, no honeypot.</p></div>
+        <div class="card"><h3>🔒 Reserve (Locked)</h3><p class="highlight">60 Billion</p><p>Locked 2 years on PinkLock<br><a href="https://www.pinksale.finance/pinklock/bsc/record/1514414" target="_blank" style="color:#ffd700; margin-top:8px; display:inline-block;">Verify Lock →</a></p></div>
+        <div class="card"><h3>Development Wallet</h3><p class="highlight">13 Billion Allocated</p><p>Current on-chain balance:<br><strong style="color:#ffd700; font-size:16px;">8,828,804,146 SHIMO</strong><br><a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e?a=0x02225DBA3980aE5feC2015dE6165940e99D3331d#transactions" target="_blank" style="color:#ffd700; margin-top:8px; display:inline-block;">View Wallet & Transactions →</a></p></div>
     </div>
 </div>
 
-<!-- ✅ PAINEL DE VERIFICAÇÃO MASTER -->
+<!-- ✅ PAINEL DE VERIFICAÇÃO -->
 <div class="section">
     <h2>🔍 Command Center: On-Chain Verification</h2>
-    <p style="text-align:center; color:#aaa; margin-bottom:30px; font-size:16px;">
-        Every claim is verifiable. No promises, just proofs.
-    </p>
-    
+    <p style="text-align:center; color:#aaa; margin-bottom:30px; font-size:16px;">Every claim is verifiable. No promises, just proofs.</p>
     <div class="verification-table-container">
         <table class="verification-table">
-            <thead>
-                <tr>
-                    <th>Platform / Verification</th>
-                    <th>Status / Description</th>
-                    <th>Access Link</th>
-                </tr>
-            </thead>
+            <thead><tr><th>Platform / Verification</th><th>Status / Description</th><th>Access Link</th></tr></thead>
             <tbody>
                 <tr class="category-row"><td colspan="3">🔒 Security & Contracts</td></tr>
-                <tr>
-                    <td>BscScan (Official Contract)</td>
-                    <td class="status-ok">✅ Code Verified</td>
-                    <td><a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Access BscScan ↗</a></td>
-                </tr>
-                <tr>
-                    <td>PinkLock (Liquidity 10 Years)</td>
-                    <td class="status-ok">✅ Locked & Renounced</td>
-                    <td><a href="https://www.pinksale.finance/pinklock/bsc/0x550aB515CB19c1447895375C1eEaE9d9a037E5bd" target="_blank">Verify on PinkLock ↗</a></td>
-                </tr>
-                <tr>
-                    <td>PinkLock (Reserve 2 Years)</td>
-                    <td class="status-ok">✅ Locked</td>
-                    <td><a href="https://www.pinksale.finance/pinklock/bsc/record/1514414" target="_blank">Verify Lock ↗</a></td>
-                </tr>
-                <tr>
-                    <td>Cyberscope Security</td>
-                    <td class="status-ok">✅ Security Analysis</td>
-                    <td><a href="https://app.cyberscope.io/embed/cyberscan?network=BSC&address=0xca9f1011b270eeabfad0d232dcfaeb781e53d77e#security" target="_blank">Verify Cyberscope ↗</a></td>
-                </tr>
-                <tr>
-                    <td>Top100Token Scan</td>
-                    <td class="status-ok">✅ Analyzed</td>
-                    <td><a href="https://top100token.com/scan?address=0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Verify Top100Token ↗</a></td>
-                </tr>
-                <tr>
-                    <td>BlockSAFU</td>
-                    <td class="status-ok">✅ Security Score</td>
-                    <td><a href="https://blocksafu.com/token-scanner/56/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Verify BlockSAFU ↗</a></td>
-                </tr>
-                <tr>
-                    <td>Honeypot.is</td>
-                    <td class="status-ok">✅ Clean (No Honeypot)</td>
-                    <td><a href="https://honeypot.is/?address=0xca9f1011b270eeabfad0d232dcfaeb781e53d77e" target="_blank">Verify Honeypot ↗</a></td>
-                </tr>
-                <tr>
-                    <td>TokenSniffer</td>
-                    <td class="status-ok">✅ Verified</td>
-                    <td><a href="https://tokensniffer.com/token/bsc/0xca9f1011b270eeabfad0d232dcfaeb781e53d77e" target="_blank">Verify on Sniffer ↗</a></td>
-                </tr>
-                <tr>
-                    <td>SolidityScan</td>
-                    <td class="status-ok">✅ Score 91.83/100</td>
-                    <td><a href="https://solidityscan.com/quickscan/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e/bscscan/mainnet" target="_blank">Verify Scan ↗</a></td>
-                </tr>
-                <tr>
-                    <td>CertiK Token Scan</td>
-                    <td class="status-ok">✅ Analyzed</td>
-                    <td><a href="https://skynet.certik.com/tools/token-scan/bsc/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Verify CertiK ↗</a></td>
-                </tr>
-                <tr>
-                    <td>GoPlus Security</td>
-                    <td class="status-ok">✅ No Critical Risks</td>
-                    <td><a href="https://gopluslabs.io/token-security/bsc/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Verify GoPlus ↗</a></td>
-                </tr>
-
+                <tr><td>BscScan (Official Contract)</td><td class="status-ok">✅ Code Verified</td><td><a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Access BscScan ↗</a></td></tr>
+                <tr><td>PinkLock (Liquidity 10 Years)</td><td class="status-ok">✅ Locked & Renounced</td><td><a href="https://www.pinksale.finance/pinklock/bsc/0x550aB515CB19c1447895375C1eEaE9d9a037E5bd" target="_blank">Verify on PinkLock ↗</a></td></tr>
+                <tr><td>PinkLock (Reserve 2 Years)</td><td class="status-ok">✅ Locked</td><td><a href="https://www.pinksale.finance/pinklock/bsc/record/1514414" target="_blank">Verify Lock ↗</a></td></tr>
+                <tr><td>Cyberscope Security</td><td class="status-ok">✅ Security Analysis</td><td><a href="https://app.cyberscope.io/embed/cyberscan?network=BSC&address=0xca9f1011b270eeabfad0d232dcfaeb781e53d77e#security" target="_blank">Verify Cyberscope ↗</a></td></tr>
+                <tr><td>Top100Token Scan</td><td class="status-ok">✅ Analyzed</td><td><a href="https://top100token.com/scan?address=0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Verify Top100Token ↗</a></td></tr>
+                <tr><td>BlockSAFU</td><td class="status-ok">✅ Security Score</td><td><a href="https://blocksafu.com/token-scanner/56/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Verify BlockSAFU ↗</a></td></tr>
+                <tr><td>Honeypot.is</td><td class="status-ok">✅ Clean (No Honeypot)</td><td><a href="https://honeypot.is/?address=0xca9f1011b270eeabfad0d232dcfaeb781e53d77e" target="_blank">Verify Honeypot ↗</a></td></tr>
+                <tr><td>TokenSniffer</td><td class="status-ok">✅ Verified</td><td><a href="https://tokensniffer.com/token/bsc/0xca9f1011b270eeabfad0d232dcfaeb781e53d77e" target="_blank">Verify on Sniffer ↗</a></td></tr>
+                <tr><td>SolidityScan</td><td class="status-ok">✅ Score 91.83/100</td><td><a href="https://solidityscan.com/quickscan/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e/bscscan/mainnet" target="_blank">Verify Scan ↗</a></td></tr>
+                <tr><td>CertiK Token Scan</td><td class="status-ok">✅ Analyzed</td><td><a href="https://skynet.certik.com/tools/token-scan/bsc/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Verify CertiK ↗</a></td></tr>
+                <tr><td>GoPlus Security</td><td class="status-ok">✅ No Critical Risks</td><td><a href="https://gopluslabs.io/token-security/bsc/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Verify GoPlus ↗</a></td></tr>
                 <tr class="category-row"><td colspan="3">📊 Charts & Aggregators</td></tr>
-                <tr>
-                    <td>DexScreener</td>
-                    <td class="status-info">📈 Chart & Liquidity</td>
-                    <td><a href="https://dexscreener.com/bsc/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Open DexScreener ↗</a></td>
-                </tr>
-                <tr>
-                    <td>DexTools</td>
-                    <td class="status-info">📈 Chart & Trust</td>
-                    <td><a href="https://www.dextools.io/app/bnb/pair-explorer/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" target="_blank">Open DexTools ↗</a></td>
-                </tr>
-                <tr>
-                    <td>GeckoTerminal</td>
-                    <td class="status-info">📈 CoinGecko Data</td>
-                    <td><a href="https://www.geckoterminal.com/bsc/pools/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" target="_blank">Open GeckoTerminal ↗</a></td>
-                </tr>
-                <tr>
-                    <td>DexView</td>
-                    <td class="status-info">📈 Advanced Analysis</td>
-                    <td><a href="https://www.dexview.com/bsc/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Open DexView ↗</a></td>
-                </tr>
-                <tr>
-                    <td>ApeSpace</td>
-                    <td class="status-info">📈 Chart & Community</td>
-                    <td><a href="https://apespace.io/bsc/0xca9f1011b270eeabfad0d232dcfaeb781e53d77e" target="_blank">Open ApeSpace ↗</a></td>
-                </tr>
-
+                <tr><td>DexScreener</td><td class="status-info">📈 Chart & Liquidity</td><td><a href="https://dexscreener.com/bsc/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Open DexScreener ↗</a></td></tr>
+                <tr><td>DexTools</td><td class="status-info">📈 Chart & Trust</td><td><a href="https://www.dextools.io/app/bnb/pair-explorer/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" target="_blank">Open DexTools ↗</a></td></tr>
+                <tr><td>GeckoTerminal</td><td class="status-info">📈 CoinGecko Data</td><td><a href="https://www.geckoterminal.com/bsc/pools/0x550ab515cb19c1447895375c1eeae9d9a037e5bd" target="_blank">Open GeckoTerminal ↗</a></td></tr>
+                <tr><td>DexView</td><td class="status-info">📈 Advanced Analysis</td><td><a href="https://www.dexview.com/bsc/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" target="_blank">Open DexView ↗</a></td></tr>
+                <tr><td>ApeSpace</td><td class="status-info">📈 Chart & Community</td><td><a href="https://apespace.io/bsc/0xca9f1011b270eeabfad0d232dcfaeb781e53d77e" target="_blank">Open ApeSpace ↗</a></td></tr>
                 <tr class="category-row"><td colspan="3">🗳️ Voting, Listings & Data</td></tr>
-                <tr>
-                    <td>CoinCodex</td>
-                    <td class="status-info">📊 Forecast & Data</td>
-                    <td><a href="https://coincodex.com/ido/shimonay/" target="_blank">Access CoinCodex ↗</a></td>
-                </tr>
-                <tr>
-                    <td>CoinVote</td>
-                    <td class="status-info">🗳️ Community Voting</td>
-                    <td><a href="https://coinvote.cc/coin/Shimonay" target="_blank">Vote on CoinVote ↗</a></td>
-                </tr>
-                <tr>
-                    <td>CoinCarp</td>
-                    <td class="status-info">📊 Market Data</td>
-                    <td><a href="https://www.coincarp.com/currencies/shimonay/" target="_blank">Access CoinCarp ↗</a></td>
-                </tr>
-                <tr>
-                    <td>LiveCoinWatch</td>
-                    <td class="status-info">📊 Real-time Price</td>
-                    <td><a href="https://www.livecoinwatch.com/price/Shimonay-SHIMO" target="_blank">Access LiveCoinWatch ↗</a></td>
-                </tr>
-                <tr>
-                    <td>Coinvo</td>
-                    <td class="status-info">📊 Token Profile</td>
-                    <td><a href="https://coinvo.app/es/token/shimonay-488" target="_blank">Access Coinvo ↗</a></td>
-                </tr>
-                <tr>
-                    <td>Coinmun</td>
-                    <td class="status-info">📊 On-Chain Data</td>
-                    <td><a href="https://coinmun.com/coins/shimonay" target="_blank">Access Coinmun ↗</a></td>
-                </tr>
-                <tr>
-                    <td>CoinCatapult</td>
-                    <td class="status-ok">✅ Listed</td>
-                    <td><a href="https://www.coincatapult.com/coin/shimonay-shimo-ca9f10" target="_blank">View CoinCatapult ↗</a></td>
-                </tr>
-                <tr>
-                    <td>Blockspot.io</td>
-                    <td class="status-ok">✅ Verified Listing</td>
-                    <td><a href="https://blockspot.io/coin/shimonay-shimo/" target="_blank">View Blockspot Data ↗</a></td>
-                </tr>
-                <tr>
-                    <td>Binance Web3</td>
-                    <td class="status-ok">✅ Tracked on Binance</td>
-                    <td><a href="https://web3.binance.com/en/token/bsc/0xca9f1011b270eeabfad0d232dcfaeb781e53d77e" target="_blank">View on Binance Web3 ↗</a></td>
-                </tr>
-                <tr>
-                    <td>Dev Wallet (BscScan)</td>
-                    <td class="status-ok">✅ Balance: 8,828,804,146</td>
-                    <td><a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e?a=0x02225DBA3980aE5feC2015dE6165940e99D3331d#transactions" target="_blank">View On-Chain ↗</a></td>
-                </tr>
-
+                <tr><td>CoinCodex</td><td class="status-info">📊 Forecast & Data</td><td><a href="https://coincodex.com/ido/shimonay/" target="_blank">Access CoinCodex ↗</a></td></tr>
+                <tr><td>CoinVote</td><td class="status-info">🗳️ Community Voting</td><td><a href="https://coinvote.cc/coin/Shimonay" target="_blank">Vote on CoinVote ↗</a></td></tr>
+                <tr><td>CoinCarp</td><td class="status-info">📊 Market Data</td><td><a href="https://www.coincarp.com/currencies/shimonay/" target="_blank">Access CoinCarp ↗</a></td></tr>
+                <tr><td>LiveCoinWatch</td><td class="status-info">📊 Real-time Price</td><td><a href="https://www.livecoinwatch.com/price/Shimonay-SHIMO" target="_blank">Access LiveCoinWatch ↗</a></td></tr>
+                <tr><td>Coinvo</td><td class="status-info">📊 Token Profile</td><td><a href="https://coinvo.app/es/token/shimonay-488" target="_blank">Access Coinvo ↗</a></td></tr>
+                <tr><td>Coinmun</td><td class="status-info">📊 On-Chain Data</td><td><a href="https://coinmun.com/coins/shimonay" target="_blank">Access Coinmun ↗</a></td></tr>
+                <tr><td>CoinCatapult</td><td class="status-ok">✅ Listed</td><td><a href="https://www.coincatapult.com/coin/shimonay-shimo-ca9f10" target="_blank">View CoinCatapult ↗</a></td></tr>
+                <tr><td>Blockspot.io</td><td class="status-ok">✅ Verified Listing</td><td><a href="https://blockspot.io/coin/shimonay-shimo/" target="_blank">View Blockspot Data ↗</a></td></tr>
+                <tr><td>Binance Web3</td><td class="status-ok">✅ Tracked on Binance</td><td><a href="https://web3.binance.com/en/token/bsc/0xca9f1011b270eeabfad0d232dcfaeb781e53d77e" target="_blank">View on Binance Web3 ↗</a></td></tr>
+                <tr><td>Dev Wallet (BscScan)</td><td class="status-ok">✅ Balance: 8,828,804,146</td><td><a href="https://bscscan.com/token/0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e?a=0x02225DBA3980aE5feC2015dE6165940e99D3331d#transactions" target="_blank">View On-Chain ↗</a></td></tr>
                 <tr class="category-row"><td colspan="3">🌐 Social Networks & Community</td></tr>
-                <tr>
-                    <td>Binance Square</td>
-                    <td class="status-ok">✅ Official Verified Profile</td>
-                    <td><a href="https://app.binance.com/uni-qr/cpro/ShimonayToken?l=pt-BR&r=RQNR7OU8&uc=app_square_share_link&us=copylink" target="_blank">Visit Profile ↗</a></td>
-                </tr>
-                <tr>
-                    <td>Telegram</td>
-                    <td class="status-info">💬 Active Community</td>
-                    <td><a href="https://t.me/+Bzn5r9XIhyw4YWMx" target="_blank">Join Telegram ↗</a></td>
-                </tr>
-                <tr>
-                    <td>X (Twitter)</td>
-                    <td class="status-info">🐦 Official Updates</td>
-                    <td><a href="https://x.com/ShimonayToken" target="_blank">Follow on X ↗</a></td>
-                </tr>
-                <tr>
-                    <td>Bluesky</td>
-                    <td class="status-info">🦋 Decentralized Network</td>
-                    <td><a href="https://bsky.app/profile/shimonaytoken.bsky.social" target="_blank">Follow on Bluesky ↗</a></td>
-                </tr>
-                <tr>
-                    <td>Bitcointalk</td>
-                    <td class="status-info">📜 Official Thread</td>
-                    <td><a href="https://bitcointalk.org/index.php?topic=5579855.0" target="_blank">View Thread ↗</a></td>
-                </tr>
+                <tr><td>Binance Square</td><td class="status-ok">✅ Official Verified Profile</td><td><a href="https://app.binance.com/uni-qr/cpro/ShimonayToken?l=pt-BR&r=RQNR7OU8&uc=app_square_share_link&us=copylink" target="_blank">Visit Profile ↗</a></td></tr>
+                <tr><td>Telegram</td><td class="status-info">💬 Active Community</td><td><a href="https://t.me/+Bzn5r9XIhyw4YWMx" target="_blank">Join Telegram ↗</a></td></tr>
+                <tr><td>X (Twitter)</td><td class="status-info">🐦 Official Updates</td><td><a href="https://x.com/ShimonayToken" target="_blank">Follow on X ↗</a></td></tr>
+                <tr><td>Bluesky</td><td class="status-info">🦋 Decentralized Network</td><td><a href="https://bsky.app/profile/shimonaytoken.bsky.social" target="_blank">Follow on Bluesky ↗</a></td></tr>
+                <tr><td>Bitcointalk</td><td class="status-info">📜 Official Thread</td><td><a href="https://bitcointalk.org/index.php?topic=5579855.0" target="_blank">View Thread ↗</a></td></tr>
             </tbody>
         </table>
+    </div>
+</div>
+
+<!-- ✅ LIVE SMART CONTRACT SCANNER -->
+<div class="section">
+    <h2>🛡️ Live Smart Contract Scanner</h2>
+    <p style="text-align:center; color:#aaa; margin-bottom:30px; font-size:16px;">Don't trust, verify. Analyze any BSC token instantly. (SHIMO is set as default).</p>
+    <div class="scanner-container">
+        <div class="scanner-input-group">
+            <input type="text" id="scannerInput" class="scanner-input" value="0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e" placeholder="0x... (BSC Token Address)">
+            <button onclick="runScanner()" id="scannerBtn" class="scanner-btn">🔍 AUDIT TOKEN</button>
+        </div>
+        <div id="scannerResult" class="scanner-result"></div>
     </div>
 </div>
 
@@ -614,12 +496,10 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
     </div>
 </div>
 
-<!-- ✅ BLOCKSPOT VERIFIED LISTING -->
+<!-- ✅ BLOCKSPOT -->
 <div class="blockspot-section">
     <h2 style="margin-bottom:20px; background:linear-gradient(135deg,#ffd700,#ffaa00); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-size:28px; letter-spacing:2px;">🏅 Verified Listing</h2>
-    <p style="color:#aaa; margin-bottom:30px; font-size:15px;">
-        Shimonay (SHIMO) is verified on Blockspot.io — listing data confirmed by the project.
-    </p>
+    <p style="color:#aaa; margin-bottom:30px; font-size:15px;">Shimonay (SHIMO) is verified on Blockspot.io — listing data confirmed by the project.</p>
     <a href="https://blockspot.io/coin/shimonay-shimo/" target="_blank" rel="noopener" class="blockspot-badge" title="Shimonay (SHIMO) — Verified on Blockspot.io">
         <img src="/shimonay/assets/logo-dark-blue-500x500.jpg" alt="Blockspot.io - Verified Listing for Shimonay SHIMO" class="blockspot-logo" loading="lazy">
         <div class="blockspot-info">
@@ -671,6 +551,7 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
 <!-- ✅ SCRIPTS -->
 <script async src="https://www.coincatapult.com/widget.js"></script>
 <script>
+// ✅ COPY CONTRACT
 function copyContract() {
     const address = "0xCa9F1011b270EEAbfAd0D232dCFAeb781e53d77e";
     function showFeedback() {
@@ -680,35 +561,481 @@ function copyContract() {
             btn.innerHTML = '✅ Copied!';
             btn.style.background = '#ffd700';
             btn.style.color = '#000';
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.background = 'transparent';
-                btn.style.color = '#ffd700';
-            }, 2000);
+            setTimeout(() => { btn.innerHTML = originalText; btn.style.background = 'transparent'; btn.style.color = '#ffd700'; }, 2000);
         }
     }
     function fallbackCopy(text) {
         const textArea = document.createElement("textarea");
         textArea.value = text;
-        textArea.style.position = "fixed";
-        textArea.style.left = "-9999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        try {
-            document.execCommand('copy');
-            showFeedback();
-        } catch (err) {
-            console.error('Copy error', err);
-        }
+        textArea.style.position = "fixed"; textArea.style.left = "-9999px";
+        document.body.appendChild(textArea); textArea.focus(); textArea.select();
+        try { document.execCommand('copy'); showFeedback(); } catch (err) { console.error('Copy error', err); }
         document.body.removeChild(textArea);
     }
     if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(address).then(() => { showFeedback(); }).catch(() => { fallbackCopy(address); });
-    } else {
-        fallbackCopy(address);
+    } else { fallbackCopy(address); }
+}
+
+// ✅ UNIVERSAL BSC SCANNER v10 — BURNED LP DETECTION
+const provider = new ethers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
+const WBNB = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
+const PANCAKE_FACTORY_V2 = "0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73";
+const PAIR_CREATED_TOPIC = "0x0d3648bd50f0109fba21e4f14435d35985e7d0aab6f47a54f3b9e25f3f5d5733";
+const DEAD_ADDRESS = "0x000000000000000000000000000000000000dEaD";
+
+const LOCKERS = {
+    "PinkLock": "0x407993575c91ce7643a4d4cCACc9A98c36eE1BBE",
+    "Mudra": "0x211D5D1e0918B54454aB0a360d1E22f3c7E4b1E5",
+    "Team Finance": "0xE2fE530C047f2d85298b07D1197C531E0223D3e8",
+    "FairLock": "0x3DfD6dd38F055aD5061254813F5b82F73e1C5f3e"
+};
+
+const KNOWN_SUPPLIES = {
+    "0xca9f1011b270eeabfad0d232dcfaeb781e53d77e": { circulating: 20_000_000_000, max: 200_000_000_000 }
+};
+
+let currentAudit = null;
+
+function isValidAddress(addr) { return /^0x[a-fA-F0-9]{40}$/.test(addr); }
+
+// Formatters
+const fmtUSD = n => n ? n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }) : "—";
+const fmtCompact = n => new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 2 }).format(n);
+const fmtPrice = n => {
+    if (!n) return "—";
+    if (n >= 1) return "$" + n.toFixed(4);
+    if (n >= 0.01) return "$" + n.toFixed(6);
+    if (n >= 0.0001) return "$" + n.toFixed(8);
+    if (n >= 0.00000001) return "$" + n.toFixed(10);
+    if (n >= 0.0000000001) return "$" + n.toFixed(12);
+    return "$" + n.toExponential(4);
+};
+
+// ✅ FORMATADOR DE IDADE DA POOL
+function formatPoolAge(createdAtMs) {
+    if (!createdAtMs) return null;
+    const diffMs = Date.now() - createdAtMs;
+    if (diffMs < 0) return "just now";
+    const min = Math.floor(diffMs / 60000);
+    const h = Math.floor(min / 60);
+    const d = Math.floor(h / 24);
+    const mo = Math.floor(d / 30);
+    const y = Math.floor(d / 365);
+    if (y >= 1) return `~${y} year${y > 1 ? 's' : ''} ago`;
+    if (mo >= 1) return `~${mo} month${mo > 1 ? 's' : ''} ago`;
+    if (d >= 1) return `${d} day${d > 1 ? 's' : ''} ago`;
+    if (h >= 1) return `${h} hour${h > 1 ? 's' : ''} ago`;
+    return `${min} min ago`;
+}
+
+// ✅ BADGE DE RISCO POR IDADE
+function getAgeBadge(createdAtMs) {
+    if (!createdAtMs) return { label: "Unknown", cls: "age-badge-new" };
+    const diffH = (Date.now() - createdAtMs) / 3600000;
+    if (diffH < 24) return { label: "🔴 Very New", cls: "age-badge-danger" };
+    if (diffH < 24 * 7) return { label: "🟡 New Pool", cls: "age-badge-new" };
+    return { label: "🟢 Established", cls: "age-badge-old" };
+}
+
+// ✅ PREÇO DO BNB
+async function getBNBPrice() {
+    try {
+        const res = await fetch("https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT", { cache: "no-store" });
+        return parseFloat((await res.json()).price);
+    } catch (e) {
+        try {
+            const res2 = await fetch("https://api.binance.us/api/v3/ticker/price?symbol=BNBUSDT", { cache: "no-store" });
+            return parseFloat((await res2.json()).price);
+        } catch (e2) { return 600; }
     }
 }
+
+// ✅ DADOS DE MERCADO VIA DEXSCREENER
+async function getMarketData(address) {
+    try {
+        const res = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${address}`, { cache: "no-store" });
+        const data = await res.json();
+        if (!data.pairs || data.pairs.length === 0) return null;
+        const mainPair = data.pairs.reduce((best, p) => {
+            const liq = p.liquidity?.usd || 0;
+            return liq > (best.liquidity?.usd || 0) ? p : best;
+        }, data.pairs[0]);
+        return {
+            priceUsd: parseFloat(mainPair.priceUsd),
+            liquidityUsd: mainPair.liquidity?.usd || null,
+            fdv: mainPair.fdv || null,
+            marketCap: mainPair.marketCap || null,
+            volume24h: mainPair.volume?.h24 || null,
+            dexId: mainPair.dexId,
+            pairCreatedAt: mainPair.pairCreatedAt || null,
+            source: 'DexScreener API'
+        };
+    } catch (e) { return null; }
+}
+
+// ✅ BUSCA ON-CHAIN DO BLOCO DE CRIAÇÃO DO PAR
+async function findPairCreatedBlock(tokenAddress) {
+    try {
+        const sorted = [tokenAddress.toLowerCase(), WBNB.toLowerCase()].sort();
+        let end = await provider.getBlockNumber();
+        const CHUNK = 50000, MAX_QUERIES = 12;
+        for (let i = 0; i < MAX_QUERIES; i++) {
+            const start = Math.max(0, end - CHUNK + 1);
+            const logs = await provider.getLogs({
+                address: PANCAKE_FACTORY_V2,
+                topics: [PAIR_CREATED_TOPIC, sorted[0], sorted[1]],
+                fromBlock: start, toBlock: end
+            });
+            if (logs.length > 0) return logs[0].blockNumber;
+            end = start - 1;
+            if (end <= 0) break;
+        }
+    } catch (e) {}
+    return null;
+}
+
+async function getPoolAgeFromChain(tokenAddress) {
+    const blockNum = await findPairCreatedBlock(tokenAddress);
+    if (!blockNum) return null;
+    const block = await provider.getBlock(blockNum);
+    return block ? block.timestamp * 1000 : null;
+}
+
+// ✅ DADOS V2 ON-CHAIN (com detecção de LP queimada)
+async function getV2SecurityData(address, decimals) {
+    try {
+        const factory = new ethers.Contract(PANCAKE_FACTORY_V2,
+            ["function getPair(address,address) view returns (address)"], provider);
+        const lpAddress = await factory.getPair(address, WBNB);
+        if (!lpAddress || lpAddress === ethers.ZeroAddress) {
+            return { hasV2: false, lpAddress: null, lockedPct: 0, burnedPct: 0, safePct: 0, lockedIn: [], bnbInPool: 0, tokenInPool: 0, totalLP: 0 };
+        }
+        const lp = new ethers.Contract(lpAddress, [
+            "function getReserves() view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast)",
+            "function totalSupply() view returns (uint256)",
+            "function token0() view returns (address)",
+            "function balanceOf(address) view returns (uint256)"
+        ], provider);
+        const [reserves, totalSupply, token0] = await Promise.all([
+            lp.getReserves(), lp.totalSupply(), lp.token0()
+        ]);
+        const wbnbIsToken0 = token0.toLowerCase() === WBNB.toLowerCase();
+        const bnbInPool = parseFloat(ethers.formatUnits(wbnbIsToken0 ? reserves.reserve0 : reserves.reserve1, 18));
+        const tokenInPool = parseFloat(ethers.formatUnits(wbnbIsToken0 ? reserves.reserve1 : reserves.reserve0, decimals));
+        const totalLP = parseFloat(ethers.formatUnits(totalSupply, 18));
+
+        let lockedRaw = 0n;
+        let burnedRaw = 0n;
+        const lockedIn = [];
+
+        // Verifica lockers conhecidos
+        for (const [name, addr] of Object.entries(LOCKERS)) {
+            try {
+                const bal = await lp.balanceOf(addr);
+                if (bal > 0n) { lockedRaw += bal; lockedIn.push(name); }
+            } catch (e) {}
+        }
+
+        // 🔥 Verifica se LP foi QUEIMADA (enviada pro dead address)
+        try {
+            const burnedBal = await lp.balanceOf(DEAD_ADDRESS);
+            if (burnedBal > 0n) burnedRaw = burnedBal;
+        } catch (e) {}
+
+        const lockedLP = parseFloat(ethers.formatUnits(lockedRaw, 18));
+        const burnedLP = parseFloat(ethers.formatUnits(burnedRaw, 18));
+
+        const lockedPct = totalLP > 0 ? (lockedLP / totalLP) * 100 : 0;
+        const burnedPct = totalLP > 0 ? (burnedLP / totalLP) * 100 : 0;
+        const safePct = lockedPct + burnedPct; // % totalmente segura (locked + burned)
+
+        return { 
+            hasV2: true, lpAddress, 
+            lockedPct, burnedPct, safePct,
+            lockedIn, 
+            bnbInPool, tokenInPool, totalLP 
+        };
+    } catch (e) {
+        return { hasV2: false, lpAddress: null, lockedPct: 0, burnedPct: 0, safePct: 0, lockedIn: [], bnbInPool: 0, tokenInPool: 0, totalLP: 0 };
+    }
+}
+
+// ✅ FALLBACK: calcula dados de mercado do pool V2
+function calcFromV2(v2Data, bnbPrice) {
+    if (!v2Data.hasV2 || v2Data.bnbInPool <= 0 || v2Data.tokenInPool <= 0 || !bnbPrice) return null;
+    const priceUsd = (v2Data.bnbInPool / v2Data.tokenInPool) * bnbPrice;
+    const knownSupply = KNOWN_SUPPLIES[currentAudit.address.toLowerCase()];
+    const fdv = knownSupply?.max ? priceUsd * knownSupply.max : priceUsd * v2Data.tokenInPool * 10;
+    const mc = knownSupply?.circulating ? priceUsd * knownSupply.circulating : fdv;
+    return {
+        priceUsd, liquidityUsd: v2Data.bnbInPool * bnbPrice * 2, fdv, marketCap: mc,
+        volume24h: null, dexId: 'PancakeSwap V2', pairCreatedAt: null,
+        source: 'Calculated from V2 Pool + BNB Price'
+    };
+}
+
+// 🧮 SLIPPAGE
+function calcSlippage(tradeUsd, liquidityUsd) {
+    if (!liquidityUsd || liquidityUsd <= 0) return { impact: 0, rec: 0, safe: false };
+    const impact = (tradeUsd / liquidityUsd) * 100 * 2;
+    const rec = Math.max(0.5, impact + 0.5);
+    return { impact: impact.toFixed(2), rec: rec.toFixed(2), safe: impact < 1.0 };
+}
+
+function renderScannerCard(tokenData, marketData, v2Data) {
+    const time = new Date().toLocaleTimeString();
+    const { name, symbol, decimals, owner, isRenounced, risks } = tokenData;
+
+    let html = `
+    <div class="scanner-item">
+        <div class="scanner-label">🪪 Token Identity & Ownership</div>
+        <div class="scanner-value">
+            <strong>${name}</strong> (${symbol}) • <span style="color:#888;">${decimals} decimals</span><br>
+            <code>${currentAudit.address}</code><br><br>
+            ${isRenounced
+                ? '<span class="status-green">✅ CONTRACT RENOUNCED (Owner is 0x000...dead)</span>'
+                : `<span class="status-red">⚠️ NOT RENOUNCED</span><br>Owner: <code>${owner}</code>`}
+        </div>
+    </div>`;
+
+    // 🚨 BANNER DE RUG RISK (usa safePct = locked + burned)
+    if (v2Data.hasV2 && v2Data.safePct < 50) {
+        const ageInfo = marketData?.pairCreatedAt ? formatPoolAge(marketData.pairCreatedAt) : null;
+        const extraWarn = ageInfo ? `<br><strong>Pool age:</strong> ${ageInfo} — verify the lock before trading!` : '';
+        html += `
+        <div class="rug-alert-banner">
+            <div class="rug-alert-title">🚨 DANGER: LIQUIDITY UNLOCKED 🚨</div>
+            <div class="rug-alert-text">
+                Only <strong>${v2Data.safePct.toFixed(1)}%</strong> of the V2 LP is secured 
+                (locked + burned). The remaining <strong>${(100 - v2Data.safePct).toFixed(1)}%</strong> 
+                can be withdrawn at any time (rug pull risk).
+                Only trade amounts you can afford to lose.${extraWarn}
+            </div>
+        </div>`;
+    }
+
+    // 📊 DADOS DE MERCADO
+    if (marketData) {
+        const sourceBadge = marketData.source === 'DexScreener API'
+            ? '<span style="color:#00ff88; font-size:10px;">🟢 Live API</span>'
+            : '<span style="color:#ffd700; font-size:10px;">🟡 V2 Pool Calculation</span>';
+        html += `
+        <div class="scanner-item">
+            <div class="scanner-label">📊 Market Data ${sourceBadge}</div>
+            <div class="scanner-value">
+                <div class="price-grid">
+                    <div class="price-cell"><span class="price-cell-label">💵 Price</span><span class="price-cell-value">${fmtPrice(marketData.priceUsd)}</span></div>
+                    <div class="price-cell"><span class="price-cell-label">📈 Market Cap</span><span class="price-cell-value">${fmtUSD(marketData.marketCap)}</span></div>
+                    <div class="price-cell"><span class="price-cell-label">📊 FDV</span><span class="price-cell-value">${fmtUSD(marketData.fdv)}</span></div>
+                </div>
+                <div class="live-grid" style="margin-top:10px;">
+                    <div class="live-cell"><span class="live-cell-label">TOTAL TVL</span><span class="live-cell-value status-green">${fmtUSD(marketData.liquidityUsd)}</span></div>
+                    ${marketData.volume24h ? `<div class="live-cell"><span class="live-cell-label">24H VOLUME</span><span class="live-cell-value">${fmtUSD(marketData.volume24h)}</span></div>` : ''}
+                    <div class="live-cell"><span class="live-cell-label">SOURCE</span><span class="live-cell-value" style="font-size:11px;">${marketData.dexId || '—'}</span></div>
+                </div>
+            </div>
+        </div>`;
+    }
+
+    // 🔒 V2 SECURITY + ⏱️ POOL AGE
+    if (v2Data.hasV2) {
+        const lockBadge = v2Data.lockedPct >= 99 ? "status-green" : (v2Data.lockedPct > 0 ? "status-yellow" : "");
+        const lockLabel = v2Data.lockedPct >= 99 ? "🔒 FULLY LOCKED" : (v2Data.lockedPct > 0 ? "⚠️ Partially Locked" : "Not Locked");
+
+        const burnBadge = v2Data.burnedPct >= 99 ? "status-green" : (v2Data.burnedPct > 0 ? "status-yellow" : "");
+        const burnLabel = v2Data.burnedPct >= 99 ? "🔥 FULLY BURNED" : (v2Data.burnedPct > 0 ? "🔥 Partially Burned" : "Not Burned");
+
+        const createdAt = marketData?.pairCreatedAt || currentAudit.cachedAgeMs || null;
+        const ageText = formatPoolAge(createdAt);
+        const ageBadge = getAgeBadge(createdAt);
+
+        html += `
+        <div class="scanner-item">
+            <div class="scanner-label">🔒 PancakeSwap V2 Security Check (On-Chain)</div>
+            <div class="scanner-value">
+                <div class="live-grid">
+                    <div class="live-cell"><span class="live-cell-label">V2 LP ADDRESS</span><span class="live-cell-value" style="font-size:11px;">${v2Data.lpAddress}</span></div>
+                    <div class="live-cell"><span class="live-cell-label">BNB IN V2 POOL</span><span class="live-cell-value">${fmtCompact(v2Data.bnbInPool)} BNB</span></div>
+                    <div class="live-cell"><span class="live-cell-label">${symbol} IN V2 POOL</span><span class="live-cell-value">${fmtCompact(v2Data.tokenInPool)} ${symbol}</span></div>
+                    <div class="live-cell"><span class="live-cell-label">🔒 LOCKED %</span><span class="live-cell-value ${lockBadge}">${lockLabel} (${v2Data.lockedPct.toFixed(1)}%)</span></div>
+                    <div class="live-cell"><span class="live-cell-label">🔥 BURNED %</span><span class="live-cell-value ${burnBadge}">${burnLabel} (${v2Data.burnedPct.toFixed(1)}%)</span></div>
+                    <div class="live-cell"><span class="live-cell-label">V2 LOCKER</span><span class="live-cell-value">${v2Data.lockedIn.length ? v2Data.lockedIn.join(", ") : "None"}</span></div>
+                    <div class="live-cell age-cell">
+                        <span class="live-cell-label">⏱️ POOL AGE</span>
+                        <span class="live-cell-value">${ageText || "—"}</span>
+                        <span class="age-badge ${ageBadge.cls}">${ageBadge.label}</span>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    } else {
+        html += `
+        <div class="scanner-item">
+            <div class="scanner-label">🔒 PancakeSwap V2 Security Check</div>
+            <div class="scanner-value"><span class="status-yellow">⚠️ No PancakeSwap V2 pair found. Token might be V3 only or have no liquidity.</span></div>
+        </div>`;
+    }
+
+    // 📉 SLIPPAGE
+    const liqForSlippage = marketData?.liquidityUsd || (v2Data.bnbInPool > 0 ? v2Data.bnbInPool * 600 * 2 : 0);
+    const trades = [10, 50, 100];
+    let slippageHtml = '<div class="slippage-grid">';
+    trades.forEach(usdAmount => {
+        const calc = calcSlippage(usdAmount, liqForSlippage);
+        const colorClass = calc.safe ? 'status-green' : (parseFloat(calc.impact) < 3 ? 'status-yellow' : 'status-red');
+        slippageHtml += `
+            <div class="slippage-card">
+                <div class="slippage-amount">Buy $${usdAmount}</div>
+                <div class="slippage-impact">Price Impact: ~${calc.impact}%</div>
+                <div class="slippage-rec ${colorClass}">Set Slippage: ${calc.rec}%</div>
+            </div>
+        `;
+    });
+    slippageHtml += '</div>';
+    slippageHtml += `<div class="slippage-note">💡 <strong>Trading tip:</strong> Set slippage slightly above "Price Impact" to avoid failed transactions.</div>`;
+
+    html += `
+    <div class="scanner-item">
+        <div class="scanner-label">📉 Estimated Slippage for Small Trades</div>
+        <div class="scanner-value">${slippageHtml}</div>
+    </div>`;
+
+    // 🛡️ RISK
+    let riskStatus = '<span class="status-green">✅ No common dangerous functions detected in bytecode</span>';
+    if (risks.length > 0) {
+        riskStatus = `<span class="status-red">⚠️ Risk Functions Detected:</span><br>${risks.join(', ')}<br><small><em>Note: If contract is RENOUNCED, these cannot be executed.</em></small>`;
+    }
+    html += `
+    <div class="scanner-item">
+        <div class="scanner-label">🛡️ Honeypot / Bytecode Risk Analysis</div>
+        <div class="scanner-value">${riskStatus}</div>
+    </div>`;
+
+    // FOOTER
+    html += `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; flex-wrap:wrap; gap:10px;">
+        <small style="color:#888;">🕐 Last Update: <strong style="color:#d4af37;">${time}</strong></small>
+        <div style="display:flex; gap:10px;">
+            <a href="https://bscscan.com/token/${currentAudit.address}" target="_blank" class="update-btn" style="text-decoration:none; display:inline-flex; align-items:center;">🔗 BscScan</a>
+            <button onclick="refreshLiveLiquidity()" class="update-btn" id="updateBtn">🔄 Update Live Data</button>
+        </div>
+    </div>`;
+
+    return html;
+}
+
+async function refreshLiveLiquidity() {
+    if (!currentAudit) return;
+    const resultDiv = document.getElementById("scannerResult");
+    const btn = document.getElementById("updateBtn");
+    if (!resultDiv || !btn) return;
+
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Fetching...';
+
+    try {
+        const tokenContract = new ethers.Contract(currentAudit.address, ["function owner() view returns (address)"], provider);
+        let owner = "Unknown", isRenounced = false;
+        try {
+            owner = await tokenContract.owner();
+            isRenounced = (owner === ethers.ZeroAddress || owner.toLowerCase() === "0x000000000000000000000000000000000000dead");
+        } catch (e) {}
+
+        const [marketDataFromAPI, v2Data] = await Promise.all([
+            getMarketData(currentAudit.address),
+            getV2SecurityData(currentAudit.address, currentAudit.decimals)
+        ]);
+
+        let marketData = marketDataFromAPI;
+        if (!marketData && v2Data.hasV2) {
+            const bnbPrice = await getBNBPrice();
+            marketData = calcFromV2(v2Data, bnbPrice);
+        }
+
+        if (v2Data.hasV2 && !marketData?.pairCreatedAt && !currentAudit.cachedAgeMs) {
+            currentAudit.cachedAgeMs = await getPoolAgeFromChain(currentAudit.address);
+        }
+
+        const tokenData = { ...currentAudit, owner, isRenounced };
+        resultDiv.innerHTML = renderScannerCard(tokenData, marketData, v2Data);
+    } catch (e) {
+        console.error('Update error:', e);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '🔄 Update Live Data';
+    }
+}
+
+async function runScanner() {
+    const address = document.getElementById("scannerInput").value.trim();
+    const resultDiv = document.getElementById("scannerResult");
+    const btn = document.getElementById("scannerBtn");
+
+    if (!isValidAddress(address)) {
+        resultDiv.innerHTML = '<p class="status-red">❌ Invalid BSC Address format.</p>';
+        resultDiv.classList.add('active');
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Scanning Blockchain...';
+    resultDiv.classList.remove('active');
+
+    try {
+        const tokenContract = new ethers.Contract(address, [
+            "function name() view returns (string)",
+            "function symbol() view returns (string)",
+            "function decimals() view returns (uint8)",
+            "function owner() view returns (address)"
+        ], provider);
+
+        let name = "Unknown", symbol = "???", decimals = 18, owner = "Unknown", isRenounced = false;
+        try {
+            const [n, s, d, o] = await Promise.all([
+                tokenContract.name(), tokenContract.symbol(), tokenContract.decimals(), tokenContract.owner()
+            ]);
+            name = n; symbol = s; decimals = Number(d); owner = o;
+            isRenounced = (owner === ethers.ZeroAddress || owner.toLowerCase() === "0x000000000000000000000000000000000000dead");
+        } catch (e) {}
+
+        const code = await provider.getCode(address);
+        const dangerous = { "mint(address,uint256)": "40c10f19", "blacklist(address)": "c8b2cb8d", "setMaxTxAmount(uint256)": "84521151" };
+        let risks = [];
+        for (const [funcName, selector] of Object.entries(dangerous)) {
+            if (code.toLowerCase().includes(selector)) risks.push(`<code>${funcName}</code>`);
+        }
+
+        currentAudit = { address, name, symbol, decimals, owner, isRenounced, risks, cachedAgeMs: null };
+
+        const [marketDataFromAPI, v2Data] = await Promise.all([
+            getMarketData(address),
+            getV2SecurityData(address, decimals)
+        ]);
+
+        let marketData = marketDataFromAPI;
+        if (!marketData && v2Data.hasV2) {
+            const bnbPrice = await getBNBPrice();
+            marketData = calcFromV2(v2Data, bnbPrice);
+        }
+
+        if (v2Data.hasV2 && !marketData?.pairCreatedAt) {
+            currentAudit.cachedAgeMs = await getPoolAgeFromChain(address);
+        }
+
+        resultDiv.innerHTML = renderScannerCard(currentAudit, marketData, v2Data);
+        resultDiv.classList.add('active');
+
+    } catch (error) {
+        resultDiv.innerHTML = `<p class="status-red">❌ Error scanning: ${error.message}</p>`;
+        resultDiv.classList.add('active');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '🔍 AUDIT TOKEN';
+    }
+}
+
+window.addEventListener('load', () => { setTimeout(runScanner, 1500); });
 </script>
 
 </body>

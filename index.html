@@ -189,6 +189,14 @@ header p{ color:#d4af37; font-size:22px; letter-spacing: 3px; margin-bottom: 50p
 .slippage-rec { font-size: 14px; font-weight: 800; padding: 4px 8px; border-radius: 6px; display: inline-block; }
 .slippage-note { font-size: 12px; color: #888; margin-top: 15px; text-align: center; font-style: italic; line-height: 1.4; background: rgba(255,215,0,0.05); padding: 10px; border-radius: 8px; border-left: 3px solid #ffd700; }
 
+/* ✅ SLIPPAGE CALCULATOR */
+.slippage-divider { border: none; border-top: 1px dashed rgba(255,215,0,0.3); margin: 20px 0 15px 0; }
+.slippage-calc-title { color: #ffd700; font-size: 13px; font-weight: 700; text-align: center; margin-bottom: 12px; letter-spacing: 1px; text-transform: uppercase; }
+.slippage-input-group { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 15px; flex-wrap: wrap; }
+.slippage-input { background: rgba(0,0,0,0.5); border: 2px solid #ffd700; color: #ffd700; padding: 10px 15px; border-radius: 8px; width: 130px; text-align: center; font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 700; outline: none; transition: all 0.3s; }
+.slippage-input:focus { box-shadow: 0 0 15px rgba(255,215,0,0.3); border-color: #ffed4e; }
+.slippage-input-label { color: #d4af37; font-weight: 700; font-size: 14px; }
+
 /* ✅ PRICE CARDS */
 .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 15px; }
 .price-cell { background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,215,0,0.03)); border: 1px solid rgba(255,215,0,0.25); border-radius: 12px; padding: 14px 10px; text-align: center; }
@@ -216,6 +224,46 @@ header p{ color:#d4af37; font-size:22px; letter-spacing: 3px; margin-bottom: 50p
 }
 .rug-alert-text { color: #ffb3b3; font-size: 13px; line-height: 1.6; }
 .rug-alert-text strong { color: #fff; }
+
+/* ✅ PROXY ALERT BANNER */
+.proxy-alert-banner {
+    background: linear-gradient(135deg, rgba(140,0,255,0.18), rgba(60,0,110,0.28));
+    border: 2px solid #a855f7;
+    border-radius: 14px;
+    padding: 20px;
+    margin: 18px 0;
+    text-align: center;
+    animation: proxy-pulse 1.6s ease-in-out infinite;
+}
+@keyframes proxy-pulse {
+    0%, 100% { box-shadow: 0 0 12px rgba(168,85,247,0.3); border-color: #a855f7; }
+    50% { box-shadow: 0 0 30px rgba(168,85,247,0.9), inset 0 0 20px rgba(168,85,247,0.15); border-color: #c084fc; }
+}
+.proxy-alert-title {
+    color: #c084fc; font-size: 17px; font-weight: 900;
+    font-family: 'Orbitron', sans-serif; letter-spacing: 2px;
+    margin-bottom: 8px; text-transform: uppercase;
+}
+.proxy-alert-text { color: #d8b4fe; font-size: 13px; line-height: 1.6; }
+.proxy-alert-text strong { color: #fff; }
+.proxy-alert-text a { color: #ffd700; text-decoration: underline; font-weight: 700; }
+
+/* ✅ SECURITY VERDICT */
+.verdict-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-bottom:15px; }
+.verdict-badge { border-radius:12px; padding:12px 8px; text-align:center; border:1px solid; font-family:'Orbitron',sans-serif; }
+.verdict-badge .v-label { display:block; font-size:10px; letter-spacing:1px; text-transform:uppercase; margin-bottom:5px; font-weight:700; opacity:0.85; }
+.verdict-badge .v-value { display:block; font-size:13px; font-weight:900; }
+.verdict-ok { background: rgba(0,255,136,0.08); border-color: rgba(0,255,136,0.4); color:#00ff88; }
+.verdict-warn { background: rgba(255,215,0,0.08); border-color: rgba(255,215,0,0.4); color:#ffd700; }
+.verdict-danger { background: rgba(255,68,68,0.12); border-color: rgba(255,68,68,0.5); color:#ff4444; animation: rug-pulse 1.4s infinite; }
+
+/* ✅ SIMULATION CARDS */
+.sim-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-top:10px; }
+.sim-card { background: rgba(255,215,0,0.05); border:1px solid rgba(255,215,0,0.2); border-radius:12px; padding:15px; }
+.sim-card-title { color:#d4af37; font-size:11px; text-transform:uppercase; letter-spacing:1px; font-weight:700; margin-bottom:8px; }
+.sim-card-main { color:#fff; font-size:16px; font-weight:800; font-family:'Orbitron',sans-serif; margin-bottom:4px; }
+.sim-card-sub { color:#aaa; font-size:12px; line-height:1.5; }
+.sim-path { font-size:10px; color:#888; margin-top:6px; font-family:'Courier New',monospace; word-break:break-all; }
 
 /* ✅ AGE BADGES */
 .age-cell { position: relative; }
@@ -287,7 +335,8 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
 /* ✅ ACESSIBILIDADE */
 .button:focus-visible, .trade-btn:focus-visible, .copy-btn:focus-visible, 
 .blockspot-badge:focus-visible, .binance-profile-btn:focus-visible, footer a:focus-visible,
-.scanner-input:focus-visible, .scanner-btn:focus-visible, .update-btn:focus-visible {
+.scanner-input:focus-visible, .scanner-btn:focus-visible, .update-btn:focus-visible,
+.slippage-input:focus-visible {
     outline: 3px solid #ffed4e;
     outline-offset: 3px;
 }
@@ -543,13 +592,14 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
         <a href="https://x.com/ShimonayToken" target="_blank">X (Twitter)</a>
         <a href="https://t.me/+Bzn5r9XIhyw4YWMx" target="_blank">Telegram</a>
     </div>
-    <p>© 2026 SHIMONAY — Built with transparency by a solo developer</p>
+    <p>© 2026/2027 SHIMONAY — Built with transparency by a solo developer</p>
     <p style="margin-top:15px; font-size:11px; color:#b3b3b3;">Remember: Don't trust words. Trust code. Verify on-chain.</p>
     <p style="color:#b3b3b3; font-size:10px; margin-top:10px;">Contact: shimonaytoken@gmail.com</p>
 </footer>
 
 <!-- ✅ SCRIPTS -->
 <script async src="https://www.coincatapult.com/widget.js"></script>
+
 <script>
 // ✅ COPY CONTRACT
 function copyContract() {
@@ -577,18 +627,30 @@ function copyContract() {
     } else { fallbackCopy(address); }
 }
 
-// ✅ UNIVERSAL BSC SCANNER v10 — BURNED LP DETECTION
+// ✅ UNIVERSAL BSC SCANNER v36 — PRECISE BURN DETECTION V2 & V3
 const provider = new ethers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
+const providerBackup = new ethers.JsonRpcProvider("https://bsc-rpc.publicnode.com");
+
 const WBNB = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
+const USDT = "0x55d398326f99059fF775485246999027B3197955";
+const USDC = "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d";
+const ROUTER_V2 = "0x10ED43C718714eb63d5aA57B78B54704E256024E";
 const PANCAKE_FACTORY_V2 = "0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73";
+const PANCAKE_V3_POSITION_MANAGER = "0x46A15B0b27311cedF172AB29E4f4766fbE7F4364";
 const PAIR_CREATED_TOPIC = "0x0d3648bd50f0109fba21e4f14435d35985e7d0aab6f47a54f3b9e25f3f5d5733";
+const SWAP_TOPIC = "0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822";
 const DEAD_ADDRESS = "0x000000000000000000000000000000000000dEaD";
+const EIP1967_IMPL_SLOT = "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc";
+const EIP1967_ADMIN_SLOT = "0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103";
+const ZERO_ADDR = "0x0000000000000000000000000000000000000000";
 
 const LOCKERS = {
     "PinkLock": "0x407993575c91ce7643a4d4cCACc9A98c36eE1BBE",
     "Mudra": "0x211D5D1e0918B54454aB0a360d1E22f3c7E4b1E5",
     "Team Finance": "0xE2fE530C047f2d85298b07D1197C531E0223D3e8",
-    "FairLock": "0x3DfD6dd38F055aD5061254813F5b82F73e1C5f3e"
+    "FairLock": "0x3DfD6dd38F055aD5061254813F5b82F73e1C5f3e",
+    "UNCX": "0x04B0a7111411a787aef7e4bCCBd3a931E8335008",
+    "PinkLock V2": "0x7C598c96D02398d89FbCb9d41Eab3DF0C16F227D"
 };
 
 const KNOWN_SUPPLIES = {
@@ -596,10 +658,11 @@ const KNOWN_SUPPLIES = {
 };
 
 let currentAudit = null;
+window.currentSlippageLiquidity = 0;
 
+const errMsg = e => (e && (e.shortMessage || e.message)) || "Unknown error";
 function isValidAddress(addr) { return /^0x[a-fA-F0-9]{40}$/.test(addr); }
 
-// Formatters
 const fmtUSD = n => n ? n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }) : "—";
 const fmtCompact = n => new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 2 }).format(n);
 const fmtPrice = n => {
@@ -612,7 +675,6 @@ const fmtPrice = n => {
     return "$" + n.toExponential(4);
 };
 
-// ✅ FORMATADOR DE IDADE DA POOL
 function formatPoolAge(createdAtMs) {
     if (!createdAtMs) return null;
     const diffMs = Date.now() - createdAtMs;
@@ -629,16 +691,15 @@ function formatPoolAge(createdAtMs) {
     return `${min} min ago`;
 }
 
-// ✅ BADGE DE RISCO POR IDADE
-function getAgeBadge(createdAtMs) {
-    if (!createdAtMs) return { label: "Unknown", cls: "age-badge-new" };
-    const diffH = (Date.now() - createdAtMs) / 3600000;
-    if (diffH < 24) return { label: "🔴 Very New", cls: "age-badge-danger" };
-    if (diffH < 24 * 7) return { label: "🟡 New Pool", cls: "age-badge-new" };
-    return { label: "🟢 Established", cls: "age-badge-old" };
+async function getLogsWithFallback(filter) {
+    try { return await provider.getLogs(filter); }
+    catch (e) { return await providerBackup.getLogs(filter); }
+}
+async function getStorageWithFallback(address, slot) {
+    try { return await provider.getStorage(address, slot); }
+    catch (e) { return await providerBackup.getStorage(address, slot); }
 }
 
-// ✅ PREÇO DO BNB
 async function getBNBPrice() {
     try {
         const res = await fetch("https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT", { cache: "no-store" });
@@ -651,7 +712,95 @@ async function getBNBPrice() {
     }
 }
 
-// ✅ DADOS DE MERCADO VIA DEXSCREENER
+// ⭐ DETECTA TIPO DE POOL (V2 ou V3)
+async function detectPoolType(poolAddress) {
+    try {
+        const contract = new ethers.Contract(poolAddress, [
+            "function getReserves() view returns (uint112, uint112, uint32)"
+        ], provider);
+        await contract.getReserves();
+        return 'V2';
+    } catch (e) {
+        try {
+            const contract = new ethers.Contract(poolAddress, [
+                "function slot0() view returns (uint160, int24, uint16, uint16, uint16, uint8, bool)"
+            ], provider);
+            await contract.slot0();
+            return 'V3';
+        } catch (e2) {
+            return 'UNKNOWN';
+        }
+    }
+}
+
+// ⭐ VERIFICA BURN V2 (LP tokens no dead address)
+async function checkV2Burn(lpAddress) {
+    try {
+        const lp = new ethers.Contract(lpAddress, [
+            "function totalSupply() view returns (uint256)",
+            "function balanceOf(address) view returns (uint256)"
+        ], provider);
+        
+        const [totalSupply, deadBalance] = await Promise.all([
+            lp.totalSupply(),
+            lp.balanceOf(DEAD_ADDRESS)
+        ]);
+        
+        const totalNum = Number(totalSupply);
+        const deadNum = Number(deadBalance);
+        
+        if (totalNum === 0) return { burned: false, burnedPct: 0 };
+        
+        const burnedPct = (deadNum / totalNum) * 100;
+        return { burned: burnedPct > 50, burnedPct, deadLP: deadNum, totalLP: totalNum };
+    } catch (e) {
+        return { burned: false, burnedPct: 0, error: errMsg(e) };
+    }
+}
+
+// ⭐ VERIFICA BURN V3 (NFTs no dead address do Position Manager)
+async function checkV3Burn() {
+    try {
+        const positionManager = new ethers.Contract(PANCAKE_V3_POSITION_MANAGER, [
+            "function balanceOf(address) view returns (uint256)",
+            "function totalSupply() view returns (uint256)"
+        ], provider);
+        
+        const [deadBalance, totalSupply] = await Promise.all([
+            positionManager.balanceOf(DEAD_ADDRESS),
+            positionManager.totalSupply()
+        ]);
+        
+        const deadNum = Number(deadBalance);
+        const totalNum = Number(totalSupply);
+        
+        if (totalNum === 0) return { burned: false, burnedPct: 0 };
+        
+        const burnedPct = (deadNum / totalNum) * 100;
+        return { burned: burnedPct > 50, burnedPct, deadNFTs: deadNum, totalNFTs: totalNum };
+    } catch (e) {
+        return { burned: false, burnedPct: 0, error: errMsg(e) };
+    }
+}
+
+// ⭐ VERIFICA LOCKERS V2
+async function checkV2Lockers(lpAddress) {
+    const lockedIn = [];
+    let lockedRaw = 0n;
+    
+    for (const [name, addr] of Object.entries(LOCKERS)) {
+        try {
+            const lp = new ethers.Contract(lpAddress, [
+                "function balanceOf(address) view returns (uint256)"
+            ], provider);
+            const bal = await lp.balanceOf(addr);
+            if (bal > 0n) { lockedRaw += bal; lockedIn.push(name); }
+        } catch (e) {}
+    }
+    
+    return { lockedIn, lockedRaw };
+}
+
 async function getMarketData(address) {
     try {
         const res = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${address}`, { cache: "no-store" });
@@ -669,12 +818,34 @@ async function getMarketData(address) {
             volume24h: mainPair.volume?.h24 || null,
             dexId: mainPair.dexId,
             pairCreatedAt: mainPair.pairCreatedAt || null,
+            baseTokenName: mainPair.baseToken?.name || null,
+            baseTokenSymbol: mainPair.baseToken?.symbol || null,
+            baseTokenDecimals: mainPair.baseToken?.decimals || null,
+            allPairs: data.pairs.map(p => ({
+                pairAddress: p.pairAddress,
+                dexId: p.dexId,
+                labels: p.labels || [],
+                liquidityUsd: p.liquidity?.usd || 0,
+                volume24h: p.volume?.h24 || 0,
+                priceUsd: parseFloat(p.priceUsd) || null,
+                createdAt: p.pairCreatedAt || null,
+                quoteSymbol: p.quoteToken?.symbol || "?",
+                baseSymbol: p.baseToken?.symbol || "?"
+            })),
             source: 'DexScreener API'
         };
     } catch (e) { return null; }
 }
 
-// ✅ BUSCA ON-CHAIN DO BLOCO DE CRIAÇÃO DO PAR
+async function getIdentityFromGecko(address) {
+    try {
+        const res = await fetch(`https://api.geckoterminal.com/api/v2/networks/bsc/tokens/${address}`, { cache: "no-store" });
+        const a = (await res.json())?.data?.attributes;
+        if (!a) return null;
+        return { name: a.name || null, symbol: a.symbol || null, decimals: a.decimals ? Number(a.decimals) : null };
+    } catch (e) { return null; }
+}
+
 async function findPairCreatedBlock(tokenAddress) {
     try {
         const sorted = [tokenAddress.toLowerCase(), WBNB.toLowerCase()].sort();
@@ -682,7 +853,7 @@ async function findPairCreatedBlock(tokenAddress) {
         const CHUNK = 50000, MAX_QUERIES = 12;
         for (let i = 0; i < MAX_QUERIES; i++) {
             const start = Math.max(0, end - CHUNK + 1);
-            const logs = await provider.getLogs({
+            const logs = await getLogsWithFallback({
                 address: PANCAKE_FACTORY_V2,
                 topics: [PAIR_CREATED_TOPIC, sorted[0], sorted[1]],
                 fromBlock: start, toBlock: end
@@ -702,7 +873,6 @@ async function getPoolAgeFromChain(tokenAddress) {
     return block ? block.timestamp * 1000 : null;
 }
 
-// ✅ DADOS V2 ON-CHAIN (com detecção de LP queimada)
 async function getV2SecurityData(address, decimals) {
     try {
         const factory = new ethers.Contract(PANCAKE_FACTORY_V2,
@@ -725,19 +895,14 @@ async function getV2SecurityData(address, decimals) {
         const tokenInPool = parseFloat(ethers.formatUnits(wbnbIsToken0 ? reserves.reserve1 : reserves.reserve0, decimals));
         const totalLP = parseFloat(ethers.formatUnits(totalSupply, 18));
 
-        let lockedRaw = 0n;
-        let burnedRaw = 0n;
+        let lockedRaw = 0n, burnedRaw = 0n;
         const lockedIn = [];
-
-        // Verifica lockers conhecidos
         for (const [name, addr] of Object.entries(LOCKERS)) {
             try {
                 const bal = await lp.balanceOf(addr);
                 if (bal > 0n) { lockedRaw += bal; lockedIn.push(name); }
             } catch (e) {}
         }
-
-        // 🔥 Verifica se LP foi QUEIMADA (enviada pro dead address)
         try {
             const burnedBal = await lp.balanceOf(DEAD_ADDRESS);
             if (burnedBal > 0n) burnedRaw = burnedBal;
@@ -745,37 +910,340 @@ async function getV2SecurityData(address, decimals) {
 
         const lockedLP = parseFloat(ethers.formatUnits(lockedRaw, 18));
         const burnedLP = parseFloat(ethers.formatUnits(burnedRaw, 18));
-
         const lockedPct = totalLP > 0 ? (lockedLP / totalLP) * 100 : 0;
         const burnedPct = totalLP > 0 ? (burnedLP / totalLP) * 100 : 0;
-        const safePct = lockedPct + burnedPct; // % totalmente segura (locked + burned)
 
-        return { 
-            hasV2: true, lpAddress, 
-            lockedPct, burnedPct, safePct,
-            lockedIn, 
-            bnbInPool, tokenInPool, totalLP 
-        };
+        if (burnedPct > 0 && !lockedIn.includes('🔥 Burned')) {
+            lockedIn.push('🔥 Burned');
+        }
+
+        return { hasV2: true, lpAddress, lockedPct, burnedPct, safePct: lockedPct + burnedPct, lockedIn, bnbInPool, tokenInPool, totalLP };
     } catch (e) {
         return { hasV2: false, lpAddress: null, lockedPct: 0, burnedPct: 0, safePct: 0, lockedIn: [], bnbInPool: 0, tokenInPool: 0, totalLP: 0 };
     }
 }
 
-// ✅ FALLBACK: calcula dados de mercado do pool V2
+async function getStableV2Pairs(address, decimals) {
+    const results = [];
+    const stables = [ { addr: USDT, name: "USDT", dec: 18 }, { addr: USDC, name: "USDC", dec: 6 } ];
+    for (const st of stables) {
+        try {
+            const factory = new ethers.Contract(PANCAKE_FACTORY_V2, ["function getPair(address,address) view returns (address)"], provider);
+            const lpAddress = await factory.getPair(address, st.addr);
+            if (!lpAddress || lpAddress === ethers.ZeroAddress) continue;
+            const lp = new ethers.Contract(lpAddress, [
+                "function getReserves() view returns (uint112,uint112,uint32)",
+                "function totalSupply() view returns (uint256)",
+                "function token0() view returns (address)",
+                "function balanceOf(address) view returns (uint256)"
+            ], provider);
+            const [reserves, totalSupply, token0] = await Promise.all([lp.getReserves(), lp.totalSupply(), lp.token0()]);
+            const stIsToken0 = token0.toLowerCase() === st.addr.toLowerCase();
+            const stReserve = parseFloat(ethers.formatUnits(stIsToken0 ? reserves.reserve0 : reserves.reserve1, st.dec));
+            const totalLP = parseFloat(ethers.formatUnits(totalSupply, 18));
+            let lockedRaw = 0n, burnedRaw = 0n; const lockedIn = [];
+            for (const [name, addr2] of Object.entries(LOCKERS)) {
+                try { const b = await lp.balanceOf(addr2); if (b > 0n) { lockedRaw += b; lockedIn.push(name); } } catch (e) {}
+            }
+            try { const b = await lp.balanceOf(DEAD_ADDRESS); if (b > 0n) burnedRaw = b; } catch (e) {}
+            const safePct = totalLP > 0 ? ((parseFloat(ethers.formatUnits(lockedRaw, 18)) + parseFloat(ethers.formatUnits(burnedRaw, 18))) / totalLP) * 100 : 0;
+            
+            const burnedPct = totalLP > 0 ? (parseFloat(ethers.formatUnits(burnedRaw, 18)) / totalLP) * 100 : 0;
+            if (burnedPct > 0 && !lockedIn.includes('🔥 Burned')) {
+                lockedIn.push('🔥 Burned');
+            }
+            
+            results.push({ name: st.name, lpAddress, stReserve, safePct, lockedIn, burnedPct });
+        } catch (e) {}
+    }
+    return results;
+}
+
+async function checkProxy(address) {
+    try {
+        const impl = await getStorageWithFallback(address, EIP1967_IMPL_SLOT);
+        const admin = await getStorageWithFallback(address, EIP1967_ADMIN_SLOT);
+        const implAddr = "0x" + impl.slice(-40);
+        const adminAddr = "0x" + admin.slice(-40);
+        const isProxy = implAddr.toLowerCase() !== ZERO_ADDR;
+        return { isProxy, implAddress: isProxy ? implAddr : null,
+            adminAddress: adminAddr.toLowerCase() !== ZERO_ADDR ? adminAddr : null };
+    } catch (e) { return { isProxy: false, implAddress: null, adminAddress: null }; }
+}
+
+async function findMainPool(address, v2Data, stablePairs, marketData, displaySymbol) {
+    const bnbPrice = await getBNBPrice();
+    const pools = [];
+
+    if (v2Data.hasV2 && v2Data.bnbInPool > 0) {
+        pools.push({
+            type: 'V2',
+            base: 'WBNB',
+            lpAddress: v2Data.lpAddress,
+            liquidityUsd: v2Data.bnbInPool * bnbPrice * 2,
+            bnbInPool: v2Data.bnbInPool,
+            tokenInPool: v2Data.tokenInPool,
+            lockedPct: v2Data.lockedPct,
+            burnedPct: v2Data.burnedPct,
+            safePct: v2Data.safePct,
+            lockedIn: v2Data.lockedIn,
+            volume24h: 0,
+            createdAt: null,
+            dexId: 'pancakeswapv2'
+        });
+    }
+
+    stablePairs.forEach(sp => {
+        if (sp.stReserve > 0) {
+            pools.push({
+                type: 'V2',
+                base: sp.name,
+                lpAddress: sp.lpAddress,
+                liquidityUsd: sp.stReserve * 2,
+                bnbInPool: 0,
+                tokenInPool: 0,
+                lockedPct: sp.safePct,
+                burnedPct: sp.burnedPct || 0,
+                safePct: sp.safePct,
+                lockedIn: sp.lockedIn,
+                volume24h: 0,
+                createdAt: null,
+                dexId: 'pancakeswapv2'
+            });
+        }
+    });
+
+    if (marketData?.allPairs) {
+        const v2Addrs = [v2Data.lpAddress, ...stablePairs.map(p => p.lpAddress)].filter(Boolean).map(a => a.toLowerCase());
+        const tokenSymLower = (displaySymbol || "").toLowerCase().trim();
+        
+        const dexPools = [];
+        marketData.allPairs.forEach(p => {
+            if (p.pairAddress && !v2Addrs.includes(p.pairAddress.toLowerCase()) && p.liquidityUsd > 0) {
+                const baseSym = (p.baseSymbol || "").toLowerCase().trim();
+                const quoteSym = (p.quoteSymbol || "").toLowerCase().trim();
+                
+                if (baseSym && quoteSym && baseSym === quoteSym) return;
+                if (tokenSymLower && baseSym.includes(tokenSymLower) && quoteSym.includes(tokenSymLower)) return;
+                if (p.liquidityUsd < 1) return;
+                
+                dexPools.push({
+                    type: 'DEX',
+                    base: p.quoteSymbol,
+                    lpAddress: p.pairAddress,
+                    liquidityUsd: p.liquidityUsd,
+                    bnbInPool: 0,
+                    tokenInPool: 0,
+                    lockedPct: 0,
+                    burnedPct: 0,
+                    safePct: 0,
+                    lockedIn: [],
+                    dexId: p.dexId,
+                    volume24h: p.volume24h,
+                    createdAt: p.createdAt
+                });
+            }
+        });
+        
+        // ⭐ AUTO-DETECT + BURN CHECK para cada pool DEX
+        for (const pool of dexPools) {
+            const detectedType = await detectPoolType(pool.lpAddress);
+            pool.type = detectedType;
+            
+            if (detectedType === 'V2') {
+                const [burnCheck, lockCheck] = await Promise.all([
+                    checkV2Burn(pool.lpAddress),
+                    checkV2Lockers(pool.lpAddress)
+                ]);
+                
+                pool.burnedPct = burnCheck.burnedPct;
+                pool.lockedIn = [...lockCheck.lockedIn];
+                
+                if (burnCheck.burned) {
+                    pool.lockedIn.push('🔥 Burned');
+                }
+                
+                const lp = new ethers.Contract(pool.lpAddress, [
+                    "function totalSupply() view returns (uint256)"
+                ], provider);
+                const totalSupply = await lp.totalSupply();
+                const totalNum = Number(totalSupply);
+                
+                let securedRaw = lockCheck.lockedRaw;
+                if (burnCheck.deadLP > 0) securedRaw += BigInt(burnCheck.deadLP);
+                
+                pool.safePct = totalNum > 0 ? (Number(securedRaw) / totalNum) * 100 : 0;
+                
+            } else if (detectedType === 'V3') {
+                const v3Burn = await checkV3Burn();
+                
+                if (v3Burn.burned) {
+                    pool.burnedPct = v3Burn.burnedPct;
+                    pool.safePct = v3Burn.burnedPct;
+                    pool.lockedIn.push(`🔥 Burned (${v3Burn.deadNFTs}/${v3Burn.totalNFTs} NFTs)`);
+                }
+            }
+        }
+        
+        pools.push(...dexPools);
+    }
+
+    pools.sort((a, b) => b.liquidityUsd - a.liquidityUsd);
+    return pools;
+}
+
+async function simulateBuySell(address, decimals, mainPool) {
+    if (!mainPool) {
+        return { buyStatus: "❌ Sem liquidez detectada", buyColor: "status-red",
+            tokensReceived: 0, sellStatus: "—", sellColor: "", totalLossPct: null,
+            slippagePct: null, residualFeePct: null, honeypot: false, pathUsed: null };
+    }
+
+    const router = new ethers.Contract(ROUTER_V2, ["function getAmountsOut(uint256,address[]) view returns (uint256[])"], provider);
+    const bnbPrice = await getBNBPrice();
+    
+    let path;
+    if (mainPool.base === 'WBNB') path = [WBNB, address];
+    else if (mainPool.base === 'USDT') path = [WBNB, USDT, address];
+    else if (mainPool.base === 'USDC') path = [WBNB, USDC, address];
+    else path = [WBNB, address];
+
+    const buyInWei = ethers.parseEther((10 / bnbPrice).toFixed(8));
+
+    let buyOk = null;
+    try {
+        const amounts = await router.getAmountsOut(buyInWei, path);
+        if (amounts[amounts.length - 1] > 0n) buyOk = amounts[amounts.length - 1];
+    } catch (e) {}
+
+    if (!buyOk) {
+        return { buyStatus: "❌ Buy falhou", buyColor: "status-red",
+            tokensReceived: 0, sellStatus: "—", sellColor: "", totalLossPct: null,
+            slippagePct: null, residualFeePct: null, honeypot: false, pathUsed: null };
+    }
+
+    const sellPath = [...path].reverse();
+    let sellOk = null;
+    try {
+        const amounts = await router.getAmountsOut(buyOk, sellPath);
+        if (amounts[amounts.length - 1] > 0n) sellOk = amounts[amounts.length - 1];
+    } catch (e) {}
+
+    const tokensReceived = parseFloat(ethers.formatUnits(buyOk, decimals));
+    const bnbIn = parseFloat(ethers.formatEther(buyInWei));
+    const pathNames = path.map(a => {
+        const lc = a.toLowerCase();
+        return lc === WBNB.toLowerCase() ? "WBNB" : lc === USDT.toLowerCase() ? "USDT" : lc === USDC.toLowerCase() ? "USDC" : "TOKEN";
+    });
+
+    if (!sellOk) {
+        return { buyStatus: `✅ Buy OK: $10 → ${fmtCompact(tokensReceived)} tokens`, buyColor: "status-green",
+            tokensReceived, sellStatus: "🚨 Sell REVERTIDA — HONEYPOT", sellColor: "status-red",
+            totalLossPct: null, slippagePct: null, residualFeePct: null, honeypot: true, pathUsed: pathNames.join(" → ") };
+    }
+
+    const bnbBack = parseFloat(ethers.formatEther(sellOk));
+    const totalLossPct = bnbIn > 0 ? Math.max(0, ((bnbIn - bnbBack) / bnbIn) * 100) : null;
+
+    let slippagePct = null;
+    if (mainPool.type === 'V2' && mainPool.bnbInPool > 0 && mainPool.tokenInPool > 0) {
+        const priceBefore = mainPool.bnbInPool / mainPool.tokenInPool;
+        const bnbAfterBuy = mainPool.bnbInPool + bnbIn;
+        const tokenAfterBuy = (mainPool.bnbInPool * mainPool.tokenInPool) / bnbAfterBuy;
+        const priceAfterBuy = bnbAfterBuy / tokenAfterBuy;
+        const buySlipPct = ((priceAfterBuy - priceBefore) / priceBefore) * 100;
+        
+        const tokenAfterSell = tokenAfterBuy + tokensReceived;
+        const bnbAfterSell = (mainPool.bnbInPool * mainPool.tokenInPool) / tokenAfterSell;
+        const priceAfterSell = bnbAfterSell / tokenAfterSell;
+        const sellSlipPct = ((priceBefore - priceAfterSell) / priceBefore) * 100;
+        
+        slippagePct = buySlipPct + sellSlipPct + 0.5;
+    }
+
+    let residualFeePct = null;
+    if (totalLossPct !== null && slippagePct !== null) {
+        residualFeePct = Math.max(0, totalLossPct - slippagePct);
+    }
+
+    let sellStatus, sellColor;
+    if (residualFeePct === null) {
+        sellStatus = `✅ Sell OK: ${bnbBack.toFixed(5)} BNB (perda ~${totalLossPct.toFixed(1)}%)`;
+        sellColor = totalLossPct > 15 ? "status-yellow" : "status-green";
+    } else if (residualFeePct > 25) {
+        sellStatus = `🚨 HONEYPOT: taxa ~${residualFeePct.toFixed(1)}%`;
+        sellColor = "status-red";
+    } else if (residualFeePct > 8) {
+        sellStatus = `⚠️ Taxa alta: ~${residualFeePct.toFixed(1)}%`;
+        sellColor = "status-yellow";
+    } else {
+        sellStatus = `✅ Sell OK: taxa ~${residualFeePct.toFixed(1)}% (perda ${totalLossPct.toFixed(1)}% = slippage ${slippagePct.toFixed(1)}% + fee)`;
+        sellColor = "status-green";
+    }
+
+    return { buyStatus: `✅ Buy OK: $10 → ${fmtCompact(tokensReceived)} tokens`, buyColor: "status-green",
+        tokensReceived, sellStatus, sellColor, totalLossPct, slippagePct, residualFeePct,
+        honeypot: residualFeePct !== null && residualFeePct > 25, pathUsed: pathNames.join(" → "),
+        mainPoolType: mainPool.type, mainPoolBase: mainPool.base, mainPoolLiquidity: mainPool.liquidityUsd };
+}
+
+async function scanBytecodeRisks(address) {
+    const risks = [];
+    const dangerous = {
+        "mint(address,uint256)": "40c10f19", "blacklist(address)": "c8b2cb8d",
+        "setMaxTxAmount(uint256)": "84521151",
+        "setBuyTax(uint256)": ethers.id("setBuyTax(uint256)").slice(2, 10),
+        "setSellTax(uint256)": ethers.id("setSellTax(uint256)").slice(2, 10),
+        "excludeFromFee(address)": ethers.id("excludeFromFee(address)").slice(2, 10),
+        "setTradingActive(bool)": ethers.id("setTradingActive(bool)").slice(2, 10),
+        "setTradingEnabled(bool)": ethers.id("setTradingEnabled(bool)").slice(2, 10),
+        "setMaxWalletAmount(uint256)": ethers.id("setMaxWalletAmount(uint256)").slice(2, 10),
+        "updateBlacklist(address,bool)": ethers.id("updateBlacklist(address,bool)").slice(2, 10)
+    };
+    let code = "";
+    try { code = (await provider.getCode(address)).toLowerCase(); } catch (e) {}
+    for (const [funcName, sel] of Object.entries(dangerous)) {
+        if (code.includes(sel)) risks.push(`<code>${funcName}</code>`);
+    }
+    return risks;
+}
+
+async function checkWashTrading(lpAddress) {
+    if (!lpAddress) return { status: "N/A", color: "", details: "No pair to analyze" };
+    try {
+        const latest = await provider.getBlockNumber();
+        const logs = await getLogsWithFallback({
+            address: lpAddress, topics: [SWAP_TOPIC],
+            fromBlock: Math.max(0, latest - 2000), toBlock: latest
+        });
+        if (!logs || logs.length === 0)
+            return { status: "⚠️ No swaps in last ~1.6 hours", color: "status-yellow", details: "0 recent swaps" };
+        const senders = {};
+        for (const log of logs) {
+            const sender = "0x" + log.topics[1].slice(-40).toLowerCase();
+            senders[sender] = (senders[sender] || 0) + 1;
+        }
+        const total = logs.length;
+        const unique = Object.keys(senders).length;
+        const topPct = (Math.max(...Object.values(senders)) / total) * 100;
+        let status = "✅ Normal trading distribution", color = "status-green";
+        if (unique <= 3 && total > 50) { status = "🚨 HIGH RISK: Wash Trading"; color = "status-red"; }
+        else if (topPct > 70 && total > 100) { status = `⚠️ Suspicious concentration (top wallet ${topPct.toFixed(1)}%)`; color = "status-yellow"; }
+        return { status, color, details: `${total} swaps • ${unique} unique wallets • top ${topPct.toFixed(1)}%` };
+    } catch (e) {
+        return { status: "⚠️ Could not analyze", color: "status-yellow", details: errMsg(e) };
+    }
+}
+
 function calcFromV2(v2Data, bnbPrice) {
     if (!v2Data.hasV2 || v2Data.bnbInPool <= 0 || v2Data.tokenInPool <= 0 || !bnbPrice) return null;
     const priceUsd = (v2Data.bnbInPool / v2Data.tokenInPool) * bnbPrice;
     const knownSupply = KNOWN_SUPPLIES[currentAudit.address.toLowerCase()];
     const fdv = knownSupply?.max ? priceUsd * knownSupply.max : priceUsd * v2Data.tokenInPool * 10;
     const mc = knownSupply?.circulating ? priceUsd * knownSupply.circulating : fdv;
-    return {
-        priceUsd, liquidityUsd: v2Data.bnbInPool * bnbPrice * 2, fdv, marketCap: mc,
-        volume24h: null, dexId: 'PancakeSwap V2', pairCreatedAt: null,
-        source: 'Calculated from V2 Pool + BNB Price'
-    };
+    return { priceUsd, liquidityUsd: v2Data.bnbInPool * bnbPrice * 2, fdv, marketCap: mc, volume24h: null, dexId: 'PancakeSwap V2', pairCreatedAt: null, source: 'Calculated from V2 Pool' };
 }
 
-// 🧮 SLIPPAGE
 function calcSlippage(tradeUsd, liquidityUsd) {
     if (!liquidityUsd || liquidityUsd <= 0) return { impact: 0, rec: 0, safe: false };
     const impact = (tradeUsd / liquidityUsd) * 100 * 2;
@@ -783,43 +1251,173 @@ function calcSlippage(tradeUsd, liquidityUsd) {
     return { impact: impact.toFixed(2), rec: rec.toFixed(2), safe: impact < 1.0 };
 }
 
-function renderScannerCard(tokenData, marketData, v2Data) {
+function renderSlippageDynamic(usdAmount) {
+    const liq = window.currentSlippageLiquidity || 0;
+    if (!liq || liq <= 0) return '<div class="status-yellow" style="text-align:center;">⚠️ No liquidity data</div>';
+    const impact = (usdAmount / liq) * 100 * 2;
+    const rec = Math.max(0.5, impact + 0.5);
+    const colorClass = impact < 1.0 ? 'status-green' : (impact < 3 ? 'status-yellow' : 'status-red');
+    return `
+        <div class="slippage-card" style="max-width:320px; margin:0 auto;">
+            <div class="slippage-amount">Buy $${parseFloat(usdAmount).toLocaleString('en-US')}</div>
+            <div class="slippage-impact">Price Impact: ~${impact.toFixed(2)}%</div>
+            <div class="slippage-rec ${colorClass}">Set Slippage: ${rec.toFixed(2)}%</div>
+        </div>`;
+}
+
+function bindSlippageCalculator() {
+    const input = document.getElementById('slippageAmountInput');
+    const container = document.getElementById('slippageDynamicResult');
+    if (input && container) {
+        const update = () => {
+            const val = parseFloat(input.value) || 0;
+            container.innerHTML = renderSlippageDynamic(val);
+        };
+        input.addEventListener('input', update);
+        update();
+    }
+}
+
+function renderVerdict(mainPool, proxyCheck, sim) {
+    const proxyCls = proxyCheck.isProxy ? "verdict-danger" : "verdict-ok";
+    const proxyVal = proxyCheck.isProxy ? "PROXY ⚠️" : "DIRECT ✅";
+
+    let lpCls, lpVal;
+    if (mainPool) {
+        if (mainPool.safePct >= 99) { lpCls = "verdict-ok"; lpVal = `${mainPool.safePct.toFixed(0)}% SECURE`; }
+        else if (mainPool.safePct >= 50) { lpCls = "verdict-warn"; lpVal = `${mainPool.safePct.toFixed(0)}% SECURE`; }
+        else { lpCls = "verdict-warn"; lpVal = `${mainPool.type} ${mainPool.base} $${fmtCompact(mainPool.liquidityUsd)}`; }
+    } else { lpCls = "verdict-danger"; lpVal = "NO POOL"; }
+
+    const honeypotCls = sim.honeypot ? "verdict-danger" : (sim.sellColor === "status-yellow" ? "verdict-warn" : "verdict-ok");
+    const honeypotVal = sim.honeypot ? "HONEYPOT 🚨" : (sim.sellColor === "status-yellow" ? "HIGH FEE ⚠️" : "SELLABLE ✅");
+
+    let feeCls = "verdict-warn", feeVal = "N/A";
+    if (sim.residualFeePct !== null && sim.residualFeePct !== undefined) {
+        feeCls = sim.residualFeePct <= 5 ? "verdict-ok" : (sim.residualFeePct <= 15 ? "verdict-warn" : "verdict-danger");
+        feeVal = `~${sim.residualFeePct.toFixed(1)}% FEE`;
+    } else if (sim.totalLossPct !== null) {
+        feeVal = `~${sim.totalLossPct.toFixed(1)}% LOSS`;
+        feeCls = sim.totalLossPct > 15 ? "verdict-warn" : "verdict-ok";
+    }
+
+    return `
+    <div class="verdict-grid">
+        <div class="verdict-badge ${proxyCls}"><span class="v-label">Contract Type</span><span class="v-value">${proxyVal}</span></div>
+        <div class="verdict-badge ${lpCls}"><span class="v-label">Main Pool</span><span class="v-value">${lpVal}</span></div>
+        <div class="verdict-badge ${honeypotCls}"><span class="v-label">Honeypot</span><span class="v-value">${honeypotVal}</span></div>
+        <div class="verdict-badge ${feeCls}"><span class="v-label">Est. Token Fee</span><span class="v-value">${feeVal}</span></div>
+    </div>`;
+}
+
+function renderPoolCard(p, displaySymbol, isMain) {
+    const badge = isMain ? '<span style="color:#00ff88; font-size:9px;">★ MAIN</span>' : '';
+    const cls = p.safePct >= 99 ? "status-green" : (p.safePct > 50 ? "status-yellow" : (p.liquidityUsd > 1000 ? "status-yellow" : "status-red"));
+    
+    let securedText;
+    if (p.type === 'V2') {
+        securedText = p.safePct > 0 ? p.safePct.toFixed(0) + '%' : '0%';
+    } else if (p.type === 'V3') {
+        securedText = p.safePct > 0 ? `${p.safePct.toFixed(0)}% (V3 NFTs)` : '0%';
+    } else {
+        securedText = 'Unknown';
+    }
+    
+    let lockerText;
+    if (p.lockedIn.length > 0) {
+        lockerText = p.lockedIn.join(", ");
+    } else {
+        lockerText = "None";
+    }
+    
+    const vol24h = p.volume24h ? fmtUSD(p.volume24h) : "—";
+    const lpLink = `https://bscscan.com/address/${p.lpAddress}`;
+    const age = p.createdAt ? formatPoolAge(p.createdAt) : "—";
+
+    return `
+    <div class="live-cell" style="${isMain ? 'border:2px solid #00ff88;' : ''}">
+        <span class="live-cell-label">POOL ${badge}</span>
+        <span class="live-cell-value">${p.type} ${displaySymbol}/${p.base} <span style="font-size:9px;color:#888;">(${p.dexId || 'on-chain'})</span></span>
+    </div>
+    <div class="live-cell">
+        <span class="live-cell-label">TVL</span>
+        <span class="live-cell-value">${fmtUSD(p.liquidityUsd)}</span>
+    </div>
+    <div class="live-cell">
+        <span class="live-cell-label">SECURED</span>
+        <span class="live-cell-value ${cls}">${securedText}</span>
+    </div>
+    <div class="live-cell">
+        <span class="live-cell-label">LOCKER</span>
+        <span class="live-cell-value" style="font-size:10px;">${lockerText}</span>
+    </div>
+    <div class="live-cell">
+        <span class="live-cell-label">24H VOL</span>
+        <span class="live-cell-value">${vol24h}</span>
+    </div>
+    <div class="live-cell">
+        <span class="live-cell-label">AGE / LP</span>
+        <span class="live-cell-value" style="font-size:11px;">
+            ${age}<br>
+            <a href="${lpLink}" target="_blank" style="color:#ffd700; font-size:9px;">View LP ↗</a>
+        </span>
+    </div>`;
+}
+
+function renderScannerCard(tokenData, marketData, v2Data, extra) {
     const time = new Date().toLocaleTimeString();
-    const { name, symbol, decimals, owner, isRenounced, risks } = tokenData;
+    const { name, symbol, decimals, owner, isRenounced, risks, proxyCheck, stablePairs, sim, washCheck, mainPool, allPools } = tokenData;
+
+    const displayName = name || marketData?.baseTokenName || "Unknown";
+    const displaySymbol = symbol || marketData?.baseTokenSymbol || "???";
+    const displayDecimals = decimals ?? marketData?.baseTokenDecimals ?? 18;
+
+    let ownerHtml;
+    if (isRenounced) {
+        ownerHtml = '<span class="status-green">✅ CONTRACT RENOUNCED</span>';
+    } else if (owner && owner !== "null" && owner.toLowerCase() !== ZERO_ADDR) {
+        ownerHtml = `<span class="status-red">⚠️ NOT RENOUNCED</span><br>Owner: <code>${owner}</code>`;
+    } else {
+        ownerHtml = `<span class="status-yellow">⚪ No standard owner() function</span><br><small style="color:#888;">Token uses different ownership pattern. Verify on BscScan.</small>`;
+    }
 
     let html = `
     <div class="scanner-item">
+        <div class="scanner-label">🧾 Security Verdict (Quick Scan)</div>
+        <div class="scanner-value">${renderVerdict(mainPool, proxyCheck, sim)}</div>
+    </div>
+    <div class="scanner-item">
         <div class="scanner-label">🪪 Token Identity & Ownership</div>
         <div class="scanner-value">
-            <strong>${name}</strong> (${symbol}) • <span style="color:#888;">${decimals} decimals</span><br>
+            <strong>${displayName}</strong> (${displaySymbol}) • <span style="color:#888;">${displayDecimals} decimals</span><br>
             <code>${currentAudit.address}</code><br><br>
-            ${isRenounced
-                ? '<span class="status-green">✅ CONTRACT RENOUNCED (Owner is 0x000...dead)</span>'
-                : `<span class="status-red">⚠️ NOT RENOUNCED</span><br>Owner: <code>${owner}</code>`}
+            ${ownerHtml}
         </div>
     </div>`;
 
-    // 🚨 BANNER DE RUG RISK (usa safePct = locked + burned)
-    if (v2Data.hasV2 && v2Data.safePct < 50) {
-        const ageInfo = marketData?.pairCreatedAt ? formatPoolAge(marketData.pairCreatedAt) : null;
-        const extraWarn = ageInfo ? `<br><strong>Pool age:</strong> ${ageInfo} — verify the lock before trading!` : '';
+    if (proxyCheck.isProxy) {
         html += `
-        <div class="rug-alert-banner">
-            <div class="rug-alert-title">🚨 DANGER: LIQUIDITY UNLOCKED 🚨</div>
-            <div class="rug-alert-text">
-                Only <strong>${v2Data.safePct.toFixed(1)}%</strong> of the V2 LP is secured 
-                (locked + burned). The remaining <strong>${(100 - v2Data.safePct).toFixed(1)}%</strong> 
-                can be withdrawn at any time (rug pull risk).
-                Only trade amounts you can afford to lose.${extraWarn}
+        <div class="proxy-alert-banner">
+            <div class="proxy-alert-title">⚠️ ACTIVE PROXY DETECTED ⚠️</div>
+            <div class="proxy-alert-text">
+                <strong>THIS TOKEN USES A PROXY CONTRACT (EIP-1967).</strong><br>
+                The logic can be replaced by the admin at any time.
+                <br><strong>Implementation:</strong> <a href="https://bscscan.com/address/${proxyCheck.implAddress}#code" target="_blank">${proxyCheck.implAddress} ↗</a>
+                ${proxyCheck.adminAddress ? `<br><strong>Proxy Admin:</strong> <a href="https://bscscan.com/address/${proxyCheck.adminAddress}" target="_blank">${proxyCheck.adminAddress} ↗</a>` : ''}
             </div>
         </div>`;
     }
 
-    // 📊 DADOS DE MERCADO
+    if (allPools && allPools.length > 0) {
+        html += `<div class="scanner-item"><div class="scanner-label">💧 All Detected Pools (sorted by liquidity)</div><div class="scanner-value">`;
+        allPools.forEach((p, idx) => {
+            html += `<div class="live-grid" style="margin-bottom:12px;">${renderPoolCard(p, displaySymbol, idx === 0)}</div>`;
+        });
+        html += `</div></div>`;
+    }
+
     if (marketData) {
-        const sourceBadge = marketData.source === 'DexScreener API'
-            ? '<span style="color:#00ff88; font-size:10px;">🟢 Live API</span>'
-            : '<span style="color:#ffd700; font-size:10px;">🟡 V2 Pool Calculation</span>';
+        const sourceBadge = marketData.source === 'DexScreener API' ? '<span style="color:#00ff88; font-size:10px;">🟢 Live API</span>' : '<span style="color:#ffd700; font-size:10px;">🟡 Calculated</span>';
         html += `
         <div class="scanner-item">
             <div class="scanner-label">📊 Market Data ${sourceBadge}</div>
@@ -832,53 +1430,34 @@ function renderScannerCard(tokenData, marketData, v2Data) {
                 <div class="live-grid" style="margin-top:10px;">
                     <div class="live-cell"><span class="live-cell-label">TOTAL TVL</span><span class="live-cell-value status-green">${fmtUSD(marketData.liquidityUsd)}</span></div>
                     ${marketData.volume24h ? `<div class="live-cell"><span class="live-cell-label">24H VOLUME</span><span class="live-cell-value">${fmtUSD(marketData.volume24h)}</span></div>` : ''}
-                    <div class="live-cell"><span class="live-cell-label">SOURCE</span><span class="live-cell-value" style="font-size:11px;">${marketData.dexId || '—'}</span></div>
                 </div>
             </div>
         </div>`;
     }
 
-    // 🔒 V2 SECURITY + ⏱️ POOL AGE
-    if (v2Data.hasV2) {
-        const lockBadge = v2Data.lockedPct >= 99 ? "status-green" : (v2Data.lockedPct > 0 ? "status-yellow" : "");
-        const lockLabel = v2Data.lockedPct >= 99 ? "🔒 FULLY LOCKED" : (v2Data.lockedPct > 0 ? "⚠️ Partially Locked" : "Not Locked");
-
-        const burnBadge = v2Data.burnedPct >= 99 ? "status-green" : (v2Data.burnedPct > 0 ? "status-yellow" : "");
-        const burnLabel = v2Data.burnedPct >= 99 ? "🔥 FULLY BURNED" : (v2Data.burnedPct > 0 ? "🔥 Partially Burned" : "Not Burned");
-
-        const createdAt = marketData?.pairCreatedAt || currentAudit.cachedAgeMs || null;
-        const ageText = formatPoolAge(createdAt);
-        const ageBadge = getAgeBadge(createdAt);
-
-        html += `
-        <div class="scanner-item">
-            <div class="scanner-label">🔒 PancakeSwap V2 Security Check (On-Chain)</div>
-            <div class="scanner-value">
-                <div class="live-grid">
-                    <div class="live-cell"><span class="live-cell-label">V2 LP ADDRESS</span><span class="live-cell-value" style="font-size:11px;">${v2Data.lpAddress}</span></div>
-                    <div class="live-cell"><span class="live-cell-label">BNB IN V2 POOL</span><span class="live-cell-value">${fmtCompact(v2Data.bnbInPool)} BNB</span></div>
-                    <div class="live-cell"><span class="live-cell-label">${symbol} IN V2 POOL</span><span class="live-cell-value">${fmtCompact(v2Data.tokenInPool)} ${symbol}</span></div>
-                    <div class="live-cell"><span class="live-cell-label">🔒 LOCKED %</span><span class="live-cell-value ${lockBadge}">${lockLabel} (${v2Data.lockedPct.toFixed(1)}%)</span></div>
-                    <div class="live-cell"><span class="live-cell-label">🔥 BURNED %</span><span class="live-cell-value ${burnBadge}">${burnLabel} (${v2Data.burnedPct.toFixed(1)}%)</span></div>
-                    <div class="live-cell"><span class="live-cell-label">V2 LOCKER</span><span class="live-cell-value">${v2Data.lockedIn.length ? v2Data.lockedIn.join(", ") : "None"}</span></div>
-                    <div class="live-cell age-cell">
-                        <span class="live-cell-label">⏱️ POOL AGE</span>
-                        <span class="live-cell-value">${ageText || "—"}</span>
-                        <span class="age-badge ${ageBadge.cls}">${ageBadge.label}</span>
-                    </div>
+    html += `
+    <div class="scanner-item">
+        <div class="scanner-label">🔄 Buy / Sell Simulation (Main Pool: ${mainPool ? mainPool.type + ' ' + mainPool.base : 'None'})</div>
+        <div class="scanner-value">
+            <div class="sim-grid">
+                <div class="sim-card">
+                    <div class="sim-card-title">🟢 Buy Simulation ($10)</div>
+                    <div class="sim-card-main ${sim.buyColor}">${sim.buyStatus}</div>
+                    ${sim.pathUsed ? `<div class="sim-path">Path: ${sim.pathUsed}</div>` : ''}
+                </div>
+                <div class="sim-card">
+                    <div class="sim-card-title">🔴 Sell Simulation</div>
+                    <div class="sim-card-main ${sim.sellColor}">${sim.sellStatus}</div>
+                    ${sim.totalLossPct !== null ? `<div class="sim-path">Loss: ${sim.totalLossPct.toFixed(1)}%${sim.slippagePct !== null ? ` = slippage ${sim.slippagePct.toFixed(1)}% + fee ~${sim.residualFeePct.toFixed(1)}%` : ''}</div>` : ''}
                 </div>
             </div>
-        </div>`;
-    } else {
-        html += `
-        <div class="scanner-item">
-            <div class="scanner-label">🔒 PancakeSwap V2 Security Check</div>
-            <div class="scanner-value"><span class="status-yellow">⚠️ No PancakeSwap V2 pair found. Token might be V3 only or have no liquidity.</span></div>
-        </div>`;
-    }
+            <small style="color:#888; display:block; margin-top:8px;">Simulated via main pool. Multi-hop supported. Fee isolated from slippage.</small>
+        </div>
+    </div>`;
 
-    // 📉 SLIPPAGE
-    const liqForSlippage = marketData?.liquidityUsd || (v2Data.bnbInPool > 0 ? v2Data.bnbInPool * 600 * 2 : 0);
+    const liqForSlippage = mainPool?.liquidityUsd || 0;
+    window.currentSlippageLiquidity = liqForSlippage;
+
     const trades = [10, 50, 100];
     let slippageHtml = '<div class="slippage-grid">';
     trades.forEach(usdAmount => {
@@ -893,26 +1472,42 @@ function renderScannerCard(tokenData, marketData, v2Data) {
         `;
     });
     slippageHtml += '</div>';
-    slippageHtml += `<div class="slippage-note">💡 <strong>Trading tip:</strong> Set slippage slightly above "Price Impact" to avoid failed transactions.</div>`;
+    slippageHtml += `
+        <hr class="slippage-divider">
+        <div class="slippage-calc-title">🎯 Calculate Your Own Trade Size</div>
+        <div class="slippage-input-group">
+            <span class="slippage-input-label">Trade Amount ($):</span>
+            <input type="number" id="slippageAmountInput" class="slippage-input" value="100" min="1" step="10" placeholder="e.g. 500">
+        </div>
+        <div id="slippageDynamicResult"></div>`;
+    slippageHtml += `<div class="slippage-note">💡 Set slippage slightly above "Price Impact".</div>`;
 
     html += `
     <div class="scanner-item">
-        <div class="scanner-label">📉 Estimated Slippage for Small Trades</div>
+        <div class="scanner-label">📉 Estimated Slippage</div>
         <div class="scanner-value">${slippageHtml}</div>
     </div>`;
 
-    // 🛡️ RISK
-    let riskStatus = '<span class="status-green">✅ No common dangerous functions detected in bytecode</span>';
+    let riskStatus = '<span class="status-green">✅ No dangerous functions detected</span>';
     if (risks.length > 0) {
-        riskStatus = `<span class="status-red">⚠️ Risk Functions Detected:</span><br>${risks.join(', ')}<br><small><em>Note: If contract is RENOUNCED, these cannot be executed.</em></small>`;
+        riskStatus = `<span class="status-red">⚠️ Risk Functions:</span><br>${risks.join(', ')}<br><small><em>If RENOUNCED and NOT proxy, cannot execute.</em></small>`;
     }
     html += `
     <div class="scanner-item">
-        <div class="scanner-label">🛡️ Honeypot / Bytecode Risk Analysis</div>
+        <div class="scanner-label">🛡️ Bytecode Risk Analysis</div>
         <div class="scanner-value">${riskStatus}</div>
     </div>`;
 
-    // FOOTER
+    html += `
+    <div class="scanner-item">
+        <div class="scanner-label">🕵️ Wash Trading Analysis (Main Pool, ~2000 blocks)</div>
+        <div class="scanner-value">
+            <div><strong>Recent Swaps:</strong> ${washCheck.details}</div>
+            <div class="${washCheck.color}" style="margin-top:6px;"><strong>${washCheck.status}</strong></div>
+            <small style="color:#888; display:block; margin-top:6px;">Scans last ~2000 blocks (~1.6h). High wallet concentration = artificial volume.</small>
+        </div>
+    </div>`;
+
     html += `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; flex-wrap:wrap; gap:10px;">
         <small style="color:#888;">🕐 Last Update: <strong style="color:#d4af37;">${time}</strong></small>
@@ -927,44 +1522,9 @@ function renderScannerCard(tokenData, marketData, v2Data) {
 
 async function refreshLiveLiquidity() {
     if (!currentAudit) return;
-    const resultDiv = document.getElementById("scannerResult");
     const btn = document.getElementById("updateBtn");
-    if (!resultDiv || !btn) return;
-
-    btn.disabled = true;
-    btn.innerHTML = '⏳ Fetching...';
-
-    try {
-        const tokenContract = new ethers.Contract(currentAudit.address, ["function owner() view returns (address)"], provider);
-        let owner = "Unknown", isRenounced = false;
-        try {
-            owner = await tokenContract.owner();
-            isRenounced = (owner === ethers.ZeroAddress || owner.toLowerCase() === "0x000000000000000000000000000000000000dead");
-        } catch (e) {}
-
-        const [marketDataFromAPI, v2Data] = await Promise.all([
-            getMarketData(currentAudit.address),
-            getV2SecurityData(currentAudit.address, currentAudit.decimals)
-        ]);
-
-        let marketData = marketDataFromAPI;
-        if (!marketData && v2Data.hasV2) {
-            const bnbPrice = await getBNBPrice();
-            marketData = calcFromV2(v2Data, bnbPrice);
-        }
-
-        if (v2Data.hasV2 && !marketData?.pairCreatedAt && !currentAudit.cachedAgeMs) {
-            currentAudit.cachedAgeMs = await getPoolAgeFromChain(currentAudit.address);
-        }
-
-        const tokenData = { ...currentAudit, owner, isRenounced };
-        resultDiv.innerHTML = renderScannerCard(tokenData, marketData, v2Data);
-    } catch (e) {
-        console.error('Update error:', e);
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = '🔄 Update Live Data';
-    }
+    if (btn) { btn.disabled = true; btn.innerHTML = '⏳ Fetching...'; }
+    await runScanner();
 }
 
 async function runScanner() {
@@ -979,7 +1539,7 @@ async function runScanner() {
     }
 
     btn.disabled = true;
-    btn.innerHTML = '⏳ Scanning Blockchain...';
+    btn.innerHTML = '⏳ Detecting pools...';
     resultDiv.classList.remove('active');
 
     try {
@@ -990,28 +1550,46 @@ async function runScanner() {
             "function owner() view returns (address)"
         ], provider);
 
-        let name = "Unknown", symbol = "???", decimals = 18, owner = "Unknown", isRenounced = false;
+        let name = null, symbol = null, decimals = null, owner = null;
         try {
-            const [n, s, d, o] = await Promise.all([
+            const results = await Promise.allSettled([
                 tokenContract.name(), tokenContract.symbol(), tokenContract.decimals(), tokenContract.owner()
             ]);
-            name = n; symbol = s; decimals = Number(d); owner = o;
-            isRenounced = (owner === ethers.ZeroAddress || owner.toLowerCase() === "0x000000000000000000000000000000000000dead");
+            name = results[0].status === 'fulfilled' ? results[0].value : null;
+            symbol = results[1].status === 'fulfilled' ? results[1].value : null;
+            decimals = results[2].status === 'fulfilled' ? Number(results[2].value) : null;
+            owner = results[3].status === 'fulfilled' ? results[3].value : null;
         } catch (e) {}
 
-        const code = await provider.getCode(address);
-        const dangerous = { "mint(address,uint256)": "40c10f19", "blacklist(address)": "c8b2cb8d", "setMaxTxAmount(uint256)": "84521151" };
-        let risks = [];
-        for (const [funcName, selector] of Object.entries(dangerous)) {
-            if (code.toLowerCase().includes(selector)) risks.push(`<code>${funcName}</code>`);
-        }
+        if (owner === null || owner === undefined || owner === "null") owner = null;
+        const isRenounced = !!owner && (owner === ethers.ZeroAddress || owner.toLowerCase() === "0x000000000000000000000000000000000000dead");
 
-        currentAudit = { address, name, symbol, decimals, owner, isRenounced, risks, cachedAgeMs: null };
+        currentAudit = { address, name, symbol, decimals, owner, isRenounced, risks: [], cachedAgeMs: null };
 
-        const [marketDataFromAPI, v2Data] = await Promise.all([
+        const [marketDataFromAPI, v2Data, stablePairs, proxyCheck] = await Promise.all([
             getMarketData(address),
-            getV2SecurityData(address, decimals)
+            getV2SecurityData(address, decimals ?? 18),
+            getStableV2Pairs(address, decimals ?? 18),
+            checkProxy(address)
         ]);
+
+        if (!name || !symbol || !decimals) {
+            if (marketDataFromAPI) {
+                if (!name) name = marketDataFromAPI.baseTokenName;
+                if (!symbol) symbol = marketDataFromAPI.baseTokenSymbol;
+                if (!decimals && marketDataFromAPI.baseTokenDecimals) decimals = marketDataFromAPI.baseTokenDecimals;
+            }
+            if (!name || !symbol || !decimals) {
+                const geckoId = await getIdentityFromGecko(address);
+                if (geckoId) {
+                    if (!name) name = geckoId.name;
+                    if (!symbol) symbol = geckoId.symbol;
+                    if (!decimals && geckoId.decimals) decimals = geckoId.decimals;
+                }
+            }
+        }
+        const decForCalc = decimals ?? 18;
+        currentAudit.name = name; currentAudit.symbol = symbol; currentAudit.decimals = decimals;
 
         let marketData = marketDataFromAPI;
         if (!marketData && v2Data.hasV2) {
@@ -1023,11 +1601,38 @@ async function runScanner() {
             currentAudit.cachedAgeMs = await getPoolAgeFromChain(address);
         }
 
+        const displaySymbol = symbol || marketData?.baseTokenSymbol || "???";
+        const allPools = await findMainPool(address, v2Data, stablePairs, marketData, displaySymbol);
+        const mainPool = allPools.length > 0 ? allPools[0] : null;
+
+        let sim = { buyStatus: "—", buyColor: "", tokensReceived: 0, sellStatus: "—", sellColor: "",
+            totalLossPct: null, slippagePct: null, residualFeePct: null, honeypot: false, pathUsed: null };
+        let risks = [];
+        try { sim = await simulateBuySell(address, decForCalc, mainPool); } catch (e) {
+            sim.sellStatus = "⚠️ Error: " + errMsg(e); sim.sellColor = "status-yellow";
+        }
+        try { risks = await scanBytecodeRisks(address); } catch (e) {}
+        currentAudit.risks = risks;
+
+        let washCheck = { status: "N/A", color: "", details: "—" };
+        try { 
+            const washLpAddress = mainPool?.lpAddress || v2Data.lpAddress;
+            washCheck = await checkWashTrading(washLpAddress); 
+        } catch (e) {}
+
+        currentAudit.proxyCheck = proxyCheck;
+        currentAudit.stablePairs = stablePairs;
+        currentAudit.sim = sim;
+        currentAudit.washCheck = washCheck;
+        currentAudit.mainPool = mainPool;
+        currentAudit.allPools = allPools;
+
         resultDiv.innerHTML = renderScannerCard(currentAudit, marketData, v2Data);
+        bindSlippageCalculator();
         resultDiv.classList.add('active');
 
     } catch (error) {
-        resultDiv.innerHTML = `<p class="status-red">❌ Error scanning: ${error.message}</p>`;
+        resultDiv.innerHTML = `<p class="status-red">❌ Error: ${error.message}</p>`;
         resultDiv.classList.add('active');
     } finally {
         btn.disabled = false;

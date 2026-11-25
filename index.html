@@ -1171,13 +1171,13 @@ async function simulateBuySell(address, decimals, mainPool) {
         sellStatus = `✅ Sell OK: ${bnbBack.toFixed(5)} BNB (Loss ~${totalLossPct.toFixed(1)}%)`;
         sellColor = totalLossPct > 15 ? "status-yellow" : "status-green";
     } else if (residualFeePct > 25) {
-        sellStatus = `🚨 HONEYPOT: taxa ~${residualFeePct.toFixed(1)}%`;
+        sellStatus = `🚨 HONEYPOT: Fees ~${residualFeePct.toFixed(1)}%`;
         sellColor = "status-red";
     } else if (residualFeePct > 8) {
-        sellStatus = `⚠️ Taxa alta: ~${residualFeePct.toFixed(1)}%`;
+        sellStatus = `⚠️ Fees alta: ~${residualFeePct.toFixed(1)}%`;
         sellColor = "status-yellow";
     } else {
-        sellStatus = `✅ Sell OK: taxa ~${residualFeePct.toFixed(1)}% (Loss ${totalLossPct.toFixed(1)}% = slippage ${slippagePct.toFixed(1)}% + fee)`;
+        sellStatus = `✅ Sell OK: Fees ~${residualFeePct.toFixed(1)}% (Loss ${totalLossPct.toFixed(1)}% = slippage ${slippagePct.toFixed(1)}% + fee)`;
         sellColor = "status-green";
     }
 

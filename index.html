@@ -628,7 +628,7 @@ function copyContract() {
     } else { fallbackCopy(address); }
 }
 
-// ✅ UNIVERSAL BSC SCANNER v37 — WASH TRADING v3 (EOA + VOL/TVL RATIO)
+// ✅ UNIVERSAL BSC SCANNER v38 — WASH TRADING v4 (EOA + VOL/TVL + POOL AGE/LOCK)
 const provider = new ethers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
 const providerBackup = new ethers.JsonRpcProvider("https://bsc-rpc.publicnode.com");
 
@@ -1210,8 +1210,8 @@ async function scanBytecodeRisks(address) {
     return risks;
 }
 
-// ✅ WASH TRADING v3 — EOA REAL + VOLUME/TVL RATIO CHECK
-async function checkWashTrading(lpAddress, volume24h, liquidityUsd) {
+// ✅ WASH TRADING v4 — EOA REAL + VOL/TVL RATIO + POOL AGE/LOCK CHECK
+async function checkWashTrading(lpAddress, volume24h, liquidityUsd, poolAgeHours, safePct) {
     if (!lpAddress) return { status: "N/A", color: "", details: "No pair to analyze" };
     try {
         const latest = await provider.getBlockNumber();
@@ -1222,7 +1222,7 @@ async function checkWashTrading(lpAddress, volume24h, liquidityUsd) {
         if (!logs || logs.length === 0)
             return { status: "⚠️ No swaps in last ~1.6 hours", color: "status-yellow", details: "0 recent swaps" };
 
-        // ⭐ REGRA 1: Deduplica tx hashes e pega apenas tx.from (signatário real)
+        // ⭐ REGRA 1: tx.from (signatário real) + filtro de EOAs
         const txHashes = [...new Set(logs.map(l => l.transactionHash))];
         const limited = txHashes.slice(0, 400);
         
@@ -1238,7 +1238,7 @@ async function checkWashTrading(lpAddress, volume24h, liquidityUsd) {
             }
         }
 
-        // ⭐ REGRA 1 (cont.): Filtra apenas EOAs (ignora routers/agregadores)
+        // Filtra apenas EOAs (ignora routers/agregadores)
         const uniqueFroms = [...new Set(fromList)];
         const eoaSet = new Set();
         for (let i = 0; i < uniqueFroms.length; i += CHUNK) {
@@ -1251,15 +1251,11 @@ async function checkWashTrading(lpAddress, volume24h, liquidityUsd) {
             });
         }
 
-        // Conta apenas carteiras humanas/bots reais
         const senders = {};
         let contractCount = 0;
         for (const f of fromList) {
-            if (eoaSet.has(f)) {
-                senders[f] = (senders[f] || 0) + 1;
-            } else {
-                contractCount++;
-            }
+            if (eoaSet.has(f)) senders[f] = (senders[f] || 0) + 1;
+            else contractCount++;
         }
 
         const total = Object.values(senders).reduce((a, b) => a + b, 0);
@@ -1269,36 +1265,57 @@ async function checkWashTrading(lpAddress, volume24h, liquidityUsd) {
             return {
                 status: "ℹ️ Volume via routers/aggregators",
                 color: "status-yellow",
-                details: `${logs.length} swaps • ${contractCount} txs from smart contracts • no direct EOAs in sample`
+                details: `${logs.length} swaps • ${contractCount} router txs excluded • no direct EOAs`
             };
         }
 
         const topPct = (Math.max(...Object.values(senders)) / total) * 100;
         
-        // ⭐ REGRA 2: Checa anomalia Volume 24h / TVL
+        // ⭐ REGRA 2: Vol/TVL Ratio
         const vol = volume24h || 0;
         const tvl = liquidityUsd || 1;
         const volToTvlRatio = vol / tvl;
 
+        // ⭐ REGRA 3 (NOVA): Pool nova + destravada + volume anômalo
+        const poolAgeH = poolAgeHours || 999;
+        const lpUnlocked = (safePct || 0) < 50;
+        const isNewPool = poolAgeH < 24;
+        const isVeryNew = poolAgeH < 4;
+
         let status = "✅ Normal trading distribution", color = "status-green";
-        
-        // Alerta VERMELHO apenas se: poucas carteiras E volume suspeitamente alto (> 2x TVL)
-        if (unique <= 3 && total > 50 && volToTvlRatio > 2.0) { 
-            status = "🚨 HIGH RISK: Wash Trading"; 
-            color = "status-red"; 
-        } 
-        // Alerta AMARELO se: concentração alta E volume elevado (> 1.5x TVL)
-        else if (topPct > 70 && total > 100 && volToTvlRatio > 1.5) { 
-            status = `⚠️ Suspicious concentration (top EOA ${topPct.toFixed(1)}%)`; 
-            color = "status-yellow"; 
+        let reasons = [];
+
+        // 🚨 ALERTA VERMELHO: 3 gatilhos
+        // 1) Wash clássico: poucas EOAs + volume alto
+        if (unique <= 3 && total > 50 && volToTvlRatio > 2.0) {
+            status = "🚨 HIGH RISK: Wash Trading"; color = "status-red";
+            reasons.push("few wallets + high vol/TVL");
+        }
+        // 2) Pool MUITO nova (<4h) + volume explosivo (>10x TVL) + LP destravada
+        else if (isVeryNew && volToTvlRatio > 10 && lpUnlocked) {
+            status = "🚨 HIGH RISK: Bot-driven volume on fresh unlocked pool"; color = "status-red";
+            reasons.push(`pool ${poolAgeH.toFixed(1)}h old, Vol/TVL ${volToTvlRatio.toFixed(1)}x, LP unlocked`);
+        }
+        // 3) Múltiplas EOAs descartáveis (bot sofisticado) + volume anômalo + pool nova
+        else if (isNewPool && volToTvlRatio > 5 && lpUnlocked && unique > 10) {
+            status = "⚠️ Suspicious: high volume on fresh unlocked pool"; color = "status-yellow";
+            reasons.push(`pool ${poolAgeH.toFixed(1)}h old, Vol/TVL ${volToTvlRatio.toFixed(1)}x, ${unique} EOAs`);
+        }
+        // 4) Concentração alta + volume elevado
+        else if (topPct > 70 && total > 100 && volToTvlRatio > 1.5) {
+            status = `⚠️ Suspicious concentration (top EOA ${topPct.toFixed(1)}%)`; color = "status-yellow";
+            reasons.push(`top wallet ${topPct.toFixed(1)}%, Vol/TVL ${volToTvlRatio.toFixed(1)}x`);
         }
 
-        const ratioText = volToTvlRatio > 1 ? `(Vol/TVL ratio: ${volToTvlRatio.toFixed(1)}x)` : '';
+        const ratioText = volToTvlRatio > 1 ? `(Vol/TVL: ${volToTvlRatio.toFixed(1)}x)` : '';
+        const ageText = poolAgeH < 999 ? `(pool age: ${poolAgeH < 1 ? '<1h' : poolAgeH.toFixed(1) + 'h'})` : '';
+        const lockText = lpUnlocked ? `(LP unlocked)` : '';
         const contractText = contractCount > 0 ? ` • ${contractCount} router txs excluded` : '';
+        const reasonText = reasons.length > 0 ? ` [${reasons.join('; ')}]` : '';
 
         return {
             status, color,
-            details: `${total} swaps • ${unique} unique human wallets • top ${topPct.toFixed(1)}% ${ratioText}${contractText}`
+            details: `${total} swaps • ${unique} unique EOAs • top ${topPct.toFixed(1)}% ${ratioText} ${ageText} ${lockText}${contractText}${reasonText}`
         };
     } catch (e) {
         return { status: "⚠️ Could not analyze", color: "status-yellow", details: errMsg(e) };
@@ -1570,7 +1587,7 @@ function renderScannerCard(tokenData, marketData, v2Data, extra) {
         <div class="scanner-value">${riskStatus}</div>
     </div>`;
 
-    // 🕵️ WASH TRADING v3 (EOA real + Volume/TVL Ratio check)
+    // 🕵️ WASH TRADING v4 (EOA + Vol/TVL + Pool Age/Lock)
     html += `
     <div class="scanner-item">
         <div class="scanner-label">🕵️ Wash Trading Analysis (Main Pool, ~2000 blocks)</div>
@@ -1578,8 +1595,9 @@ function renderScannerCard(tokenData, marketData, v2Data, extra) {
             <div><strong>Recent Swaps:</strong> ${washCheck.details}</div>
             <div class="${washCheck.color}" style="margin-top:6px;"><strong>${washCheck.status}</strong></div>
             <small style="color:#888; display:block; margin-top:6px;">
-                Uses <code>tx.from</code> (real signer) and filters smart contracts (routers/aggregators). 
-                Red alerts only trigger if few real wallets dominate <strong>AND</strong> 24h Volume is suspiciously high vs TVL (&gt;2x).
+                Uses <code>tx.from</code> (real signer) + filters smart contracts. 
+                Red alerts trigger on: (1) few wallets + high Vol/TVL, 
+                (2) fresh unlocked pool with explosive volume, or (3) many disposable EOAs on new pool.
             </small>
         </div>
     </div>`;
@@ -1690,11 +1708,14 @@ async function runScanner() {
         try { risks = await scanBytecodeRisks(address); } catch (e) {}
         currentAudit.risks = risks;
 
-        // ⭐ WASH TRADING v3 — passa volume24h e liquidityUsd para Regra 2
+        // ⭐ WASH TRADING v4 — passa volume24h, liquidityUsd, poolAgeHours, safePct
         let washCheck = { status: "N/A", color: "", details: "—" };
         try { 
             const washLpAddress = mainPool?.lpAddress || v2Data.lpAddress;
-            washCheck = await checkWashTrading(washLpAddress, marketData?.volume24h, marketData?.liquidityUsd); 
+            const poolCreatedAt = marketData?.pairCreatedAt || currentAudit.cachedAgeMs;
+            const poolAgeHours = poolCreatedAt ? (Date.now() - poolCreatedAt) / 3600000 : null;
+            const safePct = mainPool?.safePct ?? v2Data?.safePct ?? 0;
+            washCheck = await checkWashTrading(washLpAddress, marketData?.volume24h, marketData?.liquidityUsd, poolAgeHours, safePct); 
         } catch (e) {}
 
         currentAudit.proxyCheck = proxyCheck;

@@ -600,6 +600,7 @@ footer a:hover { text-shadow:0 0 15px rgba(255,215,0,0.5); }
 <!-- ✅ SCRIPTS -->
 <script async src="https://www.coincatapult.com/widget.js"></script>
 
+
 <script>
 // ✅ COPY CONTRACT
 function copyContract() {
@@ -627,7 +628,7 @@ function copyContract() {
     } else { fallbackCopy(address); }
 }
 
-// ✅ UNIVERSAL BSC SCANNER v36 — PRECISE BURN DETECTION V2 & V3
+// ✅ UNIVERSAL BSC SCANNER v37 — WASH TRADING v3 (EOA + VOL/TVL RATIO)
 const provider = new ethers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
 const providerBackup = new ethers.JsonRpcProvider("https://bsc-rpc.publicnode.com");
 
@@ -712,7 +713,7 @@ async function getBNBPrice() {
     }
 }
 
-// ⭐ DETECTA TIPO DE POOL (V2 ou V3)
+// ⭐ DETECT POOL TYPE (V2 or V3)
 async function detectPoolType(poolAddress) {
     try {
         const contract = new ethers.Contract(poolAddress, [
@@ -733,7 +734,7 @@ async function detectPoolType(poolAddress) {
     }
 }
 
-// ⭐ VERIFICA BURN V2 (LP tokens no dead address)
+// ⭐ CHECK V2 BURN (LP tokens in dead address)
 async function checkV2Burn(lpAddress) {
     try {
         const lp = new ethers.Contract(lpAddress, [
@@ -758,7 +759,7 @@ async function checkV2Burn(lpAddress) {
     }
 }
 
-// ⭐ VERIFICA BURN V3 (NFTs no dead address do Position Manager)
+// ⭐ CHECK V3 BURN (NFTs in dead address of Position Manager)
 async function checkV3Burn() {
     try {
         const positionManager = new ethers.Contract(PANCAKE_V3_POSITION_MANAGER, [
@@ -783,7 +784,7 @@ async function checkV3Burn() {
     }
 }
 
-// ⭐ VERIFICA LOCKERS V2
+// ⭐ CHECK V2 LOCKERS
 async function checkV2Lockers(lpAddress) {
     const lockedIn = [];
     let lockedRaw = 0n;
@@ -971,6 +972,7 @@ async function checkProxy(address) {
     } catch (e) { return { isProxy: false, implAddress: null, adminAddress: null }; }
 }
 
+// ⭐ MAIN POOL DETECTION + BURN/LOCK CHECK
 async function findMainPool(address, v2Data, stablePairs, marketData, displaySymbol) {
     const bnbPrice = await getBNBPrice();
     const pools = [];
@@ -1094,7 +1096,7 @@ async function findMainPool(address, v2Data, stablePairs, marketData, displaySym
 
 async function simulateBuySell(address, decimals, mainPool) {
     if (!mainPool) {
-        return { buyStatus: "❌ Sem liquidez detectada", buyColor: "status-red",
+        return { buyStatus: "❌ No liquidity detected", buyColor: "status-red",
             tokensReceived: 0, sellStatus: "—", sellColor: "", totalLossPct: null,
             slippagePct: null, residualFeePct: null, honeypot: false, pathUsed: null };
     }
@@ -1117,7 +1119,7 @@ async function simulateBuySell(address, decimals, mainPool) {
     } catch (e) {}
 
     if (!buyOk) {
-        return { buyStatus: "❌ Buy falhou", buyColor: "status-red",
+        return { buyStatus: "❌ Buy failed", buyColor: "status-red",
             tokensReceived: 0, sellStatus: "—", sellColor: "", totalLossPct: null,
             slippagePct: null, residualFeePct: null, honeypot: false, pathUsed: null };
     }
@@ -1138,7 +1140,7 @@ async function simulateBuySell(address, decimals, mainPool) {
 
     if (!sellOk) {
         return { buyStatus: `✅ Buy OK: $10 → ${fmtCompact(tokensReceived)} tokens`, buyColor: "status-green",
-            tokensReceived, sellStatus: "🚨 Sell REVERTIDA — HONEYPOT", sellColor: "status-red",
+            tokensReceived, sellStatus: "🚨 SELL REVERTED — HONEYPOT", sellColor: "status-red",
             totalLossPct: null, slippagePct: null, residualFeePct: null, honeypot: true, pathUsed: pathNames.join(" → ") };
     }
 
@@ -1168,16 +1170,16 @@ async function simulateBuySell(address, decimals, mainPool) {
 
     let sellStatus, sellColor;
     if (residualFeePct === null) {
-        sellStatus = `✅ Sell OK: ${bnbBack.toFixed(5)} BNB (Loss ~${totalLossPct.toFixed(1)}%)`;
+        sellStatus = `✅ Sell OK: ${bnbBack.toFixed(5)} BNB back (loss ~${totalLossPct.toFixed(1)}%)`;
         sellColor = totalLossPct > 15 ? "status-yellow" : "status-green";
     } else if (residualFeePct > 25) {
-        sellStatus = `🚨 HONEYPOT: Fees ~${residualFeePct.toFixed(1)}%`;
+        sellStatus = `🚨 HONEYPOT: fee ~${residualFeePct.toFixed(1)}%`;
         sellColor = "status-red";
     } else if (residualFeePct > 8) {
-        sellStatus = `⚠️ Fees alta: ~${residualFeePct.toFixed(1)}%`;
+        sellStatus = `⚠️ High fee: ~${residualFeePct.toFixed(1)}%`;
         sellColor = "status-yellow";
     } else {
-        sellStatus = `✅ Sell OK: Fees ~${residualFeePct.toFixed(1)}% (Loss ${totalLossPct.toFixed(1)}% = slippage ${slippagePct.toFixed(1)}% + fee)`;
+        sellStatus = `✅ Sell OK: fee ~${residualFeePct.toFixed(1)}% (loss ${totalLossPct.toFixed(1)}% = slippage ${slippagePct.toFixed(1)}% + fee)`;
         sellColor = "status-green";
     }
 
@@ -1208,7 +1210,8 @@ async function scanBytecodeRisks(address) {
     return risks;
 }
 
-async function checkWashTrading(lpAddress) {
+// ✅ WASH TRADING v3 — EOA REAL + VOLUME/TVL RATIO CHECK
+async function checkWashTrading(lpAddress, volume24h, liquidityUsd) {
     if (!lpAddress) return { status: "N/A", color: "", details: "No pair to analyze" };
     try {
         const latest = await provider.getBlockNumber();
@@ -1218,18 +1221,85 @@ async function checkWashTrading(lpAddress) {
         });
         if (!logs || logs.length === 0)
             return { status: "⚠️ No swaps in last ~1.6 hours", color: "status-yellow", details: "0 recent swaps" };
-        const senders = {};
-        for (const log of logs) {
-            const sender = "0x" + log.topics[1].slice(-40).toLowerCase();
-            senders[sender] = (senders[sender] || 0) + 1;
+
+        // ⭐ REGRA 1: Deduplica tx hashes e pega apenas tx.from (signatário real)
+        const txHashes = [...new Set(logs.map(l => l.transactionHash))];
+        const limited = txHashes.slice(0, 400);
+        
+        const fromList = [];
+        const CHUNK = 25;
+        for (let i = 0; i < limited.length; i += CHUNK) {
+            const chunk = limited.slice(i, i + CHUNK);
+            const txs = await Promise.allSettled(chunk.map(h => provider.getTransaction(h)));
+            for (const t of txs) {
+                if (t.status === 'fulfilled' && t.value && t.value.from) {
+                    fromList.push(t.value.from.toLowerCase());
+                }
+            }
         }
-        const total = logs.length;
+
+        // ⭐ REGRA 1 (cont.): Filtra apenas EOAs (ignora routers/agregadores)
+        const uniqueFroms = [...new Set(fromList)];
+        const eoaSet = new Set();
+        for (let i = 0; i < uniqueFroms.length; i += CHUNK) {
+            const chunk = uniqueFroms.slice(i, i + CHUNK);
+            const codes = await Promise.allSettled(chunk.map(a => provider.getCode(a)));
+            codes.forEach((c, idx) => {
+                if (c.status === 'fulfilled' && c.value === "0x") {
+                    eoaSet.add(chunk[idx]);
+                }
+            });
+        }
+
+        // Conta apenas carteiras humanas/bots reais
+        const senders = {};
+        let contractCount = 0;
+        for (const f of fromList) {
+            if (eoaSet.has(f)) {
+                senders[f] = (senders[f] || 0) + 1;
+            } else {
+                contractCount++;
+            }
+        }
+
+        const total = Object.values(senders).reduce((a, b) => a + b, 0);
         const unique = Object.keys(senders).length;
+
+        if (total === 0) {
+            return {
+                status: "ℹ️ Volume via routers/aggregators",
+                color: "status-yellow",
+                details: `${logs.length} swaps • ${contractCount} txs from smart contracts • no direct EOAs in sample`
+            };
+        }
+
         const topPct = (Math.max(...Object.values(senders)) / total) * 100;
+        
+        // ⭐ REGRA 2: Checa anomalia Volume 24h / TVL
+        const vol = volume24h || 0;
+        const tvl = liquidityUsd || 1;
+        const volToTvlRatio = vol / tvl;
+
         let status = "✅ Normal trading distribution", color = "status-green";
-        if (unique <= 3 && total > 50) { status = "🚨 HIGH RISK: Wash Trading"; color = "status-red"; }
-        else if (topPct > 70 && total > 100) { status = `⚠️ Suspicious concentration (top wallet ${topPct.toFixed(1)}%)`; color = "status-yellow"; }
-        return { status, color, details: `${total} swaps • ${unique} unique wallets • top ${topPct.toFixed(1)}%` };
+        
+        // Alerta VERMELHO apenas se: poucas carteiras E volume suspeitamente alto (> 2x TVL)
+        if (unique <= 3 && total > 50 && volToTvlRatio > 2.0) { 
+            status = "🚨 HIGH RISK: Wash Trading"; 
+            color = "status-red"; 
+        } 
+        // Alerta AMARELO se: concentração alta E volume elevado (> 1.5x TVL)
+        else if (topPct > 70 && total > 100 && volToTvlRatio > 1.5) { 
+            status = `⚠️ Suspicious concentration (top EOA ${topPct.toFixed(1)}%)`; 
+            color = "status-yellow"; 
+        }
+
+        const ratioText = volToTvlRatio > 1 ? `(Vol/TVL ratio: ${volToTvlRatio.toFixed(1)}x)` : '';
+        const contractText = contractCount > 0 ? ` • ${contractCount} router txs excluded` : '';
+
+        return {
+            status, color,
+            details: `${total} swaps • ${unique} unique human wallets • top ${topPct.toFixed(1)}% ${ratioText}${contractText}`
+        };
     } catch (e) {
         return { status: "⚠️ Could not analyze", color: "status-yellow", details: errMsg(e) };
     }
@@ -1326,6 +1396,8 @@ function renderPoolCard(p, displaySymbol, isMain) {
     let lockerText;
     if (p.lockedIn.length > 0) {
         lockerText = p.lockedIn.join(", ");
+    } else if (p.burnedPct > 0) {
+        lockerText = '🔥 Burned';
     } else {
         lockerText = "None";
     }
@@ -1498,13 +1570,17 @@ function renderScannerCard(tokenData, marketData, v2Data, extra) {
         <div class="scanner-value">${riskStatus}</div>
     </div>`;
 
+    // 🕵️ WASH TRADING v3 (EOA real + Volume/TVL Ratio check)
     html += `
     <div class="scanner-item">
         <div class="scanner-label">🕵️ Wash Trading Analysis (Main Pool, ~2000 blocks)</div>
         <div class="scanner-value">
             <div><strong>Recent Swaps:</strong> ${washCheck.details}</div>
             <div class="${washCheck.color}" style="margin-top:6px;"><strong>${washCheck.status}</strong></div>
-            <small style="color:#888; display:block; margin-top:6px;">Scans last ~2000 blocks (~1.6h). High wallet concentration = artificial volume.</small>
+            <small style="color:#888; display:block; margin-top:6px;">
+                Uses <code>tx.from</code> (real signer) and filters smart contracts (routers/aggregators). 
+                Red alerts only trigger if few real wallets dominate <strong>AND</strong> 24h Volume is suspiciously high vs TVL (&gt;2x).
+            </small>
         </div>
     </div>`;
 
@@ -1614,10 +1690,11 @@ async function runScanner() {
         try { risks = await scanBytecodeRisks(address); } catch (e) {}
         currentAudit.risks = risks;
 
+        // ⭐ WASH TRADING v3 — passa volume24h e liquidityUsd para Regra 2
         let washCheck = { status: "N/A", color: "", details: "—" };
         try { 
             const washLpAddress = mainPool?.lpAddress || v2Data.lpAddress;
-            washCheck = await checkWashTrading(washLpAddress); 
+            washCheck = await checkWashTrading(washLpAddress, marketData?.volume24h, marketData?.liquidityUsd); 
         } catch (e) {}
 
         currentAudit.proxyCheck = proxyCheck;
@@ -1642,6 +1719,7 @@ async function runScanner() {
 
 window.addEventListener('load', () => { setTimeout(runScanner, 1500); });
 </script>
+
 
 </body>
 </html>

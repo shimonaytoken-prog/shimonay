@@ -1210,7 +1210,7 @@ async function scanBytecodeRisks(address) {
     return risks;
 }
 
-// ✅ WASH TRADING v5 — 3 NÍVEIS (Vermelho/Amarelo/Verde) + RAZÃO DESCARTÁVEL
+// ✅ WASH TRADING v5.1 — Com threshold mínimo de swaps para evitar falsos positivos em pools novas
 async function checkWashTrading(lpAddress, volume24h, liquidityUsd, poolAgeHours, safePct) {
     if (!lpAddress) return { status: "N/A", color: "", details: "No pair to analyze" };
     try {
@@ -1276,30 +1276,39 @@ async function checkWashTrading(lpAddress, volume24h, liquidityUsd, poolAgeHours
         const tvl = liquidityUsd || 1;
         const volToTvlRatio = vol / tvl;
         const poolAgeH = poolAgeHours || 999;
-        const disposableRatio = total > 0 ? unique / total : 0; // ⭐ Razão descartável (0 a 1)
+        const disposableRatio = total > 0 ? unique / total : 0;
         const isPoolYoung = poolAgeH < 168; // < 7 dias
 
         let status = "✅ Normal trading distribution", color = "status-green";
         let reasons = [];
 
-        // 🔴 ALERTA VERMELHO — 2 gatilhos
-        // Gatilho 1: Bot Clássico (poucas EOAs dominando + volume alto)
-        if ((unique <= 5 || topPct >= 40) && volToTvlRatio > 2.0) {
+        // ⭐ NOVO: Se poucos swaps totais, não há dados suficientes para acusar
+        const MIN_SWAPS_FOR_CLASSIC = 15; // Mínimo para Gatilho 1
+        const MIN_SWAPS_FOR_MULTI = 20;   // Mínimo para Gatilho 2
+
+        // 🔴 ALERTA VERMELHO — Gatilho 1: Bot Clássico (com threshold mínimo)
+        if (total >= MIN_SWAPS_FOR_CLASSIC && (unique <= 5 || topPct >= 40) && volToTvlRatio > 2.0) {
             status = "🚨 HIGH RISK: Wash Trading / Bot Manipulation";
             color = "status-red";
             reasons.push(`classic bot: ${unique} EOAs, top ${topPct.toFixed(1)}%, Vol/TVL ${volToTvlRatio.toFixed(1)}x`);
         }
-        // Gatilho 2: Multi-Wallet Bot (carteiras descartáveis + giro explosivo)
-        else if (disposableRatio >= 0.85 && total >= 20 && volToTvlRatio > 15) {
+        // 🔴 ALERTA VERMELHO — Gatilho 2: Multi-Wallet Bot (com threshold mínimo)
+        else if (total >= MIN_SWAPS_FOR_MULTI && disposableRatio >= 0.85 && volToTvlRatio > 15) {
             status = "🚨 HIGH RISK: Multi-Wallet Bot / Disposable Addresses";
             color = "status-red";
             reasons.push(`disposable ratio ${disposableRatio.toFixed(2)}, ${total} swaps, Vol/TVL ${volToTvlRatio.toFixed(1)}x`);
         }
         // 🟡 ALERTA AMARELO — Zona cinzenta (giro alto em pool jovem)
-        else if (volToTvlRatio > 10 && isPoolYoung) {
+        else if (volToTvlRatio > 10 && isPoolYoung && total >= 10) {
             status = "⚠️ WARNING: High Turnover / Possible Bot Activity";
             color = "status-yellow";
             reasons.push(`Vol/TVL ${volToTvlRatio.toFixed(1)}x on ${poolAgeH < 1 ? '<1h' : poolAgeH.toFixed(1) + 'h'} pool`);
+        }
+        // ⚪ INFO — Dados insuficientes (pool muito nova com poucos swaps)
+        else if (total < MIN_SWAPS_FOR_CLASSIC && poolAgeH < 24) {
+            status = "⚪ Insufficient data (new pool)";
+            color = "status-yellow";
+            reasons.push(`only ${total} swaps in ${poolAgeH.toFixed(1)}h pool — check again later`);
         }
 
         const ratioText = volToTvlRatio > 1 ? `(Vol/TVL: ${volToTvlRatio.toFixed(1)}x)` : '';

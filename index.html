@@ -700,7 +700,7 @@ function copyContract() {
     } else { fallbackCopy(address); }
 }
 
-// ✅ UNIVERSAL BSC SCANNER v40 — 3 CAMADAS AVANÇADAS (100% CLIENT-SIDE)
+// ✅ UNIVERSAL BSC SCANNER v42 — V2 + V3 REAL (QuoterV2 struct + fee() + topic V3)
 const provider = new ethers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
 const providerBackup = new ethers.JsonRpcProvider("https://bsc-rpc.publicnode.com");
 
@@ -710,8 +710,10 @@ const USDC = "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d";
 const ROUTER_V2 = "0x10ED43C718714eb63d5aA57B78B54704E256024E";
 const PANCAKE_FACTORY_V2 = "0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73";
 const PANCAKE_V3_POSITION_MANAGER = "0x46A15B0b27311cedF172AB29E4f4766fbE7F4364";
+const PANCAKE_V3_QUOTER = "0xB048Bbc1Ee6b733FFfCFb9e9CeF7375518e25997"; // ✅ Quoter v2 confirmado
 const PAIR_CREATED_TOPIC = "0x0d3648bd50f0109fba21e4f14435d35985e7d0aab6f47a54f3b9e25f3f5d5733";
-const SWAP_TOPIC = "0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822";
+const SWAP_TOPIC = "0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822"; // V2
+const SWAP_TOPIC_V3 = "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67"; // ✅ V3
 const DEAD_ADDRESS = "0x000000000000000000000000000000000000dEaD";
 const EIP1967_IMPL_SLOT = "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc";
 const EIP1967_ADMIN_SLOT = "0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103";
@@ -785,7 +787,6 @@ async function getBNBPrice() {
     }
 }
 
-// ⭐ DETECT POOL TYPE (V2 or V3)
 async function detectPoolType(poolAddress) {
     try {
         const contract = new ethers.Contract(poolAddress, [
@@ -806,7 +807,14 @@ async function detectPoolType(poolAddress) {
     }
 }
 
-// ⭐ CHECK V2 BURN
+// ⭐ NOVO: lê o fee tier EXATO da pool V3 (em vez de chutar)
+async function getV3PoolFee(poolAddress) {
+    try {
+        const pool = new ethers.Contract(poolAddress, ["function fee() view returns (uint24)"], provider);
+        return Number(await pool.fee());
+    } catch (e) { return null; }
+}
+
 async function checkV2Burn(lpAddress) {
     try {
         const lp = new ethers.Contract(lpAddress, [
@@ -826,7 +834,6 @@ async function checkV2Burn(lpAddress) {
     }
 }
 
-// ⭐ CHECK V3 BURN
 async function checkV3Burn() {
     try {
         const positionManager = new ethers.Contract(PANCAKE_V3_POSITION_MANAGER, [
@@ -846,7 +853,6 @@ async function checkV3Burn() {
     }
 }
 
-// ⭐ CHECK V2 LOCKERS
 async function checkV2Lockers(lpAddress) {
     const lockedIn = [];
     let lockedRaw = 0n;
@@ -1098,6 +1104,8 @@ async function findMainPool(address, v2Data, stablePairs, marketData, displaySym
                 if (burnCheck.deadLP > 0) securedRaw += BigInt(burnCheck.deadLP);
                 pool.safePct = totalNum > 0 ? (Number(securedRaw) / totalNum) * 100 : 0;
             } else if (detectedType === 'V3') {
+                // ⭐ lê o fee tier real da pool
+                pool.feeTier = await getV3PoolFee(pool.lpAddress);
                 const v3Burn = await checkV3Burn();
                 if (v3Burn.burned) {
                     pool.burnedPct = v3Burn.burnedPct;
@@ -1113,50 +1121,81 @@ async function findMainPool(address, v2Data, stablePairs, marketData, displaySym
     return pools;
 }
 
+// ⭐ SIMULAÇÃO V2 + V3 REAL (QuoterV2 struct + staticCall + fee() da pool)
 async function simulateBuySell(address, decimals, mainPool) {
     if (!mainPool) {
-        return { buyStatus: "❌ No liquidity detected", buyColor: "status-red",
+        return { buyStatus: "❌ No liquidity detected", buyColor: "status-red", buyFailed: true,
             tokensReceived: 0, sellStatus: "—", sellColor: "", totalLossPct: null,
             slippagePct: null, residualFeePct: null, honeypot: false, pathUsed: null };
     }
 
-    const router = new ethers.Contract(ROUTER_V2, ["function getAmountsOut(uint256,address[]) view returns (uint256[])"], provider);
     const bnbPrice = await getBNBPrice();
-    let path;
-    if (mainPool.base === 'WBNB') path = [WBNB, address];
-    else if (mainPool.base === 'USDT') path = [WBNB, USDT, address];
-    else if (mainPool.base === 'USDC') path = [WBNB, USDC, address];
-    else path = [WBNB, address];
-
     const buyInWei = ethers.parseEther((10 / bnbPrice).toFixed(8));
-    let buyOk = null;
-    try {
-        const amounts = await router.getAmountsOut(buyInWei, path);
-        if (amounts[amounts.length - 1] > 0n) buyOk = amounts[amounts.length - 1];
-    } catch (e) {}
+    let buyOk = null, sellOk = null, pathNames = [], usedV3 = false;
 
+    if (mainPool.type === 'V3') {
+        // ✅ QuoterV2: input é STRUCT, output tem 4 campos, chamado via staticCall
+        const quoter = new ethers.Contract(PANCAKE_V3_QUOTER, [
+            "function quoteExactInputSingle((address tokenIn, address tokenOut, uint256 amountIn, uint24 fee, uint160 sqrtPriceLimitX96)) returns (uint256 amountOut, uint160 sqrtPriceX96After, uint32 initializedTicksCrossed, uint256 gasEstimate)"
+        ], provider);
+        const fee = mainPool.feeTier || 3000;
+        pathNames = ["WBNB", "TOKEN"];
+        usedV3 = true;
+
+        // BUY: WBNB -> TOKEN
+        try {
+            const r = await quoter.quoteExactInputSingle.staticCall({
+                tokenIn: WBNB, tokenOut: address, amountIn: buyInWei, fee: fee, sqrtPriceLimitX96: 0
+            });
+            if (r.amountOut > 0n) buyOk = r.amountOut;
+        } catch (e) {}
+
+        // SELL: TOKEN -> WBNB
+        if (buyOk) {
+            try {
+                const r = await quoter.quoteExactInputSingle.staticCall({
+                    tokenIn: address, tokenOut: WBNB, amountIn: buyOk, fee: fee, sqrtPriceLimitX96: 0
+                });
+                if (r.amountOut > 0n) sellOk = r.amountOut;
+            } catch (e) {}
+        }
+    } else {
+        // V2: Router getAmountsOut
+        const router = new ethers.Contract(ROUTER_V2, ["function getAmountsOut(uint256,address[]) view returns (uint256[])"], provider);
+        let path;
+        if (mainPool.base === 'WBNB') path = [WBNB, address];
+        else if (mainPool.base === 'USDT') path = [WBNB, USDT, address];
+        else if (mainPool.base === 'USDC') path = [WBNB, USDC, address];
+        else path = [WBNB, address];
+        pathNames = path.map(a => {
+            const lc = a.toLowerCase();
+            return lc === WBNB.toLowerCase() ? "WBNB" : lc === USDT.toLowerCase() ? "USDT" : lc === USDC.toLowerCase() ? "USDC" : "TOKEN";
+        });
+        try {
+            const amounts = await router.getAmountsOut(buyInWei, path);
+            if (amounts[amounts.length - 1] > 0n) buyOk = amounts[amounts.length - 1];
+        } catch (e) {}
+        if (buyOk) {
+            const sellPath = [...path].reverse();
+            try {
+                const amounts = await router.getAmountsOut(buyOk, sellPath);
+                if (amounts[amounts.length - 1] > 0n) sellOk = amounts[amounts.length - 1];
+            } catch (e) {}
+        }
+    }
+
+    // ⭐ BUY FALHOU = simulação não pôde rodar (NÃO é honeypot)
     if (!buyOk) {
-        return { buyStatus: "❌ Buy failed", buyColor: "status-red",
+        return { buyStatus: "⚠️ Simulation unavailable", buyColor: "status-yellow", buyFailed: true,
             tokensReceived: 0, sellStatus: "—", sellColor: "", totalLossPct: null,
             slippagePct: null, residualFeePct: null, honeypot: false, pathUsed: null };
     }
-
-    const sellPath = [...path].reverse();
-    let sellOk = null;
-    try {
-        const amounts = await router.getAmountsOut(buyOk, sellPath);
-        if (amounts[amounts.length - 1] > 0n) sellOk = amounts[amounts.length - 1];
-    } catch (e) {}
 
     const tokensReceived = parseFloat(ethers.formatUnits(buyOk, decimals));
     const bnbIn = parseFloat(ethers.formatEther(buyInWei));
-    const pathNames = path.map(a => {
-        const lc = a.toLowerCase();
-        return lc === WBNB.toLowerCase() ? "WBNB" : lc === USDT.toLowerCase() ? "USDT" : lc === USDC.toLowerCase() ? "USDC" : "TOKEN";
-    });
 
     if (!sellOk) {
-        return { buyStatus: `✅ Buy OK: $10 → ${fmtCompact(tokensReceived)} tokens`, buyColor: "status-green",
+        return { buyStatus: `✅ Buy OK: $10 → ${fmtCompact(tokensReceived)} tokens`, buyColor: "status-green", buyFailed: false,
             tokensReceived, sellStatus: "🚨 SELL REVERTED — HONEYPOT", sellColor: "status-red",
             totalLossPct: null, slippagePct: null, residualFeePct: null, honeypot: true, pathUsed: pathNames.join(" → ") };
     }
@@ -1185,7 +1224,8 @@ async function simulateBuySell(address, decimals, mainPool) {
 
     let sellStatus, sellColor;
     if (residualFeePct === null) {
-        sellStatus = `✅ Sell OK: ${bnbBack.toFixed(5)} BNB back (loss ~${totalLossPct.toFixed(1)}%)`;
+        // V3: loss direto (sem separar slippage — fee tier da pool já está embutido)
+        sellStatus = `✅ Sell OK: ${bnbBack.toFixed(6)} BNB back (loss ~${totalLossPct.toFixed(1)}%)${usedV3 ? ' [V3]' : ''}`;
         sellColor = totalLossPct > 15 ? "status-yellow" : "status-green";
     } else if (residualFeePct > 25) {
         sellStatus = `🚨 HONEYPOT: fee ~${residualFeePct.toFixed(1)}%`;
@@ -1198,7 +1238,7 @@ async function simulateBuySell(address, decimals, mainPool) {
         sellColor = "status-green";
     }
 
-    return { buyStatus: `✅ Buy OK: $10 → ${fmtCompact(tokensReceived)} tokens`, buyColor: "status-green",
+    return { buyStatus: `✅ Buy OK: $10 → ${fmtCompact(tokensReceived)} tokens`, buyColor: "status-green", buyFailed: false,
         tokensReceived, sellStatus, sellColor, totalLossPct, slippagePct, residualFeePct,
         honeypot: residualFeePct !== null && residualFeePct > 25, pathUsed: pathNames.join(" → "),
         mainPoolType: mainPool.type, mainPoolBase: mainPool.base, mainPoolLiquidity: mainPool.liquidityUsd };
@@ -1225,126 +1265,71 @@ async function scanBytecodeRisks(address) {
     return risks;
 }
 
-// ✅ WASH TRADING v6 — 3 CAMADAS AVANÇADAS (100% CLIENT-SIDE)
-// Camada 2: Ping-Pong Ratio (reciclagem de capital)
-// Camada 3: Cadência Temporal (regularidade robótica)
-// Camada 4: Tamanho de Ordem (clustering de valores)
+// ✅ WASH TRADING v7 — auto-detecta V2 OU V3 (topic correto)
 async function checkWashTrading(lpAddress, volume24h, liquidityUsd, poolAgeHours, safePct) {
     if (!lpAddress) return { status: "N/A", color: "", details: "No pair to analyze" };
     try {
         const latest = await provider.getBlockNumber();
-        const logs = await getLogsWithFallback({
-            address: lpAddress, topics: [SWAP_TOPIC],
-            fromBlock: Math.max(0, latest - 2000), toBlock: latest
-        });
+        const fromBlock = Math.max(0, latest - 2000);
+        // ⭐ tenta V2, se vazio tenta V3
+        let logs = await getLogsWithFallback({ address: lpAddress, topics: [SWAP_TOPIC], fromBlock, toBlock: latest });
+        let isV3 = false;
+        if (!logs || logs.length === 0) {
+            logs = await getLogsWithFallback({ address: lpAddress, topics: [SWAP_TOPIC_V3], fromBlock, toBlock: latest });
+            isV3 = true;
+        }
         if (!logs || logs.length === 0)
             return { status: "⚠️ No swaps in last ~1.6 hours", color: "status-yellow", details: "0 recent swaps" };
 
-        // ⭐ BASE: tx.from + filtro EOAs
         const txHashes = [...new Set(logs.map(l => l.transactionHash))];
         const limited = txHashes.slice(0, 400);
-        
         const fromList = [];
         const CHUNK = 25;
         for (let i = 0; i < limited.length; i += CHUNK) {
             const chunk = limited.slice(i, i + CHUNK);
             const txs = await Promise.allSettled(chunk.map(h => provider.getTransaction(h)));
             for (const t of txs) {
-                if (t.status === 'fulfilled' && t.value && t.value.from) {
-                    fromList.push(t.value.from.toLowerCase());
-                }
+                if (t.status === 'fulfilled' && t.value && t.value.from) fromList.push(t.value.from.toLowerCase());
             }
         }
-
         const uniqueFroms = [...new Set(fromList)];
         const eoaSet = new Set();
         for (let i = 0; i < uniqueFroms.length; i += CHUNK) {
             const chunk = uniqueFroms.slice(i, i + CHUNK);
             const codes = await Promise.allSettled(chunk.map(a => provider.getCode(a)));
-            codes.forEach((c, idx) => {
-                if (c.status === 'fulfilled' && c.value === "0x") {
-                    eoaSet.add(chunk[idx]);
-                }
-            });
+            codes.forEach((c, idx) => { if (c.status === 'fulfilled' && c.value === "0x") eoaSet.add(chunk[idx]); });
         }
-
-        const senders = {};
-        const senderSwaps = {};
-        let contractCount = 0;
-        
+        const senders = {}; let contractCount = 0;
         for (const f of fromList) {
-            if (eoaSet.has(f)) {
-                senders[f] = (senders[f] || 0) + 1;
-                if (!senderSwaps[f]) senderSwaps[f] = [];
-            } else {
-                contractCount++;
-            }
+            if (eoaSet.has(f)) senders[f] = (senders[f] || 0) + 1; else contractCount++;
         }
-
-        // ⭐ CAMADA 3: Coletar timestamps para análise de cadência
         const timestamps = [];
         const CHUNK2 = 20;
         for (let i = 0; i < logs.length; i += CHUNK2) {
             const chunk = logs.slice(i, i + CHUNK2);
             const blocks = await Promise.allSettled(chunk.map(l => provider.getBlock(l.blockNumber)));
-            blocks.forEach((b, idx) => {
-                if (b.status === 'fulfilled' && b.value) {
-                    timestamps.push(b.value.timestamp);
-                }
-            });
-        }
-
-        // ⭐ CAMADA 4: Coletar valores dos swaps (amount0Out/amount1Out)
-        const swapValues = [];
-        for (const log of logs) {
-            try {
-                // Parse do evento Swap: amount0In, amount1In, amount0Out, amount1Out
-                if (log.data && log.data.length >= 258) {
-                    const amount0Out = ethers.toBigInt("0x" + log.data.slice(130, 194));
-                    const amount1Out = ethers.toBigInt("0x" + log.data.slice(194, 258));
-                    const maxOut = amount0Out > amount1Out ? amount0Out : amount1Out;
-                    if (maxOut > 0n) {
-                        // Valor aproximado em wei (normalizado para 18 decimais)
-                        const normalizedValue = parseFloat(ethers.formatUnits(maxOut, 18));
-                        if (normalizedValue > 0) swapValues.push(normalizedValue);
-                    }
-                }
-            } catch (e) {}
+            blocks.forEach(b => { if (b.status === 'fulfilled' && b.value) timestamps.push(b.value.timestamp); });
         }
 
         const total = Object.values(senders).reduce((a, b) => a + b, 0);
         const unique = Object.keys(senders).length;
-
         if (total === 0) {
-            return {
-                status: "ℹ️ Volume via routers/aggregators",
-                color: "status-yellow",
-                details: `${logs.length} swaps • ${contractCount} router txs excluded • no direct EOAs`
-            };
+            return { status: "ℹ️ Volume via routers/aggregators", color: "status-yellow",
+                details: `${logs.length} swaps • ${contractCount} router txs excluded • no direct EOAs${isV3 ? ' [V3]' : ''}` };
         }
-
         const topPct = (Math.max(...Object.values(senders)) / total) * 100;
-        const vol = volume24h || 0;
-        const tvl = liquidityUsd || 1;
-        const volToTvlRatio = vol / tvl;
-        const poolAgeH = poolAgeHours || 999;
+        const vol = volume24h || 0; const tvl = liquidityUsd || 1;
+        const volToTvlRatio = vol / tvl; const poolAgeH = poolAgeHours || 999;
         const disposableRatio = total > 0 ? unique / total : 0;
 
-        // ⭐ CAMADA 3: Análise de cadência temporal
-        let temporalCV = null;
-        let nightRatio = null;
+        let temporalCV = null, nightRatio = null;
         if (timestamps.length >= 10) {
             timestamps.sort((a, b) => a - b);
             const intervals = [];
-            for (let i = 1; i < timestamps.length; i++) {
-                intervals.push(timestamps[i] - timestamps[i-1]);
-            }
+            for (let i = 1; i < timestamps.length; i++) intervals.push(timestamps[i] - timestamps[i-1]);
             const mean = intervals.reduce((a, b) => a + b, 0) / intervals.length;
             const variance = intervals.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / intervals.length;
-            const stdDev = Math.sqrt(variance);
-            temporalCV = mean > 0 ? stdDev / mean : null;
-            
-            // Atividade noturna (3h-5h UTC) vs pico (12h-18h UTC)
+            temporalCV = mean > 0 ? Math.sqrt(variance) / mean : null;
             let nightCount = 0, peakCount = 0;
             for (const ts of timestamps) {
                 const hour = new Date(ts * 1000).getUTCHours();
@@ -1353,108 +1338,28 @@ async function checkWashTrading(lpAddress, volume24h, liquidityUsd, poolAgeHours
             }
             nightRatio = peakCount > 0 ? nightCount / peakCount : null;
         }
-
-        // ⭐ CAMADA 4: Análise de clustering de valores
-        let orderClustering = null;
-        let orderCV = null;
-        if (swapValues.length >= 10) {
-            const mean = swapValues.reduce((a, b) => a + b, 0) / swapValues.length;
-            const variance = swapValues.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / swapValues.length;
-            const stdDev = Math.sqrt(variance);
-            orderCV = mean > 0 ? stdDev / mean : null;
-            const inRange = swapValues.filter(v => Math.abs(v - mean) / mean <= 0.3).length;
-            orderClustering = inRange / swapValues.length;
-        }
-
-        // ⭐ CAMADA 2: Ping-Pong Ratio (reciclagem de capital)
-        let avgPingPong = null;
-        const walletsAnalyzed = Object.keys(senderSwaps).filter(w => senderSwaps[w].length >= 3).slice(0, 15);
-        if (walletsAnalyzed.length > 0) {
-            const ratios = [];
-            for (const wallet of walletsAnalyzed) {
-                const swaps = senderSwaps[wallet];
-                if (swaps.length < 3) continue;
-                // Simplificação: se wallet tem muitos swaps com valores similares, é ping-pong
-                const values = swaps.map(s => s.usdValue || 1);
-                const maxVal = Math.max(...values);
-                const minVal = Math.min(...values);
-                const range = maxVal - minVal;
-                const ratio = maxVal > 0 ? range / maxVal : 0;
-                ratios.push(1 - ratio);
-            }
-            if (ratios.length > 0) {
-                avgPingPong = ratios.reduce((a, b) => a + b, 0) / ratios.length;
-            }
-        }
-
-        // ⭐ Coletar sinais avançados
         let signals = [];
-        if (temporalCV !== null && temporalCV < 0.5) {
-            signals.push(`temporal CV=${temporalCV.toFixed(2)} (robótico)`);
-        }
-        if (nightRatio !== null && nightRatio > 0.5) {
-            signals.push(`night activity=${(nightRatio*100).toFixed(0)}%`);
-        }
-        if (orderClustering !== null && orderClustering > 0.7) {
-            signals.push(`order clustering=${(orderClustering*100).toFixed(0)}%`);
-        }
-        if (orderCV !== null && orderCV < 0.5) {
-            signals.push(`order CV=${orderCV.toFixed(2)} (uniforme)`);
-        }
-        if (avgPingPong !== null && avgPingPong > 0.7) {
-            signals.push(`ping-pong ratio=${(avgPingPong*100).toFixed(0)}%`);
-        }
+        if (temporalCV !== null && temporalCV < 0.5) signals.push(`temporal CV=${temporalCV.toFixed(2)}`);
+        if (nightRatio !== null && nightRatio > 0.5) signals.push(`night=${(nightRatio*100).toFixed(0)}%`);
 
-        let status = "✅ Normal trading distribution", color = "status-green";
-        let reasons = [];
-
-        const MIN_SWAPS_FOR_CLASSIC = 15;
-        const MIN_SWAPS_FOR_MULTI = 20;
-
-        // 🔴 VERMELHO — Gatilho 1: Bot Clássico
-        if (total >= MIN_SWAPS_FOR_CLASSIC && (unique <= 5 || topPct >= 40) && volToTvlRatio > 2.0) {
-            status = "🚨 HIGH RISK: Wash Trading / Bot Manipulation";
-            color = "status-red";
+        let status = "✅ Normal trading distribution", color = "status-green"; let reasons = [];
+        if (total >= 15 && (unique <= 5 || topPct >= 40) && volToTvlRatio > 2.0) {
+            status = "🚨 HIGH RISK: Wash Trading / Bot Manipulation"; color = "status-red";
             reasons.push(`classic bot: ${unique} EOAs, top ${topPct.toFixed(1)}%, Vol/TVL ${volToTvlRatio.toFixed(1)}x`);
+        } else if (total >= 20 && disposableRatio >= 0.85 && volToTvlRatio > 15) {
+            status = "🚨 HIGH RISK: Multi-Wallet Bot"; color = "status-red";
+            reasons.push(`disposable ${disposableRatio.toFixed(2)}, Vol/TVL ${volToTvlRatio.toFixed(1)}x`);
+        } else if (volToTvlRatio > 10 && poolAgeH < 168 && total >= 10) {
+            status = "⚠️ WARNING: High Turnover"; color = "status-yellow";
+            reasons.push(`Vol/TVL ${volToTvlRatio.toFixed(1)}x on ${poolAgeH.toFixed(1)}h pool`);
+        } else if (total < 15 && poolAgeH < 24) {
+            status = "⚪ Insufficient data (new pool)"; color = "status-yellow";
         }
-        // 🔴 VERMELHO — Gatilho 2: Multi-Wallet Bot
-        else if (total >= MIN_SWAPS_FOR_MULTI && disposableRatio >= 0.85 && volToTvlRatio > 15) {
-            status = "🚨 HIGH RISK: Multi-Wallet Bot / Disposable Addresses";
-            color = "status-red";
-            reasons.push(`disposable ratio ${disposableRatio.toFixed(2)}, ${total} swaps, Vol/TVL ${volToTvlRatio.toFixed(1)}x`);
-            if (signals.length > 0) reasons.push(`+ ${signals.length} advanced signals`);
-        }
-        // 🔴 VERMELHO — Gatilho 3: Múltiplos sinais avançados
-        else if (signals.length >= 3 && total >= 20 && volToTvlRatio > 5) {
-            status = "🚨 HIGH RISK: Advanced Bot Detection";
-            color = "status-red";
-            reasons.push(`${signals.length} advanced signals: ${signals.slice(0, 3).join(', ')}`);
-        }
-        // 🟡 AMARELO — Zona cinzenta
-        else if (volToTvlRatio > 10 && poolAgeH < 168 && total >= 10) {
-            status = "⚠️ WARNING: High Turnover / Possible Bot Activity";
-            color = "status-yellow";
-            reasons.push(`Vol/TVL ${volToTvlRatio.toFixed(1)}x on ${poolAgeH < 1 ? '<1h' : poolAgeH.toFixed(1) + 'h'} pool`);
-            if (signals.length > 0) reasons.push(`+ ${signals.length} signals`);
-        }
-        // ⚪ INSUFICIENTE
-        else if (total < MIN_SWAPS_FOR_CLASSIC && poolAgeH < 24) {
-            status = "⚪ Insufficient data (new pool)";
-            color = "status-yellow";
-            reasons.push(`only ${total} swaps in ${poolAgeH.toFixed(1)}h pool`);
-        }
-
         const ratioText = volToTvlRatio > 1 ? `(Vol/TVL: ${volToTvlRatio.toFixed(1)}x)` : '';
-        const ageText = poolAgeH < 999 ? `(pool age: ${poolAgeH < 1 ? '<1h' : poolAgeH.toFixed(1) + 'h'})` : '';
-        const disposableText = disposableRatio >= 0.7 ? `(disposable ratio: ${disposableRatio.toFixed(2)})` : '';
-        const contractText = contractCount > 0 ? ` • ${contractCount} router txs excluded` : '';
-        const reasonText = reasons.length > 0 ? ` [${reasons.join('; ')}]` : '';
-        const signalsText = signals.length > 0 ? ` | Advanced: ${signals.join(', ')}` : '';
-
-        return {
-            status, color,
-            details: `${total} swaps • ${unique} unique EOAs • top ${topPct.toFixed(1)}% ${ratioText} ${disposableText} ${ageText}${contractText}${reasonText}${signalsText}`
-        };
+        const disposableText = disposableRatio >= 0.7 ? `(disposable: ${disposableRatio.toFixed(2)})` : '';
+        const v3Tag = isV3 ? ' [V3]' : '';
+        return { status, color,
+            details: `${total} swaps • ${unique} EOAs • top ${topPct.toFixed(1)}% ${ratioText} ${disposableText}${v3Tag}${reasons.length ? ' [' + reasons.join('; ') + ']' : ''}` };
     } catch (e) {
         return { status: "⚠️ Could not analyze", color: "status-yellow", details: errMsg(e) };
     }
@@ -1494,10 +1399,7 @@ function bindSlippageCalculator() {
     const input = document.getElementById('slippageAmountInput');
     const container = document.getElementById('slippageDynamicResult');
     if (input && container) {
-        const update = () => {
-            const val = parseFloat(input.value) || 0;
-            container.innerHTML = renderSlippageDynamic(val);
-        };
+        const update = () => { container.innerHTML = renderSlippageDynamic(parseFloat(input.value) || 0); };
         input.addEventListener('input', update);
         update();
     }
@@ -1514,8 +1416,12 @@ function renderVerdict(mainPool, proxyCheck, sim) {
         else { lpCls = "verdict-warn"; lpVal = `${mainPool.type} ${mainPool.base} $${fmtCompact(mainPool.liquidityUsd)}`; }
     } else { lpCls = "verdict-danger"; lpVal = "NO POOL"; }
 
-    const honeypotCls = sim.honeypot ? "verdict-danger" : (sim.sellColor === "status-yellow" ? "verdict-warn" : "verdict-ok");
-    const honeypotVal = sim.honeypot ? "HONEYPOT 🚨" : (sim.sellColor === "status-yellow" ? "HIGH FEE ⚠️" : "SELLABLE ✅");
+    // ⭐ HONEYPOT honesto: buy falhou = "N/A", não "SELLABLE"
+    let honeypotCls, honeypotVal;
+    if (sim.buyFailed) { honeypotCls = "verdict-warn"; honeypotVal = "N/A ⚠️"; }
+    else if (sim.honeypot) { honeypotCls = "verdict-danger"; honeypotVal = "HONEYPOT 🚨"; }
+    else if (sim.sellColor === "status-yellow") { honeypotCls = "verdict-warn"; honeypotVal = "HIGH FEE ⚠️"; }
+    else { honeypotCls = "verdict-ok"; honeypotVal = "SELLABLE ✅"; }
 
     let feeCls = "verdict-warn", feeVal = "N/A";
     if (sim.residualFeePct !== null && sim.residualFeePct !== undefined) {
@@ -1538,210 +1444,113 @@ function renderVerdict(mainPool, proxyCheck, sim) {
 function renderPoolCard(p, displaySymbol, isMain) {
     const badge = isMain ? '<span style="color:#00ff88; font-size:9px;">★ MAIN</span>' : '';
     const cls = p.safePct >= 99 ? "status-green" : (p.safePct > 50 ? "status-yellow" : (p.liquidityUsd > 1000 ? "status-yellow" : "status-red"));
-    
     let securedText;
-    if (p.type === 'V2') {
-        securedText = p.safePct > 0 ? p.safePct.toFixed(0) + '%' : '0%';
-    } else if (p.type === 'V3') {
-        securedText = p.safePct > 0 ? `${p.safePct.toFixed(0)}% (V3 NFTs)` : '0%';
-    } else {
-        securedText = 'Unknown';
-    }
-    
-    let lockerText;
-    if (p.lockedIn.length > 0) {
-        lockerText = p.lockedIn.join(", ");
-    } else if (p.burnedPct > 0) {
-        lockerText = '🔥 Burned';
-    } else {
-        lockerText = "None";
-    }
-    
+    if (p.type === 'V2') securedText = p.safePct > 0 ? p.safePct.toFixed(0) + '%' : '0%';
+    else if (p.type === 'V3') securedText = p.safePct > 0 ? `${p.safePct.toFixed(0)}% (V3 NFTs)` : '0%';
+    else securedText = 'Unknown';
+    let lockerText = p.lockedIn.length > 0 ? p.lockedIn.join(", ") : (p.burnedPct > 0 ? '🔥 Burned' : "None");
     const vol24h = p.volume24h ? fmtUSD(p.volume24h) : "—";
     const lpLink = `https://bscscan.com/address/${p.lpAddress}`;
     const age = p.createdAt ? formatPoolAge(p.createdAt) : "—";
-
+    const feeInfo = p.feeTier ? ` · fee ${(p.feeTier/10000).toFixed(2)}%` : '';
     return `
     <div class="live-cell" style="${isMain ? 'border:2px solid #00ff88;' : ''}">
         <span class="live-cell-label">POOL ${badge}</span>
-        <span class="live-cell-value">${p.type} ${displaySymbol}/${p.base} <span style="font-size:9px;color:#888;">(${p.dexId || 'on-chain'})</span></span>
+        <span class="live-cell-value">${p.type} ${displaySymbol}/${p.base}${feeInfo} <span style="font-size:9px;color:#888;">(${p.dexId || 'on-chain'})</span></span>
     </div>
-    <div class="live-cell">
-        <span class="live-cell-label">TVL</span>
-        <span class="live-cell-value">${fmtUSD(p.liquidityUsd)}</span>
-    </div>
-    <div class="live-cell">
-        <span class="live-cell-label">SECURED</span>
-        <span class="live-cell-value ${cls}">${securedText}</span>
-    </div>
-    <div class="live-cell">
-        <span class="live-cell-label">LOCKER</span>
-        <span class="live-cell-value" style="font-size:10px;">${lockerText}</span>
-    </div>
-    <div class="live-cell">
-        <span class="live-cell-label">24H VOL</span>
-        <span class="live-cell-value">${vol24h}</span>
-    </div>
-    <div class="live-cell">
-        <span class="live-cell-label">AGE / LP</span>
-        <span class="live-cell-value" style="font-size:11px;">
-            ${age}<br>
-            <a href="${lpLink}" target="_blank" style="color:#ffd700; font-size:9px;">View LP ↗</a>
-        </span>
-    </div>`;
+    <div class="live-cell"><span class="live-cell-label">TVL</span><span class="live-cell-value">${fmtUSD(p.liquidityUsd)}</span></div>
+    <div class="live-cell"><span class="live-cell-label">SECURED</span><span class="live-cell-value ${cls}">${securedText}</span></div>
+    <div class="live-cell"><span class="live-cell-label">LOCKER</span><span class="live-cell-value" style="font-size:10px;">${lockerText}</span></div>
+    <div class="live-cell"><span class="live-cell-label">24H VOL</span><span class="live-cell-value">${vol24h}</span></div>
+    <div class="live-cell"><span class="live-cell-label">AGE / LP</span><span class="live-cell-value" style="font-size:11px;">${age}<br><a href="${lpLink}" target="_blank" style="color:#ffd700; font-size:9px;">View LP ↗</a></span></div>`;
 }
 
 function renderScannerCard(tokenData, marketData, v2Data, extra) {
     const time = new Date().toLocaleTimeString();
     const { name, symbol, decimals, owner, isRenounced, risks, proxyCheck, stablePairs, sim, washCheck, mainPool, allPools } = tokenData;
-
     const displayName = name || marketData?.baseTokenName || "Unknown";
     const displaySymbol = symbol || marketData?.baseTokenSymbol || "???";
     const displayDecimals = decimals ?? marketData?.baseTokenDecimals ?? 18;
 
     let ownerHtml;
-    if (isRenounced) {
-        ownerHtml = '<span class="status-green">✅ CONTRACT RENOUNCED</span>';
-    } else if (owner && owner !== "null" && owner.toLowerCase() !== ZERO_ADDR) {
-        ownerHtml = `<span class="status-red">⚠️ NOT RENOUNCED</span><br>Owner: <code>${owner}</code>`;
-    } else {
-        ownerHtml = `<span class="status-yellow">⚪ No standard owner() function</span><br><small style="color:#888;">Token uses different ownership pattern. Verify on BscScan.</small>`;
-    }
+    if (isRenounced) ownerHtml = '<span class="status-green">✅ CONTRACT RENOUNCED</span>';
+    else if (owner && owner !== "null" && owner.toLowerCase() !== ZERO_ADDR) ownerHtml = `<span class="status-red">⚠️ NOT RENOUNCED</span><br>Owner: <code>${owner}</code>`;
+    else ownerHtml = `<span class="status-yellow">⚪ No standard owner() function</span><br><small style="color:#888;">Token uses different ownership pattern. Verify on BscScan.</small>`;
 
     let html = `
-    <div class="scanner-item">
-        <div class="scanner-label">🧾 Security Verdict (Quick Scan)</div>
-        <div class="scanner-value">${renderVerdict(mainPool, proxyCheck, sim)}</div>
-    </div>
-    <div class="scanner-item">
-        <div class="scanner-label">🪪 Token Identity & Ownership</div>
-        <div class="scanner-value">
-            <strong>${displayName}</strong> (${displaySymbol}) • <span style="color:#888;">${displayDecimals} decimals</span><br>
-            <code>${currentAudit.address}</code><br><br>
-            ${ownerHtml}
-        </div>
-    </div>`;
+    <div class="scanner-item"><div class="scanner-label">🧾 Security Verdict (Quick Scan)</div><div class="scanner-value">${renderVerdict(mainPool, proxyCheck, sim)}</div></div>
+    <div class="scanner-item"><div class="scanner-label">🪪 Token Identity & Ownership</div><div class="scanner-value">
+        <strong>${displayName}</strong> (${displaySymbol}) • <span style="color:#888;">${displayDecimals} decimals</span><br><code>${currentAudit.address}</code><br><br>${ownerHtml}</div></div>`;
 
     if (proxyCheck.isProxy) {
         html += `
-        <div class="proxy-alert-banner">
-            <div class="proxy-alert-title">⚠️ ACTIVE PROXY DETECTED ⚠️</div>
-            <div class="proxy-alert-text">
-                <strong>THIS TOKEN USES A PROXY CONTRACT (EIP-1967).</strong><br>
-                The logic can be replaced by the admin at any time.
-                <br><strong>Implementation:</strong> <a href="https://bscscan.com/address/${proxyCheck.implAddress}#code" target="_blank">${proxyCheck.implAddress} ↗</a>
-                ${proxyCheck.adminAddress ? `<br><strong>Proxy Admin:</strong> <a href="https://bscscan.com/address/${proxyCheck.adminAddress}" target="_blank">${proxyCheck.adminAddress} ↗</a>` : ''}
-            </div>
-        </div>`;
+        <div class="proxy-alert-banner"><div class="proxy-alert-title">⚠️ ACTIVE PROXY DETECTED ⚠️</div><div class="proxy-alert-text">
+            <strong>THIS TOKEN USES A PROXY CONTRACT (EIP-1967).</strong><br>The logic can be replaced by the admin at any time.
+            <br><strong>Implementation:</strong> <a href="https://bscscan.com/address/${proxyCheck.implAddress}#code" target="_blank">${proxyCheck.implAddress} ↗</a>
+            ${proxyCheck.adminAddress ? `<br><strong>Proxy Admin:</strong> <a href="https://bscscan.com/address/${proxyCheck.adminAddress}" target="_blank">${proxyCheck.adminAddress} ↗</a>` : ''}</div></div>`;
     }
 
     if (allPools && allPools.length > 0) {
         html += `<div class="scanner-item"><div class="scanner-label">💧 All Detected Pools (sorted by liquidity)</div><div class="scanner-value">`;
-        allPools.forEach((p, idx) => {
-            html += `<div class="live-grid" style="margin-bottom:12px;">${renderPoolCard(p, displaySymbol, idx === 0)}</div>`;
-        });
+        allPools.forEach((p, idx) => { html += `<div class="live-grid" style="margin-bottom:12px;">${renderPoolCard(p, displaySymbol, idx === 0)}</div>`; });
         html += `</div></div>`;
     }
 
     if (marketData) {
         const sourceBadge = marketData.source === 'DexScreener API' ? '<span style="color:#00ff88; font-size:10px;">🟢 Live API</span>' : '<span style="color:#ffd700; font-size:10px;">🟡 Calculated</span>';
         html += `
-        <div class="scanner-item">
-            <div class="scanner-label">📊 Market Data ${sourceBadge}</div>
-            <div class="scanner-value">
-                <div class="price-grid">
-                    <div class="price-cell"><span class="price-cell-label">💵 Price</span><span class="price-cell-value">${fmtPrice(marketData.priceUsd)}</span></div>
-                    <div class="price-cell"><span class="price-cell-label">📈 Market Cap</span><span class="price-cell-value">${fmtUSD(marketData.marketCap)}</span></div>
-                    <div class="price-cell"><span class="price-cell-label">📊 FDV</span><span class="price-cell-value">${fmtUSD(marketData.fdv)}</span></div>
-                </div>
-                <div class="live-grid" style="margin-top:10px;">
-                    <div class="live-cell"><span class="live-cell-label">TOTAL TVL</span><span class="live-cell-value status-green">${fmtUSD(marketData.liquidityUsd)}</span></div>
-                    ${marketData.volume24h ? `<div class="live-cell"><span class="live-cell-label">24H VOLUME</span><span class="live-cell-value">${fmtUSD(marketData.volume24h)}</span></div>` : ''}
-                </div>
+        <div class="scanner-item"><div class="scanner-label">📊 Market Data ${sourceBadge}</div><div class="scanner-value">
+            <div class="price-grid">
+                <div class="price-cell"><span class="price-cell-label">💵 Price</span><span class="price-cell-value">${fmtPrice(marketData.priceUsd)}</span></div>
+                <div class="price-cell"><span class="price-cell-label">📈 Market Cap</span><span class="price-cell-value">${fmtUSD(marketData.marketCap)}</span></div>
+                <div class="price-cell"><span class="price-cell-label">📊 FDV</span><span class="price-cell-value">${fmtUSD(marketData.fdv)}</span></div>
             </div>
-        </div>`;
+            <div class="live-grid" style="margin-top:10px;">
+                <div class="live-cell"><span class="live-cell-label">TOTAL TVL</span><span class="live-cell-value status-green">${fmtUSD(marketData.liquidityUsd)}</span></div>
+                ${marketData.volume24h ? `<div class="live-cell"><span class="live-cell-label">24H VOLUME</span><span class="live-cell-value">${fmtUSD(marketData.volume24h)}</span></div>` : ''}
+            </div></div></div>`;
     }
 
     html += `
-    <div class="scanner-item">
-        <div class="scanner-label">🔄 Buy / Sell Simulation (Main Pool: ${mainPool ? mainPool.type + ' ' + mainPool.base : 'None'})</div>
-        <div class="scanner-value">
-            <div class="sim-grid">
-                <div class="sim-card">
-                    <div class="sim-card-title">🟢 Buy Simulation ($10)</div>
-                    <div class="sim-card-main ${sim.buyColor}">${sim.buyStatus}</div>
-                    ${sim.pathUsed ? `<div class="sim-path">Path: ${sim.pathUsed}</div>` : ''}
-                </div>
-                <div class="sim-card">
-                    <div class="sim-card-title">🔴 Sell Simulation</div>
-                    <div class="sim-card-main ${sim.sellColor}">${sim.sellStatus}</div>
-                    ${sim.totalLossPct !== null ? `<div class="sim-path">Loss: ${sim.totalLossPct.toFixed(1)}%${sim.slippagePct !== null ? ` = slippage ${sim.slippagePct.toFixed(1)}% + fee ~${sim.residualFeePct.toFixed(1)}%` : ''}</div>` : ''}
-                </div>
-            </div>
-            <small style="color:#888; display:block; margin-top:8px;">Simulated via main pool. Multi-hop supported. Fee isolated from slippage.</small>
+    <div class="scanner-item"><div class="scanner-label">🔄 Buy / Sell Simulation (Main Pool: ${mainPool ? mainPool.type + ' ' + mainPool.base : 'None'})</div><div class="scanner-value">
+        <div class="sim-grid">
+            <div class="sim-card"><div class="sim-card-title">🟢 Buy Simulation ($10)</div><div class="sim-card-main ${sim.buyColor}">${sim.buyStatus}</div>
+                ${sim.pathUsed ? `<div class="sim-path">Path: ${sim.pathUsed}</div>` : ''}</div>
+            <div class="sim-card"><div class="sim-card-title">🔴 Sell Simulation</div><div class="sim-card-main ${sim.sellColor}">${sim.sellStatus}</div>
+                ${sim.totalLossPct !== null ? `<div class="sim-path">Loss: ${sim.totalLossPct.toFixed(1)}%${sim.slippagePct !== null ? ` = slippage ${sim.slippagePct.toFixed(1)}% + fee ~${sim.residualFeePct.toFixed(1)}%` : ''}</div>` : ''}</div>
         </div>
-    </div>`;
+        <small style="color:#888; display:block; margin-top:8px;">Simulated via ${mainPool?.type === 'V3' ? 'PancakeSwap V3 QuoterV2 (fee tier read from pool)' : 'Router V2'}. Multi-hop supported. Fee isolated from slippage.</small></div></div>`;
 
     const liqForSlippage = mainPool?.liquidityUsd || 0;
     window.currentSlippageLiquidity = liqForSlippage;
-
     const trades = [10, 50, 100];
     let slippageHtml = '<div class="slippage-grid">';
     trades.forEach(usdAmount => {
         const calc = calcSlippage(usdAmount, liqForSlippage);
         const colorClass = calc.safe ? 'status-green' : (parseFloat(calc.impact) < 3 ? 'status-yellow' : 'status-red');
-        slippageHtml += `
-            <div class="slippage-card">
-                <div class="slippage-amount">Buy $${usdAmount}</div>
-                <div class="slippage-impact">Price Impact: ~${calc.impact}%</div>
-                <div class="slippage-rec ${colorClass}">Set Slippage: ${calc.rec}%</div>
-            </div>
-        `;
+        slippageHtml += `<div class="slippage-card"><div class="slippage-amount">Buy $${usdAmount}</div><div class="slippage-impact">Price Impact: ~${calc.impact}%</div><div class="slippage-rec ${colorClass}">Set Slippage: ${calc.rec}%</div></div>`;
     });
     slippageHtml += '</div>';
     slippageHtml += `
-        <hr class="slippage-divider">
-        <div class="slippage-calc-title">🎯 Calculate Your Own Trade Size</div>
-        <div class="slippage-input-group">
-            <span class="slippage-input-label">Trade Amount ($):</span>
-            <input type="number" id="slippageAmountInput" class="slippage-input" value="100" min="1" step="10" placeholder="e.g. 500">
-        </div>
-        <div id="slippageDynamicResult"></div>`;
-    slippageHtml += `<div class="slippage-note">💡 Set slippage slightly above "Price Impact".</div>`;
-
-    html += `
-    <div class="scanner-item">
-        <div class="scanner-label">📉 Estimated Slippage</div>
-        <div class="scanner-value">${slippageHtml}</div>
-    </div>`;
+        <hr class="slippage-divider"><div class="slippage-calc-title">🎯 Calculate Your Own Trade Size</div>
+        <div class="slippage-input-group"><span class="slippage-input-label">Trade Amount ($):</span>
+        <input type="number" id="slippageAmountInput" class="slippage-input" value="100" min="1" step="10" placeholder="e.g. 500"></div>
+        <div id="slippageDynamicResult"></div><div class="slippage-note">💡 Set slippage slightly above "Price Impact".</div>`;
+    html += `<div class="scanner-item"><div class="scanner-label">📉 Estimated Slippage</div><div class="scanner-value">${slippageHtml}</div></div>`;
 
     let riskStatus = '<span class="status-green">✅ No dangerous functions detected</span>';
-    if (risks.length > 0) {
-        riskStatus = `<span class="status-red">⚠️ Risk Functions:</span><br>${risks.join(', ')}<br><small><em>If RENOUNCED and NOT proxy, cannot execute.</em></small>`;
-    }
-    html += `
-    <div class="scanner-item">
-        <div class="scanner-label">🛡️ Bytecode Risk Analysis</div>
-        <div class="scanner-value">${riskStatus}</div>
-    </div>`;
-	
+    if (risks.length > 0) riskStatus = `<span class="status-red">⚠️ Risk Functions:</span><br>${risks.join(', ')}<br><small><em>If RENOUNCED and NOT proxy, cannot execute.</em></small>`;
+    html += `<div class="scanner-item"><div class="scanner-label">🛡️ Bytecode Risk Analysis</div><div class="scanner-value">${riskStatus}</div></div>`;
 
-
-    // 🕵️ WASH TRADING v6 (3 camadas avançadas client-side)
     html += `
-    <div class="scanner-item">
-        <div class="scanner-label">🕵️ Wash Trading Analysis (Main Pool, ~2000 blocks)</div>
-        <div class="scanner-value">
-            <div><strong>Recent Swaps:</strong> ${washCheck.details}</div>
-            <div class="${washCheck.color}" style="margin-top:6px;"><strong>${washCheck.status}</strong></div>
-            <small style="color:#888; display:block; margin-top:6px;">
-                🔴 Red: classic bot (few wallets + high Vol/TVL) or multi-wallet bot (disposable ratio ≥0.85 + Vol/TVL >15x) or 3+ advanced signals.<br>
-                🟡 Yellow: high turnover (Vol/TVL >10x) on pool younger than 7 days.<br>
-                🟢 Green: healthy Vol/TVL (≤10x) with real wallet diversity.<br>
-                <em>Advanced signals: temporal cadence, order clustering, ping-pong ratio.</em>
-            </small>
-        </div>
-    </div>`;
+    <div class="scanner-item"><div class="scanner-label">🕵️ Wash Trading Analysis (Main Pool, ~2000 blocks)</div><div class="scanner-value">
+        <div><strong>Recent Swaps:</strong> ${washCheck.details}</div>
+        <div class="${washCheck.color}" style="margin-top:6px;"><strong>${washCheck.status}</strong></div>
+        <small style="color:#888; display:block; margin-top:6px;">
+            🔴 Red: classic bot (few wallets + high Vol/TVL) or multi-wallet bot (disposable ratio ≥0.85 + Vol/TVL >15x).<br>
+            🟡 Yellow: high turnover (Vol/TVL >10x) on pool younger than 7 days.<br>
+            🟢 Green: healthy Vol/TVL (≤10x) with real wallet diversity.<br>
+            <em>Auto-detects V2 and V3 swap events.</em></small></div></div>`;
 
     html += `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; flex-wrap:wrap; gap:10px;">
@@ -1749,9 +1558,7 @@ function renderScannerCard(tokenData, marketData, v2Data, extra) {
         <div style="display:flex; gap:10px;">
             <a href="https://bscscan.com/token/${currentAudit.address}" target="_blank" class="update-btn" style="text-decoration:none; display:inline-flex; align-items:center;">🔗 BscScan</a>
             <button onclick="refreshLiveLiquidity()" class="update-btn" id="updateBtn">🔄 Update Live Data</button>
-        </div>
-    </div>`;
-
+        </div></div>`;
     return html;
 }
 
@@ -1766,48 +1573,32 @@ async function runScanner() {
     const address = document.getElementById("scannerInput").value.trim();
     const resultDiv = document.getElementById("scannerResult");
     const btn = document.getElementById("scannerBtn");
-
     if (!isValidAddress(address)) {
         resultDiv.innerHTML = '<p class="status-red">❌ Invalid BSC Address format.</p>';
-        resultDiv.classList.add('active');
-        return;
+        resultDiv.classList.add('active'); return;
     }
-
-    btn.disabled = true;
-    btn.innerHTML = '⏳ Detecting pools...';
-    resultDiv.classList.remove('active');
-
+    btn.disabled = true; btn.innerHTML = '⏳ Detecting pools...'; resultDiv.classList.remove('active');
     try {
         const tokenContract = new ethers.Contract(address, [
-            "function name() view returns (string)",
-            "function symbol() view returns (string)",
-            "function decimals() view returns (uint8)",
-            "function owner() view returns (address)"
+            "function name() view returns (string)", "function symbol() view returns (string)",
+            "function decimals() view returns (uint8)", "function owner() view returns (address)"
         ], provider);
-
         let name = null, symbol = null, decimals = null, owner = null;
         try {
-            const results = await Promise.allSettled([
-                tokenContract.name(), tokenContract.symbol(), tokenContract.decimals(), tokenContract.owner()
-            ]);
+            const results = await Promise.allSettled([tokenContract.name(), tokenContract.symbol(), tokenContract.decimals(), tokenContract.owner()]);
             name = results[0].status === 'fulfilled' ? results[0].value : null;
             symbol = results[1].status === 'fulfilled' ? results[1].value : null;
             decimals = results[2].status === 'fulfilled' ? Number(results[2].value) : null;
             owner = results[3].status === 'fulfilled' ? results[3].value : null;
         } catch (e) {}
-
         if (owner === null || owner === undefined || owner === "null") owner = null;
         const isRenounced = !!owner && (owner === ethers.ZeroAddress || owner.toLowerCase() === "0x000000000000000000000000000000000000dead");
-
         currentAudit = { address, name, symbol, decimals, owner, isRenounced, risks: [], cachedAgeMs: null };
 
         const [marketDataFromAPI, v2Data, stablePairs, proxyCheck] = await Promise.all([
-            getMarketData(address),
-            getV2SecurityData(address, decimals ?? 18),
-            getStableV2Pairs(address, decimals ?? 18),
-            checkProxy(address)
+            getMarketData(address), getV2SecurityData(address, decimals ?? 18),
+            getStableV2Pairs(address, decimals ?? 18), checkProxy(address)
         ]);
-
         if (!name || !symbol || !decimals) {
             if (marketDataFromAPI) {
                 if (!name) name = marketDataFromAPI.baseTokenName;
@@ -1816,66 +1607,44 @@ async function runScanner() {
             }
             if (!name || !symbol || !decimals) {
                 const geckoId = await getIdentityFromGecko(address);
-                if (geckoId) {
-                    if (!name) name = geckoId.name;
-                    if (!symbol) symbol = geckoId.symbol;
-                    if (!decimals && geckoId.decimals) decimals = geckoId.decimals;
-                }
+                if (geckoId) { if (!name) name = geckoId.name; if (!symbol) symbol = geckoId.symbol; if (!decimals && geckoId.decimals) decimals = geckoId.decimals; }
             }
         }
         const decForCalc = decimals ?? 18;
         currentAudit.name = name; currentAudit.symbol = symbol; currentAudit.decimals = decimals;
-
         let marketData = marketDataFromAPI;
-        if (!marketData && v2Data.hasV2) {
-            const bnbPrice = await getBNBPrice();
-            marketData = calcFromV2(v2Data, bnbPrice);
-        }
-
-        if (v2Data.hasV2 && !marketData?.pairCreatedAt) {
-            currentAudit.cachedAgeMs = await getPoolAgeFromChain(address);
-        }
-
+        if (!marketData && v2Data.hasV2) { const bnbPrice = await getBNBPrice(); marketData = calcFromV2(v2Data, bnbPrice); }
+        if (v2Data.hasV2 && !marketData?.pairCreatedAt) currentAudit.cachedAgeMs = await getPoolAgeFromChain(address);
         const displaySymbol = symbol || marketData?.baseTokenSymbol || "???";
         const allPools = await findMainPool(address, v2Data, stablePairs, marketData, displaySymbol);
         const mainPool = allPools.length > 0 ? allPools[0] : null;
 
-        let sim = { buyStatus: "—", buyColor: "", tokensReceived: 0, sellStatus: "—", sellColor: "",
+        let sim = { buyStatus: "—", buyColor: "", tokensReceived: 0, sellStatus: "—", sellColor: "", buyFailed: false,
             totalLossPct: null, slippagePct: null, residualFeePct: null, honeypot: false, pathUsed: null };
         let risks = [];
         try { sim = await simulateBuySell(address, decForCalc, mainPool); } catch (e) {
-            sim.sellStatus = "⚠️ Error: " + errMsg(e); sim.sellColor = "status-yellow";
+            sim.sellStatus = "⚠️ Error: " + errMsg(e); sim.sellColor = "status-yellow"; sim.buyFailed = true;
         }
         try { risks = await scanBytecodeRisks(address); } catch (e) {}
         currentAudit.risks = risks;
 
-        // ⭐ WASH TRADING v6
         let washCheck = { status: "N/A", color: "", details: "—" };
-        try { 
+        try {
             const washLpAddress = mainPool?.lpAddress || v2Data.lpAddress;
             const poolCreatedAt = marketData?.pairCreatedAt || currentAudit.cachedAgeMs;
             const poolAgeHours = poolCreatedAt ? (Date.now() - poolCreatedAt) / 3600000 : null;
             const safePct = mainPool?.safePct ?? v2Data?.safePct ?? 0;
-            washCheck = await checkWashTrading(washLpAddress, marketData?.volume24h, marketData?.liquidityUsd, poolAgeHours, safePct); 
+            washCheck = await checkWashTrading(washLpAddress, marketData?.volume24h, marketData?.liquidityUsd, poolAgeHours, safePct);
         } catch (e) {}
 
-        currentAudit.proxyCheck = proxyCheck;
-        currentAudit.stablePairs = stablePairs;
-        currentAudit.sim = sim;
-        currentAudit.washCheck = washCheck;
-        currentAudit.mainPool = mainPool;
-        currentAudit.allPools = allPools;
-
+        currentAudit.proxyCheck = proxyCheck; currentAudit.stablePairs = stablePairs; currentAudit.sim = sim;
+        currentAudit.washCheck = washCheck; currentAudit.mainPool = mainPool; currentAudit.allPools = allPools;
         resultDiv.innerHTML = renderScannerCard(currentAudit, marketData, v2Data);
-        bindSlippageCalculator();
-        resultDiv.classList.add('active');
-
+        bindSlippageCalculator(); resultDiv.classList.add('active');
     } catch (error) {
-        resultDiv.innerHTML = `<p class="status-red">❌ Error: ${error.message}</p>`;
-        resultDiv.classList.add('active');
+        resultDiv.innerHTML = `<p class="status-red">❌ Error: ${error.message}</p>`; resultDiv.classList.add('active');
     } finally {
-        btn.disabled = false;
-        btn.innerHTML = '🔍 AUDIT TOKEN';
+        btn.disabled = false; btn.innerHTML = '🔍 AUDIT TOKEN';
     }
 }
 
